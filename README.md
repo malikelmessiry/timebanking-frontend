@@ -69,17 +69,17 @@ Frontend will be deployed via **Netlify** (or Render if preferred).
 
 ## 🤝 Team
 
-* \[Dehui]
-* \[Malik]
-* \[Mikaela] 
-* \[Natasha] 
+* \ Dehui
+* \ Malik
+* \ Mikaela 
+* \ Natasha
 
 
 ---
 
 ## 📌 Notes
 
-* The backend repo is [linked here](https://github.com/yourteam/backend-repo).
-* Environment variables are stored in `.env` (do not commit to GitHub).
+* The backend repo is [linked here](will put link later).
+* Environment variables are stored in `.env`.
 
 
