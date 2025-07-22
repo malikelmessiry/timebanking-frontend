@@ -1,69 +1,85 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Community TimeBanking - Front-End
 
-Currently, two official plugins are available:
+Frontend for our group project built with **React**, **TypeScript**, and **Vite**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌐 Overview
 
-## Expanding the ESLint configuration
+This app is the client-side of our service marketplace platform, allowing users to:
+- Browse and book services
+- View and edit profiles
+- Send messages
+- Leave reviews (optional) **
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+It connects to a Django backend via REST API.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🛠️ Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- **React** + **TypeScript**
+- **Vite** (frontend build tool)
+- **Axios** for HTTP requests
+- **React Router** for navigation
+- **Cloudinary** for image uploads
+- **Jest/React Testing Library** for UI tests
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🚀 Getting Started
+
+1. **Clone the repo**:
+
+```bash
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
+````
+
+2. **Install dependencies**:
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+3. **Start the development server**:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+4. **Run UI tests** (if applicable):
+
+```bash
+npm run test
+```
+
+## 📁 Folder Structure
+
+```
+src/
+├── assets/         # Images and static files
+├── components/     # Reusable UI components
+├── pages/          # Page-level components
+├── services/       # API requests
+├── App.tsx         # Main app component
+└── main.tsx        # Entry point
+```
+
+## 🌍 Deployment
+
+Frontend will be deployed via **Netlify** (or Render if preferred).
+
+---
+
+## 🤝 Team
+
+* \[Dehui]
+* \[Malik]
+* \[Mikaela] 
+* \[Natasha] 
+
+
+---
+
+## 📌 Notes
+
+* The backend repo is [linked here](https://github.com/yourteam/backend-repo).
+* Environment variables are stored in `.env` (do not commit to GitHub).
+
+
