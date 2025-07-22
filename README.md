@@ -1,5 +1,5 @@
 
-# Community TimeBanking - Front-End
+# Community TimeBanking (Front-End)
 
 Frontend for our group project built with **React**, **TypeScript**, and **Vite**.
 
@@ -69,10 +69,10 @@ Frontend will be deployed via **Netlify** (or Render if preferred).
 
 ## 🤝 Team
 
-* \ Dehui
-* \ Malik
-* \ Mikaela 
-* \ Natasha
+* Dehui
+* Malik
+* Mikaela 
+* Natasha
 
 
 ---
