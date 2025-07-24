@@ -45,6 +45,12 @@
   transition: all 0.2s;
 }
 
+.btn-large {
+  padding: 1rem 2rem;
+  font-size: 1.25rem;
+  margin-top: 2rem;
+}
+
 .btn-primary {
   background-color: #646cff;
   color: white;
@@ -84,7 +90,7 @@
 
 /* Auth pages styles */
 .auth-container {
-  max-width: 400px;
+  max-width: 450px;
   margin: 2rem auto;
   padding: 2rem;
   border: 1px solid #e0e0e0;
@@ -158,4 +164,55 @@
 
 .auth-container a:hover {
   text-decoration: underline;
+}
+
+.auth-tabs {
+  display: flex;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 1rem;
+  background: none;
+  border: none;
+  position: relative;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #666;
+}
+
+.tab-button:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 25%;
+  bottom: 25%;
+  width: 1px;
+  background-color: black;
+}
+/* 
+.tab-button:last-child {
+  border-right: none;
+} */
+
+.tab-button:hover {
+  color: #646cff;
+}
+
+.tab-button.active {
+  color: #646cff;
+  border-bottom-color: #646cff;
+}
+
+/* .tab-content {
+  text-align: left;
+} */
+
+.tab-content h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
 }

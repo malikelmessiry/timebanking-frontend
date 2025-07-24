@@ -4,14 +4,11 @@ export default function Home() {
   return (
     <div className="home-page">
       <div className="hero-section">
-        <h1>Welcome to TimeBank</h1>
+        <h1>Welcome to Community TimeBanking</h1>
         <p>Trade your time, share your skills, grow your community</p>
         <div className="auth-buttons">
-          <Link to="/login" className="btn btn-primary">
-            Log In
-          </Link>
-          <Link to="/signup" className="btn btn-secondary">
-            Sign Up
+          <Link to="/auth" className="btn btn-primary btn-large">
+            Join the TimeBank
           </Link>
         </div>
       </div>
