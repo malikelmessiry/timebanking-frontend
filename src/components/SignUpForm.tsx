@@ -40,7 +40,14 @@ export default function SignUpForm({ onSubmit }: SignUpFormProps) {
       const res = await registerUser(userData);
       console.log("User registered:", res);
 
-      onSubmit?.(userData);
+      onSubmit?.({
+        firstName,
+        lastName,
+        username,
+        email,
+        password,
+        confirmPassword
+      });
     } catch (err) {
       console.error("Registration failed", err);
     }
@@ -65,6 +72,16 @@ export default function SignUpForm({ onSubmit }: SignUpFormProps) {
           id="lastName"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
+          required
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="username">Username:</label>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Username"
           required
         />
       </div>
