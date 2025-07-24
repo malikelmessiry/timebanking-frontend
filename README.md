@@ -1,5 +1,5 @@
 
-# Community TimeBanking - Front-End
+# Community TimeBanking (Front-End)
 
 Frontend for our group project built with **React**, **TypeScript**, and **Vite**.
 
@@ -72,14 +72,14 @@ Frontend will be deployed via **Netlify** (or Render if preferred).
 * Dehui
 * Malik
 * Mikaela 
-* Natasha 
+* Natasha
 
 
 ---
 
 ## 📌 Notes
 
-* The backend repo is [linked here](https://github.com/yourteam/backend-repo).
-* Environment variables are stored in `.env` (do not commit to GitHub).
+* The backend repo is [linked here](will put link later).
+* Environment variables are stored in `.env`.
 
 
