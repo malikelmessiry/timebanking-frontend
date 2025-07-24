@@ -69,10 +69,10 @@ Frontend will be deployed via **Netlify** (or Render if preferred).
 
 ## 🤝 Team
 
-* \[Dehui]
-* \[Malik]
-* \[Mikaela] 
-* \[Natasha] 
+* Dehui
+* Malik
+* Mikaela 
+* Natasha 
 
 
 ---
