@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState } from "react";
+import { registerUser } from "../services/api";
 
 interface SignUpFormProps {
   onSubmit: (userData: {
     firstName: string;
     lastName: string;
+    username: string;
     email: string;
     password: string;
     confirmPassword: string;
@@ -13,17 +15,35 @@ interface SignUpFormProps {
 export default function SignUpForm({ onSubmit }: SignUpFormProps) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (password !== confirmPassword) {
       alert('Passwords do not match!');
       return;
     }
-    onSubmit({ firstName, lastName, email, password, confirmPassword });
+
+    try {
+      const userData = {
+        username,
+        password,
+        email,
+        first_name: firstName,
+        last_name: lastName
+      };
+
+      const res = await registerUser(userData);
+      console.log("User registered:", res);
+
+      onSubmit?.(userData);
+    } catch (err) {
+      console.error("Registration failed", err);
+    }
   };
 
   return (
