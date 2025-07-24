@@ -1,4 +1,4 @@
-const BASE_URL = "https://localhost:8000/api"; //change as needed
+const BASE_URL = "http://localhost:8000/api"; //change as needed
 
 export const registerUser = async (data: {
     username: string;
