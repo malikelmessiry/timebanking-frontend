@@ -23,34 +23,36 @@ export default function Auth() {
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-tabs">
-        <button
-          className={`tab-button ${activeTab === 'login' ? 'active' : ''}`}
-          onClick={() => setActiveTab('login')}
-        >
-          Log In
-        </button>
-        <button
-          className={`tab-button ${activeTab === 'signup' ? 'active' : ''}`}
-          onClick={() => setActiveTab('signup')}
-        >
-          Sign Up
-        </button>
-      </div>
+    <div className="auth-page-wrapper">
+      <div className="auth-container">
+        <div className="auth-tabs">
+          <button
+            className={`tab-button ${activeTab === 'login' ? 'active' : ''}`}
+            onClick={() => setActiveTab('login')}
+          >
+            Log In
+          </button>
+          <button
+            className={`tab-button ${activeTab === 'signup' ? 'active' : ''}`}
+            onClick={() => setActiveTab('signup')}
+          >
+            Sign Up
+          </button>
+        </div>
 
-      <div className="tab-content">
-        {activeTab === 'login' ? (
-          <div>
-            <h2>Welcome Back</h2>
-            <LoginForm onSubmit={handleLogin} />
-          </div>
-        ) : (
-          <div>
-            <h2>Create Account</h2>
-            <SignUpForm onSubmit={handleSignup} />
-          </div>
-        )}
+        <div className="tab-content">
+          {activeTab === 'login' ? (
+            <div>
+              <h2>Welcome Back</h2>
+              <LoginForm onSubmit={handleLogin} />
+            </div>
+          ) : (
+            <div>
+              <h2>Create Account</h2>
+              <SignUpForm onSubmit={handleSignup} />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
