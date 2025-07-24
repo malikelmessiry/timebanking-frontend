@@ -45,6 +45,9 @@ export default function Auth() {
             <div>
               <h2>Welcome Back</h2>
               <LoginForm onSubmit={handleLogin} />
+              <div className="forgot-links">
+                <p><a href="/forgot-login">Forgot login info?</a></p>
+              </div>
             </div>
           ) : (
             <div>
