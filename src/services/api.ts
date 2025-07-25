@@ -49,7 +49,7 @@ export const getUserProfile = async (token: string) => {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`, // or Token depending on backend
+            "Authorization": `Token ${token}`,
         },
     });
 
@@ -66,7 +66,7 @@ export const updateUserProfile = async (token: string, data: any) => {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
+            "Authorization": `Token ${token}`,
         },
         body: JSON.stringify(data),
     });
