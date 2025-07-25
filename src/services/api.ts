@@ -31,7 +31,8 @@ export const registerUser = async (data: {
 
 // Login User
 export const loginUser = async (data: {
-    email: string;
+    // email: string;
+    username: string;
     password: string;
 }) => {
     const res = await fetch(`${BASE_URL}/accounts/login/`, {

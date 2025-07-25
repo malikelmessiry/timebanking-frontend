@@ -8,9 +8,9 @@ export default function Auth() {
   const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
   const navigate = useNavigate();
 
-  const handleLogin = async (email: string, password: string) => {
+  const handleLogin = async (username: string, password: string) => {
     try {
-      const result = await loginUser({ email, password });
+      const result = await loginUser({ username, password });
       console.log('Login successful:', result);
 
        // Store token in localStorage (or use a more secure method)
