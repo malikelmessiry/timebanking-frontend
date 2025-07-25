@@ -33,7 +33,6 @@ export default function Auth() {
     confirmPassword: string;
   }) => {
     console.log('Signup attempt:', userData);
-    // Handle signup logic here
   };
 
   return (

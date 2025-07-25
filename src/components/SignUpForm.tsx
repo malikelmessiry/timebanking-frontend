@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { registerUser } from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 interface SignUpFormProps {
   onSubmit: (userData: {
@@ -19,6 +20,7 @@ export default function SignUpForm({ onSubmit }: SignUpFormProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,6 +42,12 @@ export default function SignUpForm({ onSubmit }: SignUpFormProps) {
       const res = await registerUser(userData);
       console.log("User registered:", res);
 
+      // Show success message
+      alert('Registration successful! Please log in.');
+
+      // Redirect to login
+      navigate('/auth');
+
       onSubmit?.({
         firstName,
         lastName,
@@ -50,6 +58,7 @@ export default function SignUpForm({ onSubmit }: SignUpFormProps) {
       });
     } catch (err) {
       console.error("Registration failed", err);
+      alert('Registration failed. Please try again.');
     }
   };
 
