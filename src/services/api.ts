@@ -7,7 +7,7 @@ export const registerUser = async (data: {
     first_name: string;
     last_name: string;
 }) => {
-    const res = await fetch(`${BASE_URL}/register/`, {
+    const res = await fetch(`${BASE_URL}/accounts/register/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
