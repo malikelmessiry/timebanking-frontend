@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { registerUser } from "../services/api";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 interface SignUpFormProps {
   onSubmit: (userData: {
@@ -26,7 +26,7 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
   const [zipCode, setZipCode] = useState('');     
   const [bio, setBio] = useState('');            
   const [skills, setSkills] = useState(''); 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
