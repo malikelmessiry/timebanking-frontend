@@ -20,6 +20,11 @@ export default function SignUpForm({ onSubmit }: SignUpFormProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [city, setCity] = useState('');           
+  const [state, setState] = useState('');         
+  const [zipCode, setZipCode] = useState('');     
+  const [bio, setBio] = useState('');            
+  const [skills, setSkills] = useState(''); 
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -34,9 +39,15 @@ export default function SignUpForm({ onSubmit }: SignUpFormProps) {
       const userData = {
         username,
         password,
+        password2: confirmPassword,
         email,
-        first_name: firstName,
-        last_name: lastName
+        city,
+        state,
+        zip_code: zipCode,
+        bio,
+        skills
+        // first_name: firstName,
+        // last_name: lastName
       };
 
       const res = await registerUser(userData);
@@ -124,6 +135,66 @@ export default function SignUpForm({ onSubmit }: SignUpFormProps) {
           required
         />
       </div>
+
+      <div className="form-group">
+        <label htmlFor="city">City:</label>
+        <input
+          type="text"
+          id="city"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          placeholder="Enter your city"
+          required
+        />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="state">State:</label>
+        <input
+          type="text"
+          id="state"
+          value={state}
+          onChange={(e) => setState(e.target.value)}
+          placeholder="Enter your state"
+          required
+        />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="zipCode">Zip Code:</label>
+        <input
+          type="text"
+          id="zipCode"
+          value={zipCode}
+          onChange={(e) => setZipCode(e.target.value)}
+          placeholder="Enter your zip code"
+          required
+        />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="bio">Bio:</label>
+        <textarea
+          id="bio"
+          value={bio}
+          onChange={(e) => setBio(e.target.value)}
+          placeholder="Tell us about yourself (optional)"
+          rows={3}
+        />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="skills">Skills:</label>
+        <textarea
+          id="skills"
+          value={skills}
+          onChange={(e) => setSkills(e.target.value)}
+          placeholder="What skills do you have to offer? (e.g., tutoring, gardening, cooking)"
+          rows={3}
+        />
+      </div>
+
+
       <button type="submit">Sign Up</button>
     </form>
   );
