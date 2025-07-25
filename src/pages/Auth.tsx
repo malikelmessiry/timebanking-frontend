@@ -35,6 +35,10 @@ export default function Auth() {
     console.log('Signup attempt:', userData);
   };
 
+  const switchToLogin = () => {
+    setActiveTab('login');
+  };
+
   return (
     <div className="auth-page-wrapper">
       <div className="auth-container">
@@ -65,7 +69,7 @@ export default function Auth() {
           ) : (
             <div>
               <h2>Create Account</h2>
-              <SignUpForm onSubmit={handleSignup} />
+                <SignUpForm onSubmit={handleSignup} switchToLogin={switchToLogin} />
             </div>
           )}
         </div>

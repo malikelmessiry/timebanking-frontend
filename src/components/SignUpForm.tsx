@@ -11,9 +11,10 @@ interface SignUpFormProps {
     password: string;
     confirmPassword: string;
   }) => void;
+  switchToLogin: () => void;
 }
 
-export default function SignUpForm({ onSubmit }: SignUpFormProps) {
+export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [username, setUsername] = useState('');
@@ -56,8 +57,8 @@ export default function SignUpForm({ onSubmit }: SignUpFormProps) {
       // Show success message
       alert('Registration successful! Please log in.');
 
-      // Redirect to login
-      navigate('/auth');
+      // Redirect to login tab
+      switchToLogin();
 
       onSubmit?.({
         firstName,
