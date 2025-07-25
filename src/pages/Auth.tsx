@@ -1,13 +1,27 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
 import SignUpForm from '../components/SignUpForm';
+import { loginUser } from '../services/api';
 
 export default function Auth() {
   const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
+  const navigate = useNavigate();
 
-  const handleLogin = (email: string, password: string) => {
-    console.log('Login attempt:', { email, password });
-    // Handle login logic here
+  const handleLogin = async (username: string, password: string) => {
+    try {
+      const result = await loginUser({ username, password });
+      console.log('Login successful:', result);
+
+       // Store token in localStorage (or use a more secure method)
+      localStorage.setItem('authToken', result.token);
+
+      // Redirect to dashboard or home page after successful login
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Login failed:', error);
+      alert('Login failed. Please check your credentials.');
+    }
   };
 
   const handleSignup = (userData: {
@@ -19,7 +33,10 @@ export default function Auth() {
     confirmPassword: string;
   }) => {
     console.log('Signup attempt:', userData);
-    // Handle signup logic here
+  };
+
+  const switchToLogin = () => {
+    setActiveTab('login');
   };
 
   return (
@@ -52,7 +69,7 @@ export default function Auth() {
           ) : (
             <div>
               <h2>Create Account</h2>
-              <SignUpForm onSubmit={handleSignup} />
+                <SignUpForm onSubmit={handleSignup} switchToLogin={switchToLogin} />
             </div>
           )}
         </div>
