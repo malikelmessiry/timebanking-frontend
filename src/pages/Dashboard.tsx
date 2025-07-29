@@ -59,8 +59,8 @@ export default function Dashboard() {
     <div className='dashboard'>
       <h1>TimeBank Dashboard</h1>
       <div className='user-welcome'>
-        <h2>Hello, {user.username}</h2>
-        <p>Welcome back to your TimeBank account TESTTdfdfdTT</p>
+        <h2>Hello, {user.first_name || user.username}!</h2>
+        <p>Welcome back to your TimeBank account</p>
 
         <div className='dashboard-stats'>
           <div className='stat-card'>
