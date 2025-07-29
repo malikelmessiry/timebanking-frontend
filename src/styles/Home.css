@@ -1,0 +1,77 @@
+.home-page {
+    padding: 2rem;
+}
+
+.hero-section {
+    margin-bottom: 4rem;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.hero-section p {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    color: #666;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.btn-large {
+    padding: 1rem 2rem;
+    font-size: 1.25rem;
+    margin-top: 2rem;
+}
+
+.btn-primary {
+    background-color: #646cff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #535bf2;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: #646cff;
+    border: 2px solid #646cff;
+}
+
+.btn-secondary:hover {
+    background-color: #646cff;
+    color: white;
+}
+
+.features {
+    margin-top: 4rem;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.feature {
+    padding: 1.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
