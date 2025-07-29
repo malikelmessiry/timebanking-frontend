@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect, act } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../services/api';
 import Navbar from '../components/Navbar';
 
@@ -104,29 +104,58 @@ export default function Dashboard() {
         </div>
 
         {/* Tab Content */}
-        <div className='user-welcome'>
-          <h2>Hello, {user.first_name || user.username}!</h2>
-          <p>Welcome back to your TimeBank account</p>
+        <div className='dashboard-content'>
+          {activeTab === 'overview' && (
+            <div className='overview-section'>
+              <div className='user-welcome'>
+                <h2>Hello, {user.first_name || user.username}!</h2>
+                <p>Welcome back to your TimeBank account</p>
 
-          <div className='dashboard-stats'>
-            <div className='stat-card'>
-              <h3>Time Credits</h3>
-              <p>{user.time_credits || 0} hours</p>
+                <div className='dashboard-stats'>
+                  <div className='stat-card'>
+                    <h3>Time Credits</h3>
+                    <p>{user.time_credits || 0} hours</p>
+                  </div>
+
+                  <div className='stat-card'>
+                    <h3>Active Services</h3>
+                    <p>3</p>
+                  </div>
+
+                  <div className='stat-card'>
+                    <h3>Pending Requests</h3>
+                    <p>2</p>
+                  </div>
+
+                  <div className='stat-card'>
+                    <h3>Unread Messages</h3>
+                    <p>1</p>
+                  </div>
+                </div>
+
+                {/* OPTIONAL: Quick Actions */}
+                <div className="quick-actions">
+                  <h3>Quick Actions</h3>
+                  <button onClick={() => setActiveTab('services')}>
+                    Manage Services
+                  </button>
+                  <button onClick={() => setActiveTab('bookings')}>
+                    View Bookings
+                  </button>
+                  <Link to="/discover">Find Services</Link>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'services' && (
+            <div className='services-section'>
+              <h2>My Services</h2>
             </div>
 
-            <div className='stat-card'>
-              <h3>Username</h3>
-              <p>{user.username}</p>
-            </div>
-
-            <div className='stat-card'>
-              <h3>Email</h3>
-              <p>{user.email}</p>
-            </div>
-
-          </div>
+          )}
         </div>
-        </div>
+      </div>
     </div>
   );
 }
