@@ -60,7 +60,7 @@ export default function Dashboard() {
       <h1>TimeBank Dashboard</h1>
       <div className='user-welcome'>
         <h2>Hello, {user.username}</h2>
-        <p>Welcome back to your TimeBank account TESTTTT</p>
+        <p>Welcome back to your TimeBank account TESTTdfdfdTT</p>
 
         <div className='dashboard-stats'>
           <div className='stat-card'>
