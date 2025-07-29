@@ -151,8 +151,73 @@ export default function Dashboard() {
           {activeTab === 'services' && (
             <div className='services-section'>
               <h2>My Services</h2>
+              <button className='add-service-btn'>+ Offer New Service</button>
+              <div className='service-card'>
+                <h3>Math Tutoring</h3>
+                <p>Help with Algebra and Calculus</p>
+                <span className='rate'>1 hour</span>
+                <div className='service-actions'>
+                  <button>Edit</button>
+                  <button>Pause</button>
+                </div>
+              </div>
+              {/* more service cards */}
             </div>
+          )}
 
+          {activeTab === 'bookings' && (
+            <div className='bookings-section'>
+              <h2>My Bookings</h2>
+              <div className='booking-filters'>
+                <button>All</button>
+                <button>Pending</button>
+                <button>Confirmed</button>
+                <button>Completed</button>
+              </div>
+              <div className='bookings-list'>
+                <div className='booking-card'>
+                  <h3>Taro Reading</h3>
+                  <p>with Natasha</p>
+                  <span className='date'>Sep 2, 2025 - 8:00 AM</span>
+                  <span className='status pending'>Pending</span>
+                  <div className='booking-actions'>
+                    <button>Message</button>
+                    <button>Cancel</button>
+                  </div>
+                </div>
+                {/* more booking cards */}
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'messages' && (
+            <div className='messages-section'>
+              <h2>Messages</h2>
+              <div className='messages-list'>
+                <div className='message-card'>
+                  <h3>Natasha Gaye</h3>
+                  <p>Hi! Looking forward to our reading...</p>
+                  <span className='time'>2 hours ago</span>
+                  <span className='unread'>•</span>
+                </div>
+                {/* more message cards */}
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'history' && (
+            <div className='history-section'>
+              <h2>Transaction History</h2>
+              <div className='history-list'>
+                <div className='history-card'>
+                  <h3>Yoga Class</h3>
+                  <p>with Mikaela B.</p>
+                  <span className='date'>June 3, 2025</span>
+                  <span className='credits spent'>-1 hour</span>
+                </div>
+                {/* more history cards */}
+              </div>
+            </div>
           )}
         </div>
       </div>
