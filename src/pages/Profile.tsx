@@ -174,7 +174,69 @@ export default function Profile() {
             </div>
 
             {/* Profile Information */}
-            
+            <div className="profile-info">
+              <div className="info-section">
+                <h2>Personal Information</h2>
+                <div className="form-grid">
+                  <div className="form-group">
+                    <label>First Name</label>
+                    {editing ? (
+                      <input
+                        type="text"
+                        name="first_name"
+                        value={formData.first_name || ''}
+                        onChange={handleInputChange} />
+                    ) : (
+                        <p>{user.first_name || 'Not provided'}</p>
+                    )}
+                  </div>
+
+                  <div className="form-group">
+                    <label>Last Name</label>
+                    {editing ? (
+                      <input
+                        type="text"
+                        name="last_name"
+                        value={formData.last_name || ''}
+                        onChange={handleInputChange} />
+                    ) : (
+                        <p>{user.last_name || 'Not provided'}</p>
+                    )}
+                  </div>
+
+                  <div className="form-group">
+                    <label>Email</label>
+                    {editing ? (
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email || ''}
+                        onChange={handleInputChange} />
+                    ) : (
+                        <p>{user.email}</p>  
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="info-section">
+                <h2>Location</h2>
+                <div className="form-grid">
+                  <div className="form-group">
+                    <label>City</label>
+                    {editing ? (
+                      <input
+                        type="text"
+                        name="city"
+                        value={formData.city || ''}
+                        onChange={handleInputChange} />
+                    ) : (
+                        <p>{user.city || 'Not provided'}</p>
+                      )} 
+                  </div>
+                </div>
+              </div>
+            </div>
                   </div>
               </div>
           </div>
