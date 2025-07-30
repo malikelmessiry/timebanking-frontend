@@ -234,13 +234,77 @@ export default function Profile() {
                         <p>{user.city || 'Not provided'}</p>
                       )} 
                   </div>
+
+                  <div className="form-group">
+                    <label>State</label>
+                    {editing ? (
+                      <input
+                        type="text"
+                        name="state"
+                        value={formData.state || ''}
+                        onChange={handleInputChange} />
+                    ) : (
+                        <p>{user.state || 'Not provided'}</p>
+                    )}
+                  </div>
+
+                  <div className="form-group">
+                    <label>Zip Code</label>
+                    {editing ? (
+                      <input
+                        type="text"
+                        name="zip_code"
+                        value={formData.zip_code || ''}
+                        onChange={handleInputChange} />
+                    ) : (
+                        <p>{user.zip_code || 'Not provided'}</p>
+                    )}
+                  </div>
+
+                  <div className="form-group">
+                    <label>Time Credits</label>
+                    <p>{user.time_credits} hours</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="info-section">
+                <h2>About Me</h2>
+                <div className="form-group">
+                  <label>Bio</label>
+                  {editing ? (
+                    <textarea
+                      name="bio"
+                      value={formData.bio || ''}
+                      onChange={handleInputChange}
+                      rows={4}
+                      placeholder="Tell others about yourself" />
+                  ) : (
+                      <p>{user.bio || 'No bio provided'}</p>
+                  )}
+                </div>
+
+                <div className="form-group">
+                  <label>Skills</label>
+                  {editing ? (
+                    <textarea
+                      name="skills"
+                      value={formData.skills || ''}
+                      onChange={handleInputChange}
+                      rows={3}
+                      placeholder="What skills do you have? (e.g. tutoring, gardening, cooking)" />
+                  ) : (
+                  <p>{user.skills || 'No skills listed'}</p>
+                  )}
                 </div>
               </div>
             </div>
-                  </div>
-              </div>
           </div>
-      </div>
+
+          {/* Account Actions */}
+    </div>
+  </div>
+</div>
   )
 
 }
