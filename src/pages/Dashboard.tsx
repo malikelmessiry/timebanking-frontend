@@ -152,41 +152,83 @@ export default function Dashboard() {
           {activeTab === 'services' && (
             <div className='services-section'>
               <h2>My Services</h2>
-              <button className='add-service-btn'>+ Offer New Service</button>
-              <div className='service-card'>
-                <h3>Math Tutoring</h3>
-                <p>Help with Algebra and Calculus</p>
-                <span className='rate'>1 hour</span>
-                <div className='service-actions'>
-                  <button>Edit</button>
-                  <button>Pause</button>
+              
+              {/* Services you offer */}
+              <div className="section-header">
+                <h3>Services I Offer</h3>
+                <button className='add-service-btn'>+ Offer New Service</button>
+              </div>
+              
+              <div className='services-list'>
+                <div className='service-card'>
+                  <h3>Math Tutoring</h3>
+                  <p>Help with Algebra and Calculus</p>
+                  <span className='rate'>1 hour</span>
+                  <div className='service-actions'>
+                    <button>Edit</button>
+                    <button>Pause</button>
+                  </div>
                 </div>
               </div>
-              {/* more service cards */}
+
+              {/* Booking requests for your services */}
+              <div className="service-requests-section">
+                <h3>Booking Requests for My Services</h3>
+                <div className='booking-filters'>
+                  <button>All</button>
+                  <button>Pending</button>
+                  <button>Accepted</button>
+                  <button>Completed</button>
+                  <button>Cancelled</button>
+                </div>
+                
+                <div className='service-requests-list'>
+                  <div className='booking-card incoming'>
+                    <div className="request-header">
+                      <h4>Math Tutoring Request</h4>
+                      <span className="service-badge">Your Service</span>
+                    </div>
+                    <p>from Dehui H.</p>
+                    <span className='date'>Sep 5, 2025 - 3:00 PM</span>
+                    <span className='status pending'>Awaiting your response</span>
+                    <div className='booking-actions'>
+                      <button className='accept'>Accept</button>
+                      <button className='decline'>Decline</button>
+                      <button>Message</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
 
           {activeTab === 'bookings' && (
             <div className='bookings-section'>
               <h2>My Bookings</h2>
+              <p className="section-description">Services you've booked from others</p>
+              
               <div className='booking-filters'>
                 <button>All</button>
                 <button>Pending</button>
                 <button>Confirmed</button>
                 <button>Completed</button>
+                <button>Cancelled</button>
               </div>
+              
               <div className='bookings-list'>
-                <div className='booking-card'>
-                  <h3>Taro Reading</h3>
+                <div className='booking-card outgoing'>
+                  <div className="request-header">
+                    <h4>Tarot Reading</h4>
+                    <span className="client-badge">You booked</span>
+                  </div>
                   <p>with Natasha</p>
                   <span className='date'>Sep 2, 2025 - 8:00 AM</span>
-                  <span className='status pending'>Pending</span>
+                  <span className='status pending'>Pending approval</span>
                   <div className='booking-actions'>
                     <button>Message</button>
                     <button>Cancel</button>
                   </div>
                 </div>
-                {/* more booking cards */}
               </div>
             </div>
           )}
