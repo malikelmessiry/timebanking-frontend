@@ -2,12 +2,11 @@ const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 // Register User
 export const registerUser = async (data: {
-    username: string;
+    email: string,
     password: string;
     password2: string;
-    email: string;
-    // first_name: string;
-    // last_name: string;
+    first_name: string;
+    last_name: string;
     city: string;
     state: string;
     zip_code: string;
@@ -31,8 +30,7 @@ export const registerUser = async (data: {
 
 // Login User
 export const loginUser = async (data: {
-    // email: string;
-    username: string;
+    email: string;
     password: string;
 }) => {
     const res = await fetch(`${BASE_URL}/accounts/login/`, {

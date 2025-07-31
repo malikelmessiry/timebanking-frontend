@@ -6,7 +6,7 @@ interface SignUpFormProps {
   onSubmit: (userData: {
     firstName: string;
     lastName: string;
-    username: string;
+    // username: string;
     email: string;
     password: string;
     confirmPassword: string;
@@ -17,7 +17,7 @@ interface SignUpFormProps {
 export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [username, setUsername] = useState('');
+  // const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -38,17 +38,17 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
 
     try {
       const userData = {
-        username,
+        // username,
+        email,
         password,
         password2: confirmPassword,
-        email,
         city,
         state,
         zip_code: zipCode,
         bio,
-        skills
-        // first_name: firstName,
-        // last_name: lastName
+        skills,
+        first_name: firstName,
+        last_name: lastName
       };
 
       const res = await registerUser(userData);
@@ -63,7 +63,7 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
       onSubmit?.({
         firstName,
         lastName,
-        username,
+        // username,
         email,
         password,
         confirmPassword
@@ -77,7 +77,7 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
   return (
     <form onSubmit={handleSubmit} className="signup-form">
       <div className="form-group">
-        <label htmlFor="firstName">First Name:</label>
+        <label htmlFor="firstName">First Name</label>
         <input
           type="text"
           id="firstName"
@@ -87,7 +87,7 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
         />
       </div>
       <div className="form-group">
-        <label htmlFor="lastName">Last Name:</label>
+        <label htmlFor="lastName">Last Name</label>
         <input
           type="text"
           id="lastName"
@@ -96,7 +96,7 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
           required
         />
       </div>
-      <div className="form-group">
+      {/* <div className="form-group">
         <label htmlFor="username">Username:</label>
         <input
           type="text"
@@ -105,9 +105,9 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
           placeholder="Username"
           required
         />
-      </div>
+      </div> */}
       <div className="form-group">
-        <label htmlFor="email">Email:</label>
+        <label htmlFor="email">Email</label>
         <input
           type="email"
           id="email"
@@ -117,7 +117,7 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
         />
       </div>
       <div className="form-group">
-        <label htmlFor="password">Password:</label>
+        <label htmlFor="password">Password</label>
         <input
           type="password"
           id="password"
@@ -127,7 +127,7 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
         />
       </div>
       <div className="form-group">
-        <label htmlFor="confirmPassword">Confirm Password:</label>
+        <label htmlFor="confirmPassword">Confirm Password</label>
         <input
           type="password"
           id="confirmPassword"
@@ -138,7 +138,7 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
       </div>
 
       <div className="form-group">
-        <label htmlFor="city">City:</label>
+        <label htmlFor="city">City</label>
         <input
           type="text"
           id="city"
@@ -150,7 +150,7 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
       </div>
 
       <div className="form-group">
-        <label htmlFor="state">State:</label>
+        <label htmlFor="state">State</label>
         <input
           type="text"
           id="state"
@@ -162,7 +162,7 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
       </div>
 
       <div className="form-group">
-        <label htmlFor="zipCode">Zip Code:</label>
+        <label htmlFor="zipCode">Zip Code</label>
         <input
           type="text"
           id="zipCode"
@@ -174,7 +174,7 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
       </div>
 
       <div className="form-group">
-        <label htmlFor="bio">Bio:</label>
+        <label htmlFor="bio">Bio</label>
         <textarea
           id="bio"
           value={bio}
@@ -185,7 +185,7 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
       </div>
 
       <div className="form-group">
-        <label htmlFor="skills">Skills:</label>
+        <label htmlFor="skills">Skills</label>
         <textarea
           id="skills"
           value={skills}
