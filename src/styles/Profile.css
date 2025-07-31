@@ -37,6 +37,9 @@
 .avatar-section {
   text-align: center;
   margin-bottom: 3rem;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 8px;
 }
 
 .avatar-container {
@@ -49,11 +52,25 @@
   height: 150px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid #e0e0e0;
+  border: 4px solid #646cff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.avatar-image:hover {
+  transform: scale(1.05);
+}
+
+.avatar-controls {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
 .avatar-upload {
-  margin-top: 1rem;
+  position: relative;
 }
 
 .avatar-input {
@@ -62,16 +79,97 @@
 
 .avatar-label {
   display: inline-block;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.5rem;
   background: #646cff;
   color: white;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(100, 108, 255, 0.3);
 }
 
 .avatar-label:hover {
   background: #535bf2;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(100, 108, 255, 0.4);
+}
+
+.avatar-label:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.remove-avatar-btn {
+  padding: 0.5rem 1rem;
+  background: transparent;
+  color: #ef4444;
+  border: 2px solid #ef4444;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+}
+
+.remove-avatar-btn:hover {
+  background: #ef4444;
+  color: white;
+}
+
+.remove-avatar-btn:disabled {
+  border-color: #9ca3af;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.image-error {
+  background: #fee2e2;
+  color: #dc2626;
+  padding: 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #fecaca;
+  font-size: 0.875rem;
+  max-width: 300px;
+}
+
+.avatar-guidelines {
+  background: #f0f9ff;
+  color: #0369a1;
+  padding: 1rem;
+  border-radius: 6px;
+  border: 1px solid #bae6fd;
+  max-width: 300px;
+  text-align: left;
+}
+
+.avatar-guidelines small {
+  line-height: 1.5;
+}
+
+/* Loading state */
+.avatar-label:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Preview overlay for new uploads */
+.avatar-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(100, 108, 255, 0.1);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.avatar-container:hover::after {
+  opacity: 1;
 }
 
 .info-section {
@@ -223,5 +321,14 @@
 
   .action-buttons {
     flex-direction: column;
+  }
+
+  .avatar-image {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .avatar-guidelines {
+    max-width: 100%;
   }
 }

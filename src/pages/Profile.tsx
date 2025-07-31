@@ -21,82 +21,124 @@ interface User {
 }
 
 export default function Profile() {
-    const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [editing, setEditing] = useState(false);
-    const [formData, setFormData] = useState<Partial<User>>({});
-    const [avatarFile, setAvatarFile] = useState<File | null>(null);
-    const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
-    const navigate = useNavigate();
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [editing, setEditing] = useState(false);
+  const [formData, setFormData] = useState<Partial<User>>({});
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [imageError, setImageError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-      const loadUserProfile = async () => {
-          try {
-              const token = localStorage.getItem('authToken');
-              if (!token) {
-                  navigate('/auth');
-                  return;
-              }
-
-              const profile = await getUserProfile(token);
-              setUser(profile);
-              setFormData(profile);
-          } catch (error) {
-              console.error('Failed to load profile:', error);
-              localStorage.removeItem('authToken');
+  useEffect(() => {
+    const loadUserProfile = async () => {
+      try {
+          const token = localStorage.getItem('authToken');
+          if (!token) {
               navigate('/auth');
-          } finally {
-              setLoading(false);
+              return;
           }
-      };
 
-      loadUserProfile();
-  }, [navigate]);
+          const profile = await getUserProfile(token);
+          setUser(profile);
+          setFormData(profile);
+      } catch (error) {
+          console.error('Failed to load profile:', error);
+          localStorage.removeItem('authToken');
+          navigate('/auth');
+      } finally {
+          setLoading(false);
+      }
+  };
+
+    loadUserProfile();
+}, [navigate]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const { name, value } = e.target;
-      setFormData(prev => ({ ...prev, [name]: value }));
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-      if (file) {
-          setAvatarFile(file);
-          const reader = new FileReader();
-          reader.onload = () => {
-              setAvatarPreview(reader.result as string);
-          };
-          reader.readAsDataURL(file);
+    const file = e.target.files?.[0];
+    if (file) {
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        setImageError('Please select a valid image file');
+        return;
       }
+
+      // Validate file size (e.g., max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        setImageError('Image size must be less than 5MB');
+        return;
+      }
+
+      setImageError(null);
+      setAvatarFile(file);
+      
+      // Create preview
+      const reader = new FileReader();
+      reader.onload = () => {
+        setAvatarPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSave = async () => {
-      try {
-          const token = localStorage.getItem('authToken');
-          if (!token || !formData) return;
+    try {
+      setUploadingImage(true);
+      const token = localStorage.getItem('authToken');
+      if (!token || !formData) return;
 
-          // Create FormData for file upload
-          const updateData = new FormData();
-          Object.entries(formData).forEach(([key, value]) => {
-              if (value !== null && value !== undefined) {
-                  updateData.append(key, value.toString());
-              }
-          });
+      // Create FormData for file upload
+      const updateData = new FormData();
+      
+      // Add all form fields
+      Object.entries(formData).forEach(([key, value]) => {
+        if (value !== null && value !== undefined && key !== 'avatar') {
+          updateData.append(key, value.toString());
+        }
+      });
 
-          if (avatarFile) {
-              updateData.append('avatar', avatarFile);
-          }
-
-          const updatedProfile = await updateUserProfile(token, updateData);
-          setUser(updatedProfile);
-          setEditing(false);
-          setAvatarFile(null);
-          setAvatarPreview(null);
-          alert('Profile updated successfully!');
-      } catch (error) {
-          console.error('Failed to update profile:', error);
-          alert('Failed to update profile. Please try again.');
+      // Add avatar file if selected
+      if (avatarFile) {
+        updateData.append('avatar', avatarFile);
       }
+
+      const updatedProfile = await updateUserProfile(token, updateData);
+      setUser(updatedProfile);
+      setEditing(false);
+      setAvatarFile(null);
+      setAvatarPreview(null);
+      setImageError(null);
+      alert('Profile updated successfully!');
+    } catch (error) {
+      console.error('Failed to update profile:', error);
+      alert('Failed to update profile. Please try again.');
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
+  const removeAvatar = async () => {
+    try {
+      const token = localStorage.getItem('authToken');
+      if (!token) return;
+
+      const updateData = new FormData();
+      updateData.append('avatar', ''); // Send empty string to remove
+
+      const updatedProfile = await updateUserProfile(token, updateData);
+      setUser(updatedProfile);
+      setAvatarPreview(null);
+      alert('Profile photo removed successfully!');
+    } catch (error) {
+      console.error('Failed to remove avatar:', error);
+      alert('Failed to remove profile photo.');
+    }
   };
 
   const handleLogout = () => {
@@ -136,14 +178,14 @@ export default function Profile() {
   return (
     <div>
       <Navbar />
-      <div className="profile-page">
-        <div className="profile-container">
-          <div className="profile-header">
+      <div className='profile-page'>
+        <div className='profile-container'>
+          <div className='profile-header'>
             <h1>Profile & Settings</h1>
-            <div className="profile-actions">
+            <div className='profile-actions'>
               {!editing ? (
                 <button onClick={() => setEditing(true)} className="btn-primary">Edit Profile</button>) : (
-                <div className="edit-actions">
+                <div className='edit-actions'>
                   <button onClick={handleSave} className="btn-primary">Save Changes</button>
                   <button onClick={handleCancel} className="btn-secondary">Cancel</button>
                 </div>
@@ -151,34 +193,71 @@ export default function Profile() {
             </div>
           </div>
 
-          <div className="profile-content">
-            {/* avatar section */}
-            <div className="avatar-section">
-              <div className="avatar-container">
-                <img
-                  src={avatarPreview || user.avatar || '/default-avatar.png'}
-                  alt="Profile"
-                  className="avatar-image" />
+          <div className='profile-content'>
+            {/* Enhanced Avatar Section */}
+            <div className='avatar-section'>
+              <div className='avatar-container'>
+                <img 
+                  src={
+                    avatarPreview || 
+                    user.avatar || 
+                    `https://ui-avatars.com/api/?name=${user.first_name}+${user.last_name}&background=646cff&color=fff&size=150`
+                  } 
+                  alt="Profile" 
+                  className='avatar-image'
+                />
+                
                 {editing && (
-                  <div className="avatar-upload">
-                    <input
-                      type="file"
-                      id="avatar"
-                      accept="image/*"
-                      onChange={handleAvatarChange}
-                      className="avatar-input" />
-                    <label htmlFor="avatar" className="avatar-label">Change Photo</label>
+                  <div className='avatar-controls'>
+                    <div className='avatar-upload'>
+                      <input
+                        type="file"
+                        id="avatar"
+                        accept="image/*"
+                        onChange={handleAvatarChange}
+                        className='avatar-input'
+                        disabled={uploadingImage}
+                      />
+                      <label htmlFor="avatar" className='avatar-label'>
+                        {uploadingImage ? 'Uploading...' : 'Change Photo'}
+                      </label>
+                    </div>
+                    
+                    {(user.avatar || avatarPreview) && (
+                      <button 
+                        onClick={removeAvatar}
+                        className='remove-avatar-btn'
+                        type="button"
+                        disabled={uploadingImage}
+                      >
+                        Remove Photo
+                      </button>
+                    )}
+                    
+                    {imageError && (
+                      <div className='image-error'>
+                        {imageError}
+                      </div>
+                    )}
+                    
+                    <div className='avatar-guidelines'>
+                      <small>
+                        • Max file size: 5MB<br/>
+                        • Supported formats: JPG, PNG, GIF<br/>
+                        • Recommended: 300x300px or higher
+                      </small>
+                    </div>
                   </div>
                 )}
               </div>
             </div>
 
             {/* Profile Information */}
-            <div className="profile-info">
-              <div className="info-section">
+            <div className='profile-info'>
+              <div className='info-section'>
                 <h2>Personal Information</h2>
-                <div className="form-grid">
-                  <div className="form-group">
+                <div className='form-grid'>
+                  <div className='form-group'>
                     <label>First Name</label>
                     {editing ? (
                       <input
@@ -191,7 +270,7 @@ export default function Profile() {
                     )}
                   </div>
 
-                  <div className="form-group">
+                  <div className='form-group'>
                     <label>Last Name</label>
                     {editing ? (
                       <input
@@ -204,7 +283,7 @@ export default function Profile() {
                     )}
                   </div>
 
-                  <div className="form-group">
+                  <div className='form-group'>
                     <label>Email</label>
                     {editing ? (
                       <input
@@ -219,10 +298,10 @@ export default function Profile() {
                 </div>
               </div>
 
-              <div className="info-section">
+              <div className='info-section'>
                 <h2>Location</h2>
-                <div className="form-grid">
-                  <div className="form-group">
+                <div className='form-grid'>
+                  <div className='form-group'>
                     <label>City</label>
                     {editing ? (
                       <input
@@ -235,7 +314,7 @@ export default function Profile() {
                     )}
                   </div>
 
-                  <div className="form-group">
+                  <div className='form-group'>
                     <label>State</label>
                     {editing ? (
                       <input
@@ -248,7 +327,7 @@ export default function Profile() {
                     )}
                   </div>
 
-                  <div className="form-group">
+                  <div className='form-group'>
                     <label>Zip Code</label>
                     {editing ? (
                       <input
@@ -261,16 +340,16 @@ export default function Profile() {
                     )}
                   </div>
 
-                  <div className="form-group">
+                  <div className='form-group'>
                     <label>Time Credits</label>
                     <p>{user.time_credits} hours</p>
                   </div>
                 </div>
               </div>
 
-              <div className="info-section">
+              <div className='info-section'>
                 <h2>About Me</h2>
-                <div className="form-group">
+                <div className='form-group'>
                   <label>Bio</label>
                   {editing ? (
                     <textarea
@@ -284,7 +363,7 @@ export default function Profile() {
                   )}
                 </div>
 
-                <div className="form-group">
+                <div className='form-group'>
                   <label>Skills</label>
                   {editing ? (
                     <textarea
@@ -302,9 +381,9 @@ export default function Profile() {
           </div>
 
           {/* Account Actions */}
-          <div className="account-actions">
+          <div className='account-actions'>
             <h2>Account Actions</h2>
-            <div className="action-buttons">
+            <div className='action-buttons'>
               <button onClick={handleLogout} className="logout-btn">Logout</button>
               <button className="danger-btn">Delete Account</button>
             </div>
