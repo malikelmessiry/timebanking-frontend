@@ -34,26 +34,32 @@ export default function Profile() {
   useEffect(() => {
     const loadUserProfile = async () => {
       try {
-          const token = localStorage.getItem('authToken');
-          if (!token) {
-              navigate('/auth');
-              return;
-          }
-
-          const profile = await getUserProfile(token);
-          setUser(profile);
-          setFormData(profile);
-      } catch (error) {
-          console.error('Failed to load profile:', error);
-          localStorage.removeItem('authToken');
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+          console.log('No auth token found, redirecting to auth');
           navigate('/auth');
+          return;
+        }
+
+        console.log('Current URL:', window.location.href);
+        console.log('API Base URL:', import.meta.env.VITE_BACKEND_URL);
+        
+        const profile = await getUserProfile(token);
+        console.log('Profile loaded successfully:', profile);
+        
+        setUser(profile);
+        setFormData(profile);
+      } catch (error) {
+        console.error('Failed to load profile:', error);
+        localStorage.removeItem('authToken');
+        navigate('/auth');
       } finally {
-          setLoading(false);
+        setLoading(false);
       }
-  };
+    };
 
     loadUserProfile();
-}, [navigate]);
+  }, [navigate]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -201,10 +207,15 @@ export default function Profile() {
                   src={
                     avatarPreview || 
                     user.avatar || 
-                    `https://ui-avatars.com/api/?name=${user.first_name}+${user.last_name}&background=646cff&color=fff&size=150`
+                    `https://ui-avatars.com/api/?name=${encodeURIComponent((user.first_name || user.username || 'User').charAt(0))}&background=646cff&color=fff&size=150`
                   } 
                   alt="Profile" 
                   className='avatar-image'
+                  onError={(e) => {
+                    console.error('Avatar failed to load:', e.currentTarget.src);
+                    // Fallback to a reliable placeholder
+                    e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent((user.username || 'U').charAt(0))}&background=646cff&color=fff&size=150`;
+                  }}
                 />
                 
                 {editing && (
