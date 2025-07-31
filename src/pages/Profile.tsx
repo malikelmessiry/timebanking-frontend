@@ -134,32 +134,32 @@ export default function Profile() {
   }
 
   return (
-      <div>
-          <Navbar />
-          <div className="profile-page">
-              <div className="profile-container">
-                  <div className="profile-header">
-                      <h1>Profile & Settings</h1>
-                      <div className="profile-actions">
-                          {!editing ? (
-                              <button onClick={() => setEditing(true)} className="btn-primary">Edit Profile</button>) : (
-                                  <div className="edit-actions">
-                                      <button onClick={handleSave} className="btn-primary">Save Changes</button>
-                                      <button onClick={handleCancel} className="btn-secondary">Cancel</button>
-                                  </div>
-                              )}
-                      </div>
-                  </div>
+    <div>
+      <Navbar />
+      <div className="profile-page">
+        <div className="profile-container">
+          <div className="profile-header">
+            <h1>Profile & Settings</h1>
+            <div className="profile-actions">
+              {!editing ? (
+                <button onClick={() => setEditing(true)} className="btn-primary">Edit Profile</button>) : (
+                <div className="edit-actions">
+                  <button onClick={handleSave} className="btn-primary">Save Changes</button>
+                  <button onClick={handleCancel} className="btn-secondary">Cancel</button>
+                </div>
+              )}
+            </div>
+          </div>
 
-                  <div className="profile-content">
-                      {/* avatar section */}
-                      <div className="avatar-section">
-                          <div className="avatar-container">
-                              <img
-                                src={avatarPreview || user.avatar || '/default-avatar.png'}
-                                alt="Profile"
-                                className="avatar-image" />
-                              {editing && (
+          <div className="profile-content">
+            {/* avatar section */}
+            <div className="avatar-section">
+              <div className="avatar-container">
+                <img
+                  src={avatarPreview || user.avatar || '/default-avatar.png'}
+                  alt="Profile"
+                  className="avatar-image" />
+                {editing && (
                   <div className="avatar-upload">
                     <input
                       type="file"
@@ -187,7 +187,7 @@ export default function Profile() {
                         value={formData.first_name || ''}
                         onChange={handleInputChange} />
                     ) : (
-                        <p>{user.first_name || 'Not provided'}</p>
+                      <p>{user.first_name || 'Not provided'}</p>
                     )}
                   </div>
 
@@ -200,7 +200,7 @@ export default function Profile() {
                         value={formData.last_name || ''}
                         onChange={handleInputChange} />
                     ) : (
-                        <p>{user.last_name || 'Not provided'}</p>
+                      <p>{user.last_name || 'Not provided'}</p>
                     )}
                   </div>
 
@@ -213,7 +213,7 @@ export default function Profile() {
                         value={formData.email || ''}
                         onChange={handleInputChange} />
                     ) : (
-                        <p>{user.email}</p>  
+                      <p>{user.email}</p>
                     )}
                   </div>
                 </div>
@@ -231,8 +231,8 @@ export default function Profile() {
                         value={formData.city || ''}
                         onChange={handleInputChange} />
                     ) : (
-                        <p>{user.city || 'Not provided'}</p>
-                      )} 
+                      <p>{user.city || 'Not provided'}</p>
+                    )}
                   </div>
 
                   <div className="form-group">
@@ -244,7 +244,7 @@ export default function Profile() {
                         value={formData.state || ''}
                         onChange={handleInputChange} />
                     ) : (
-                        <p>{user.state || 'Not provided'}</p>
+                      <p>{user.state || 'Not provided'}</p>
                     )}
                   </div>
 
@@ -257,7 +257,7 @@ export default function Profile() {
                         value={formData.zip_code || ''}
                         onChange={handleInputChange} />
                     ) : (
-                        <p>{user.zip_code || 'Not provided'}</p>
+                      <p>{user.zip_code || 'Not provided'}</p>
                     )}
                   </div>
 
@@ -280,7 +280,7 @@ export default function Profile() {
                       rows={4}
                       placeholder="Tell others about yourself" />
                   ) : (
-                      <p>{user.bio || 'No bio provided'}</p>
+                    <p>{user.bio || 'No bio provided'}</p>
                   )}
                 </div>
 
@@ -294,7 +294,7 @@ export default function Profile() {
                       rows={3}
                       placeholder="What skills do you have? (e.g. tutoring, gardening, cooking)" />
                   ) : (
-                  <p>{user.skills || 'No skills listed'}</p>
+                    <p>{user.skills || 'No skills listed'}</p>
                   )}
                 </div>
               </div>
@@ -302,9 +302,15 @@ export default function Profile() {
           </div>
 
           {/* Account Actions */}
+          <div className="account-actions">
+            <h2>Account Actions</h2>
+            <div className="action-buttons">
+              <button onClick={handleLogout} className="logout-btn">Logout</button>
+              <button className="danger-btn">Delete Account</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-  )
-
+  );
 }
