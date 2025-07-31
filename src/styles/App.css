@@ -124,10 +124,6 @@
   width: 1px;
   background-color: black;
 }
-/* 
-.tab-button:last-child {
-  border-right: none;
-} */
 
 .tab-button:hover {
   color: #646cff;
