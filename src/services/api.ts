@@ -68,18 +68,18 @@ export const getUserProfile = async (token: string) => {
 };
 
 // Update user profile (requires auth token)
-export const updateUserProfile = async (token: string, data: any) => {
+export const updateUserProfile = async (token: string, formData: FormData) => {
     const res = await fetch(`${BASE_URL}/accounts/profile/`, {
         method: "PATCH",
         headers: {
-            "Content-Type": "application/json",
             "Authorization": `Token ${token}`,
         },
-        body: JSON.stringify(data),
+        body: formData,
     });
 
     if (!res.ok) {
-        throw new Error('Failed to update profile');
+        const errorData = await res.json().catch(() => ({ error: 'Unknown error' }));
+        throw new Error(`Profile update failed: ${JSON.stringify(errorData)}`);
     }
 
     return await res.json();
