@@ -76,7 +76,7 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
   };
 
   return (
-    <form onSubmit={handleSubmit} className="signup-form">
+    <form className="signup-form" onSubmit={handleSubmit}>
       {/* Error Messages */}
       {errors.length > 0 && (
         <div className="error-messages">
@@ -89,30 +89,33 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
         </div>
       )}
 
-      <div className="form-group">
-        <label htmlFor="firstName">First Name *</label>
-        <input
-          type="text"
-          id="firstName"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-          required
-        />
+      {/* Name fields in a row */}
+      <div className="form-row">
+        <div className="form-group">
+          <label htmlFor="firstName">first name</label>
+          <input
+            type="text"
+            id="firstName"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="lastName">last name</label>
+          <input
+            type="text"
+            id="lastName"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            required
+          />
+        </div>
       </div>
 
-      <div className="form-group">
-        <label htmlFor="lastName">Last Name *</label>
-        <input
-          type="text"
-          id="lastName"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-          required
-        />
-      </div>
-    
-      <div className="form-group">
-        <label htmlFor="email">Email *</label>
+      {/* Email - full width */}
+      <div className="form-group full-width">
+        <label htmlFor="email">email</label>
         <input
           type="email"
           id="email"
@@ -122,36 +125,35 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
         />
       </div>
 
-      <div className="form-group">
-        <label htmlFor="password">Password *</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <small className="password-hint">
-          Must be at least 8 characters long and not entirely numeric
-        </small>
+      {/* Phone and Date of Birth in a row */}
+      <div className="form-row">
+        <div className="form-group">
+          <label htmlFor="phone">phone</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            // ... other props
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="dateOfBirth">date of birth</label>
+          <input
+            type="date"
+            id="dateOfBirth"
+            name="dateOfBirth"
+            // ... other props
+          />
+        </div>
       </div>
 
-      <div className="form-group">
-        <label htmlFor="confirmPassword">Confirm Password *</label>
+      {/* Address - full width */}
+      <div className="form-group full-width">
+        <label htmlFor="address">address</label>
         <input
-          type="password"
-          id="confirmPassword"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="street">Street Address *</label>
-        <input
-          type="text"  // Fix: was type="street"
-          id="street"
+          type="text"
+          id="address"
+          name="address"
           value={street}
           onChange={(e) => setStreet(e.target.value)}  // Fix: was setCity
           placeholder="123 Main St"
@@ -159,72 +161,78 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
         />
       </div>
 
-      <div className="form-group">
-        <label htmlFor="city">City *</label>
-        <input
-          type="text"
-          id="city"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-          placeholder="Enter your city"
-          required
-        />
+      {/* City, State, Zip in three columns */}
+      <div className="form-row three-col">
+        <div className="form-group">
+          <label htmlFor="city">city</label>
+          <input
+            type="text"
+            id="city"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            placeholder="Enter your city"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="state">state</label>
+          <input
+            type="text"
+            id="state"
+            value={state}
+            onChange={(e) => setState(e.target.value)}
+            placeholder="CA"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="zipCode">zip code</label>
+          <input
+            type="text"
+            id="zipCode"
+            value={zipCode}
+            onChange={(e) => setZipCode(e.target.value)}
+            placeholder="12345"
+            required
+          />
+        </div>
       </div>
 
-      <div className="form-group">
-        <label htmlFor="state">State *</label>
-        <input
-          type="text"
-          id="state"
-          value={state}
-          onChange={(e) => setState(e.target.value)}
-          placeholder="CA"
-          required
-        />
+      {/* Password fields in a row */}
+      <div className="form-row">
+        <div className="form-group">
+          <label htmlFor="password">password</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <small className="password-hint">
+            Must be at least 8 characters long and not entirely numeric
+          </small>
+        </div>
+        <div className="form-group">
+          <label htmlFor="confirmPassword">confirm password</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+        </div>
       </div>
 
-      <div className="form-group">
-        <label htmlFor="zipCode">ZIP Code *</label>
-        <input
-          type="text"
-          id="zipCode"
-          value={zipCode}
-          onChange={(e) => setZipCode(e.target.value)}
-          placeholder="12345"
-          required
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="interests">Interests</label>
-        <input
-          type="text"
-          id="interests"
-          value={interests}
-          onChange={(e) => setInterests(e.target.value)}
-          placeholder="reading, gardening, cooking (separate with commas)"
-        />
-        <small className="hint">Optional - separate with commas</small>
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="bio">Bio</label>
+      {/* Bio - full width */}
+      <div className="form-group full-width">
+        <label htmlFor="bio">bio</label>
         <textarea
           id="bio"
           value={bio}
           onChange={(e) => setBio(e.target.value)}
           placeholder="Tell us about yourself (optional)"
-          rows={3}
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="skills">Skills</label>
-        <textarea
-          id="skills"
-          value={skills}
-          onChange={(e) => setSkills(e.target.value)}
-          placeholder="What skills do you have to offer? (e.g., tutoring, gardening, cooking)"
           rows={3}
         />
       </div>

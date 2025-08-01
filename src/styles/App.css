@@ -37,15 +37,22 @@ body {
   background: linear-gradient(135deg, #fde3cf 0%, #f8f6f0 100%);
 }
 
+/* Base auth container - starts smaller for login */
 .auth-container {
   background: rgba(253, 227, 207, 0.95);
   border-radius: 2px;
   box-shadow: 0 20px 60px rgba(99, 39, 19, 0.08);
-  max-width: 420px;
+  max-width: 420px; /* Default width for login */
   width: 100%;
   padding: 60px 40px;
   border: 1px solid rgba(228, 165, 202, 0.3);
   backdrop-filter: blur(10px);
+  transition: all 0.8s ease; /* Smooth width transition */
+}
+
+.auth-container.signup-active {
+  max-width: 800px; /* Wider for signup */
+  padding: 60px 50px; /* More horizontal padding */
 }
 
 .auth-tabs {
@@ -112,10 +119,25 @@ h2 {
   gap: 25px;
 }
 
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-row.three-col {
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 15px;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
 }
 
 label {
@@ -246,8 +268,31 @@ p {
     padding: 40px 30px;
   }
   
+  .auth-container.signup-active {
+    max-width: 100%;
+    padding: 40px 30px;
+  }
+  
   h2 {
     font-size: 24px;
     letter-spacing: 1px;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .auth-container.signup-active {
+    max-width: 500px;
+    padding: 50px 35px;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .form-row.three-col {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
 }

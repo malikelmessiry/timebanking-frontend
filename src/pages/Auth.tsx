@@ -62,7 +62,7 @@ export default function Auth() {
 
   return (
     <div className="auth-page-wrapper">
-      <div className="auth-container">
+      <div className={`auth-container ${activeTab === 'signup' ? 'signup-active' : ''}`}>
         <div className="auth-tabs">
           <button
             className={`tab-button ${activeTab === 'login' ? 'active' : ''}`}

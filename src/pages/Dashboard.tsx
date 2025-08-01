@@ -145,7 +145,7 @@ export default function Dashboard() {
                   </button>
                   <Link to="/discover">Find Services</Link>
                 </div> */}
-                
+
               </div>
             </div>
           )}
@@ -174,13 +174,14 @@ export default function Dashboard() {
 
               {/* Booking requests for your services */}
               <div className="service-requests-section">
-                <h3>Booking Requests for My Services</h3>
+                <h3>Requests</h3>
                 <div className='booking-filters'>
-                  <button>All</button>
                   <button>Pending</button>
                   <button>Accepted</button>
                   <button>Completed</button>
                   <button>Cancelled</button>
+                  <button>All</button>
+
                 </div>
                 
                 <div className='service-requests-list'>
@@ -209,11 +210,11 @@ export default function Dashboard() {
               <p className="section-description">Services you've booked from others</p>
               
               <div className='booking-filters'>
-                <button>All</button>
                 <button>Pending</button>
                 <button>Confirmed</button>
                 <button>Completed</button>
                 <button>Cancelled</button>
+                <button>All</button>
               </div>
               
               <div className='bookings-list'>
