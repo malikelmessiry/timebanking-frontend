@@ -1,0 +1,124 @@
+/* src/styles/Navbar.css - Minimalist & Artsy with custom colors */
+.navbar {
+  background: rgba(253, 227, 207, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(228, 165, 202, 0.3);
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: all 0.3s ease;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+}
+
+.nav-brand {
+  color: #632713;
+  font-size: 24px;
+  font-weight: 300;
+  text-decoration: none;
+  font-family: 'Georgia', serif;
+  letter-spacing: 2px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.nav-brand::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #72ac43, #2e573a);
+  transition: width 0.3s ease;
+}
+
+.nav-brand:hover::after {
+  width: 100%;
+}
+
+.nav-links {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.nav-link {
+  color: #e4a5ca;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 15px;
+  font-family: 'Georgia', serif;
+  letter-spacing: 1px;
+  position: relative;
+  transition: all 0.3s ease;
+  text-transform: lowercase;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #f8a91f, #ec6426);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #632713;
+}
+
+.nav-link:hover::before {
+  width: 100%;
+}
+
+.nav-link.active {
+  color: #632713;
+}
+
+.nav-link.active::before {
+  width: 100%;
+  background: linear-gradient(90deg, #72ac43, #2e573a);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 0 20px;
+  }
+  
+  .nav-brand {
+    font-size: 20px;
+    letter-spacing: 1px;
+  }
+  
+  .nav-links {
+    gap: 25px;
+  }
+  
+  .nav-link {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .nav-links {
+    gap: 20px;
+  }
+  
+  .nav-link {
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+}
