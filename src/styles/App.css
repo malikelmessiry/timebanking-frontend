@@ -1,3 +1,25 @@
+/* Add this to the top of your App.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure all page containers are centered */
+.page-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
 /* Updated Auth section - Minimalist & Artsy with custom colors */
 body {
   font-family: 'Georgia', 'Times New Roman', serif;
