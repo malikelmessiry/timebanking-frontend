@@ -1,4 +1,6 @@
-const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+// const BASE_URL = import.meta.env.VITE_BACKEND_URL; // deployed backend
+
+const BASE_URL = 'http://localhost:8000' // local backend
 
 export const registerUser = async (data: {
     email: string,
