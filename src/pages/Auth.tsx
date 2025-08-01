@@ -6,6 +6,7 @@ import { loginUser, registerUser } from '../services/api';
 
 export default function Auth() {
   const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
+  const [successMessage, setSuccessMessage] = useState<string>(''); // Add success state
   const navigate = useNavigate();
 
   const handleLogin = async (data: { email: string; password: string }) => {
@@ -33,14 +34,15 @@ export default function Auth() {
       const result = await registerUser(userData);
       console.log('Registration successful:', result);
 
-      // If backend returns token on registration, store it and redirect
-      if (result.token) {
-        localStorage.setItem('authToken', result.token);
-        navigate('/dashboard');
-      } else {
-        // Otherwise, switch to login tab for user to sign in
-        setActiveTab('login');
-      }
+      // Show success message and switch to login
+      setSuccessMessage('Registration successful! Please log in with your new account.');
+      setActiveTab('login');
+      
+      // Clear success message after 5 seconds
+      setTimeout(() => {
+        setSuccessMessage('');
+      }, 5000);
+
     } catch (error: any) {
       console.error('Registration failed:', error);
       // Re-throw so SignUpForm can handle the error
@@ -50,6 +52,12 @@ export default function Auth() {
 
   const switchToLogin = () => {
     setActiveTab('login');
+    setSuccessMessage(''); // Clear success message when manually switching
+  };
+
+  const switchToSignup = () => {
+    setActiveTab('signup');
+    setSuccessMessage(''); // Clear success message when switching to signup
   };
 
   return (
@@ -58,17 +66,25 @@ export default function Auth() {
         <div className="auth-tabs">
           <button
             className={`tab-button ${activeTab === 'login' ? 'active' : ''}`}
-            onClick={() => setActiveTab('login')}
+            onClick={switchToLogin}
           >
             Log In
           </button>
           <button
             className={`tab-button ${activeTab === 'signup' ? 'active' : ''}`}
-            onClick={() => setActiveTab('signup')}
+            onClick={switchToSignup}
           >
             Sign Up
           </button>
         </div>
+
+        {/* Success Message */}
+        {successMessage && (
+          <div className="success-message">
+            <span className="success-icon">✅</span>
+            {successMessage}
+          </div>
+        )}
 
         <div className="tab-content">
           {activeTab === 'login' ? (
