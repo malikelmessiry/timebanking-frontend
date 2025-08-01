@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile, updateUserProfile } from "../services/api";
+import { parseInterests } from "../utilities/validation"; // ✅ Add this import
 import Navbar from '../components/Navbar';
 import '../styles/Profile.css';
 
@@ -105,7 +106,15 @@ export default function Profile() {
       // Add all form fields
       Object.entries(formData).forEach(([key, value]) => {
         if (value !== null && value !== undefined && key !== 'avatar') {
-          updateData.append(key, value.toString());
+          // Special handling for interests - convert to array
+          if (key === 'interests') {
+            const interestsArray = typeof value === 'string' 
+              ? parseInterests(value)  // Convert string to array
+              : value;                 // Already an array
+            updateData.append(key, JSON.stringify(interestsArray)); // Send as JSON
+          } else {
+            updateData.append(key, value.toString());
+          }
         }
       });
 
@@ -377,16 +386,64 @@ export default function Profile() {
                 <div className='form-group'>
                   <label>Skills</label>
                   {editing ? (
-                    <textarea
-                      name="skills"
-                      value={formData.skills || ''}
-                      onChange={handleInputChange}
-                      rows={3}
-                      placeholder="What skills do you have? (e.g. tutoring, gardening, cooking)" />
+                    <>
+                      <textarea
+                        name="skills"
+                        value={formData.skills || ''}
+                        onChange={handleInputChange}
+                        rows={3}
+                        placeholder="Describe your skills and abilities" />
+                      <small className="hint">
+                        💡 Describe your skills in your own words
+                      </small>
+                      <small className="example">
+                        Example: I'm great at cooking Italian food and teaching math to kids
+                      </small>
+                    </>
                   ) : (
                     <p>{user.skills || 'No skills listed'}</p>
                   )}
                 </div>
+
+                <div className='form-group'>
+                  <label>Interests</label>
+                  {editing ? (
+                    <>
+                      <textarea
+                        name="interests"
+                        value={
+                          Array.isArray(formData.interests) 
+                            ? formData.interests.join(', ')  // Convert array to comma-separated string for editing
+                            : (formData.interests || '')     // Handle if it's already a string
+                        }
+                        onChange={(e) => {
+                          // Store as string in formData, will convert to array on save
+                          setFormData(prev => ({ ...prev, interests: e.target.value }));
+                        }}
+                        rows={3}
+                        placeholder="music, sports, reading, photography" />
+                      <small className="hint">
+                        📝 Enter your interests separated by commas
+                      </small>
+                      <small className="example">
+                        Example: music, sports, reading, travel
+                      </small>
+                    </>
+                  ) : (
+                    <div className="interests-display">
+                      {Array.isArray(user.interests) && user.interests.length > 0 ? (
+                        <div className="interest-tags">
+                          {user.interests.map((interest: string, index: number) => (
+                            <span key={index} className="interest-tag">{interest}</span>
+                          ))}
+                        </div>
+                      ) : (
+                        <p>No interests listed</p>
+                      )}
+                    </div>
+                  )}
+                </div>
+
               </div>
             </div>
           </div>

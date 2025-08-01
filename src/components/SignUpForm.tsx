@@ -29,6 +29,8 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
     setErrors([]);
     setIsLoading(true);
 
+    const interestsArray = parseInterests(interests); // ✅ Convert interests to array
+
     const formData = {
       email,
       password,
@@ -38,10 +40,10 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
       street,
       city,
       state,
-      zip_code: zipCode,          // Backend expects zip_code
+      zip_code: zipCode,
       bio: bio || '',
-      skills: skills || '',
-      interests: parseInterests(interests), // Convert to array
+      skills: skills || '',        // ✅ Keep skills as string
+      interests: interestsArray,   // ✅ Convert interests to array
     };
 
     // Frontend validation first
@@ -235,6 +237,43 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
           placeholder="Tell us about yourself (optional)"
           rows={3}
         />
+      </div>
+
+      {/* Skills and Interests - side by side */}
+      <div className="form-row">
+        <div className="form-group">
+          <label htmlFor="skills">skills</label>
+          <textarea
+            id="skills"
+            value={skills}
+            onChange={(e) => setSkills(e.target.value)}
+            placeholder="Describe your skills and abilities"
+            rows={3}
+          />
+          <small className="hint">
+            💡 Describe your skills in your own words
+          </small>
+          <small className="example">
+            Example: I'm great at cooking Italian food and teaching math to kids
+          </small>
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="interests">interests</label>
+          <textarea
+            id="interests"
+            value={interests}
+            onChange={(e) => setInterests(e.target.value)}
+            placeholder="music, sports, reading, photography"
+            rows={3}
+          />
+          <small className="hint">
+            📝 Enter your interests separated by commas
+          </small>
+          <small className="example">
+            Example: music, sports, reading, travel
+          </small>
+        </div>
       </div>
 
       <button type="submit" disabled={isLoading}>

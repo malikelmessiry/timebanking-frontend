@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
 import SignUpForm from '../components/SignUpForm';
 import { loginUser, registerUser } from '../services/api';
+import '../styles/Auth.css';
 
 export default function Auth() {
   const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
