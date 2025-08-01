@@ -3,7 +3,7 @@ import Home from './pages/Home';
 import Auth from './pages/Auth';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
-import './App.css';
+import './styles/App.css';
 
 function App() {
   return (
