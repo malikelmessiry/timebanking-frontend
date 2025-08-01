@@ -89,3 +89,14 @@ export const validateLoginData = (data: { email: string; password: string }): Va
     errors
   };
 };
+
+// Convert comma-separated interests to array
+export const parseInterests = (interestsString: string): string[] => {
+    if (!interestsString.trim()) return [];
+    
+    return interestsString
+        .split(',')
+        .map(interest => interest.trim())
+        .filter(interest => interest.length > 0)
+        .slice(0, 10); // Limit to 10 interests
+};
