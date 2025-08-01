@@ -7,11 +7,13 @@ export const registerUser = async (data: {
     password2: string;
     first_name: string;
     last_name: string;
+    street: string;
     city: string;
     state: string;
     zip_code: string;
     bio?: string; //optional
     skills?: string; //optional
+    interests?: string[]; //optional, returns array
 }) => {
     const res = await fetch(`${BASE_URL}/accounts/register/`, {
         method: "POST",
@@ -22,7 +24,27 @@ export const registerUser = async (data: {
     });
 
     if (!res.ok) {
-        throw new Error("Failed to register");
+      const errorData = await res.json().catch(() => ({ error: 'Network error' }));
+
+      if (res.status === 400) {
+        let errorMessage = 'Registration failed: ';
+
+        if (errorData.email) {
+          errorMessage = 'This email is already registered. Try logging in instead.';
+        } else if (errorData.password) {
+          errorMessage = `Password error: ${errorData.password[0]}`;
+        } else if (errorData.street) {
+          errorMessage = 'Street address is required';
+        } else if (errorData.non_field_errors) {
+          errorMessage = errorData.non_field_errors[0];
+        } else {
+          errorMessage = 'Please complete all required fields';
+        }
+
+        throw new Error(errorMessage);
+      }
+
+      throw new Error('Registration failed. Please try again.');
     }
 
     return await res.json();
