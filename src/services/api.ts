@@ -1,6 +1,5 @@
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-// Register User
 export const registerUser = async (data: {
     email: string,
     password: string;
@@ -11,9 +10,9 @@ export const registerUser = async (data: {
     city: string;
     state: string;
     zip_code: string;
-    bio?: string; //optional
-    skills?: string; //optional
-    interests?: string[]; //optional, returns array
+    bio?: string;
+    skills?: string;
+    interests?: string[];
 }) => {
     const res = await fetch(`${BASE_URL}/accounts/register/`, {
         method: "POST",
@@ -24,33 +23,30 @@ export const registerUser = async (data: {
     });
 
     if (!res.ok) {
-      const errorData = await res.json().catch(() => ({ error: 'Network error' }));
-
-      if (res.status === 400) {
-        let errorMessage = 'Registration failed: ';
-
-        if (errorData.email) {
-          errorMessage = 'This email is already registered. Try logging in instead.';
-        } else if (errorData.password) {
-          errorMessage = `Password error: ${errorData.password[0]}`;
-        } else if (errorData.street) {
-          errorMessage = 'Street address is required';
-        } else if (errorData.non_field_errors) {
-          errorMessage = errorData.non_field_errors[0];
+        const errorData = await res.json().catch(() => ({ error: 'Network error' }));
+        
+        if (res.status === 400) {
+            // Common backend errors
+            if (errorData.email && errorData.email[0].includes('already exists')) {
+                throw new Error('This email is already registered. Try logging in instead.');
+            } else if (errorData.non_field_errors) {
+                throw new Error(errorData.non_field_errors[0]);
+            } else if (errorData.password) {
+                throw new Error(`Password: ${errorData.password[0]}`);
+            } else {
+                throw new Error('Registration failed. Please check your information.');
+            }
+        } else if (res.status >= 500) {
+            throw new Error('Server error. Please try again later.');
         } else {
-          errorMessage = 'Please complete all required fields';
+            throw new Error('Registration failed. Please try again.');
         }
-
-        throw new Error(errorMessage);
-      }
-
-      throw new Error('Registration failed. Please try again.');
     }
 
     return await res.json();
 };
 
-// Login User
+// Login
 export const loginUser = async (data: {
     email: string;
     password: string;
@@ -64,13 +60,19 @@ export const loginUser = async (data: {
     });
 
     if (!res.ok) {
-        throw new Error('Login failed');
+        if (res.status === 400 || res.status === 401) {
+            throw new Error('Invalid email or password');
+        } else if (res.status >= 500) {
+            throw new Error('Server error. Please try again later.');
+        } else {
+            throw new Error('Login failed. Please try again.');
+        }
     }
 
     return await res.json();
 };
 
-// Get user profile (requires auth token)
+// Improved getUserProfile
 export const getUserProfile = async (token: string) => {
     const res = await fetch(`${BASE_URL}/accounts/profile/`, {
         method: "GET",
@@ -81,13 +83,19 @@ export const getUserProfile = async (token: string) => {
     });
 
     if (!res.ok) {
-        throw new Error('Failed to get profile');
+        if (res.status === 401) {
+            throw new Error('Session expired. Please log in again.');
+        } else if (res.status >= 500) {
+            throw new Error('Server error. Please try again later.');
+        } else {
+            throw new Error('Failed to load profile');
+        }
     }
 
     return await res.json();
 };
 
-// Update user profile (requires auth token)
+// Keep updateUserProfile as-is (it's perfect for avatar uploads)
 export const updateUserProfile = async (token: string, formData: FormData) => {
     const res = await fetch(`${BASE_URL}/accounts/profile/`, {
         method: "PATCH",
