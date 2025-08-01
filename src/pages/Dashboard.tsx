@@ -134,7 +134,7 @@ export default function Dashboard() {
                   </div>
                 </div>
 
-                {/* OPTIONAL: Quick Actions */}
+                {/* OPTIONAL: Quick Actions
                 <div className="quick-actions">
                   <h3>Quick Actions</h3>
                   <button onClick={() => setActiveTab('services')}>
@@ -144,7 +144,8 @@ export default function Dashboard() {
                     View Bookings
                   </button>
                   <Link to="/discover">Find Services</Link>
-                </div>
+                </div> */}
+                
               </div>
             </div>
           )}
