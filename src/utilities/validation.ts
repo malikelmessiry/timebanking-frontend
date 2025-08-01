@@ -13,6 +13,8 @@ export const validateRegistrationData = (data: {
   city: string;
   state: string;
   zip_code: string;
+  skills?: string;
+  interests?: string;
 }): ValidationResult => {
   const errors: string[] = [];
 

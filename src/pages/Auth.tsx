@@ -2,37 +2,50 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
 import SignUpForm from '../components/SignUpForm';
-import { loginUser } from '../services/api';
+import { loginUser, registerUser } from '../services/api';
 
 export default function Auth() {
   const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
   const navigate = useNavigate();
 
-  const handleLogin = async (email: string, password: string) => {
+  const handleLogin = async (data: { email: string; password: string }) => {
     try {
-      const result = await loginUser({ email, password });
+      const result = await loginUser(data);
       console.log('Login successful:', result);
 
-       // Store token in localStorage (or use a more secure method)
+      // Store token in localStorage
       localStorage.setItem('authToken', result.token);
 
-      // Redirect to dashboard or home page after successful login
+      // Redirect to dashboard after successful login
       navigate('/dashboard');
     } catch (error) {
       console.error('Login failed:', error);
-      alert('Login failed. Please check your credentials.');
+      // Let LoginForm handle error display
+      throw error;
     }
   };
 
-  const handleSignup = (userData: {
-    firstName: string;
-    lastName: string;
-    // username: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-  }) => {
-    console.log('Signup attempt:', userData);
+  const handleSignup = async (userData: any) => {
+    try {
+      console.log('Signup attempt:', userData);
+      
+      // Call the registration API
+      const result = await registerUser(userData);
+      console.log('Registration successful:', result);
+
+      // If backend returns token on registration, store it and redirect
+      if (result.token) {
+        localStorage.setItem('authToken', result.token);
+        navigate('/dashboard');
+      } else {
+        // Otherwise, switch to login tab for user to sign in
+        setActiveTab('login');
+      }
+    } catch (error: any) {
+      console.error('Registration failed:', error);
+      // Re-throw so SignUpForm can handle the error
+      throw error;
+    }
   };
 
   const switchToLogin = () => {
@@ -69,7 +82,7 @@ export default function Auth() {
           ) : (
             <div>
               <h2>Create Account</h2>
-                <SignUpForm onSubmit={handleSignup} switchToLogin={switchToLogin} />
+              <SignUpForm onSubmit={handleSignup} switchToLogin={switchToLogin} />
             </div>
           )}
         </div>

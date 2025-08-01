@@ -1,83 +1,96 @@
 import { useState } from "react";
-import { registerUser } from "../services/api";
-// import { useNavigate } from "react-router-dom";
+import { validateRegistrationData, parseInterests } from "../utilities/validation";
 
 interface SignUpFormProps {
-  onSubmit: (userData: {
-    firstName: string;
-    lastName: string;
-    // username: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-  }) => void;
+  onSubmit: (userData: any) => Promise<void>; 
   switchToLogin: () => void;
 }
 
 export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  // const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [street, setStreet] = useState('');       
   const [city, setCity] = useState('');           
   const [state, setState] = useState('');         
   const [zipCode, setZipCode] = useState('');     
   const [bio, setBio] = useState('');            
   const [skills, setSkills] = useState(''); 
-  // const navigate = useNavigate();
+  const [interests, setInterests] = useState('');
+  
+  // Add error handling
+  const [errors, setErrors] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrors([]);
+    setIsLoading(true);
 
-    if (password !== confirmPassword) {
-      alert('Passwords do not match!');
-      return;
+    const formData = {
+      email,
+      password,
+      password2: confirmPassword,  
+      first_name: firstName,      
+      last_name: lastName,        
+      street,
+      city,
+      state,
+      zip_code: zipCode,          // Backend expects zip_code
+      bio: bio || '',
+      skills: skills || '',
+      interests: parseInterests(interests), // Convert to array
+    };
+
+    // Frontend validation first
+    const validation = validateRegistrationData({
+      email,
+      password,
+      password2: confirmPassword,
+      first_name: firstName,
+      last_name: lastName,
+      street,
+      city,
+      state,
+      zip_code: zipCode,
+      interests,
+    });
+
+    if (!validation.isValid) {
+      setErrors(validation.errors);
+      setIsLoading(false);
+      return; // Don't send to backend if validation fails
     }
 
     try {
-      const userData = {
-        // username,
-        email,
-        password,
-        password2: confirmPassword,
-        city,
-        state,
-        zip_code: zipCode,
-        bio,
-        skills,
-        first_name: firstName,
-        last_name: lastName
-      };
-
-      const res = await registerUser(userData);
-      console.log("User registered:", res);
-
-      // Show success message
-      alert('Registration successful! Please log in.');
-
-      // Redirect to login tab
-      switchToLogin();
-
-      onSubmit?.({
-        firstName,
-        lastName,
-        // username,
-        email,
-        password,
-        confirmPassword
-      });
-    } catch (err) {
-      console.error("Registration failed", err);
-      alert('Registration failed. Please try again.');
+      await onSubmit(formData);  // Let the parent handle the API call
+      // Success is handled by parent component
+    } catch (error: any) {
+      console.error("Registration failed", error);
+      setErrors([error.message]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="signup-form">
+      {/* Error Messages */}
+      {errors.length > 0 && (
+        <div className="error-messages">
+          {errors.map((error, index) => (
+            <div key={index} className="error-message">
+              <span className="error-icon">⚠️</span>
+              {error}
+            </div>
+          ))}
+        </div>
+      )}
+
       <div className="form-group">
-        <label htmlFor="firstName">First Name</label>
+        <label htmlFor="firstName">First Name *</label>
         <input
           type="text"
           id="firstName"
@@ -86,8 +99,9 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
           required
         />
       </div>
+
       <div className="form-group">
-        <label htmlFor="lastName">Last Name</label>
+        <label htmlFor="lastName">Last Name *</label>
         <input
           type="text"
           id="lastName"
@@ -96,18 +110,9 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
           required
         />
       </div>
-      {/* <div className="form-group">
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username"
-          required
-        />
-      </div> */}
+    
       <div className="form-group">
-        <label htmlFor="email">Email</label>
+        <label htmlFor="email">Email *</label>
         <input
           type="email"
           id="email"
@@ -116,8 +121,9 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
           required
         />
       </div>
+
       <div className="form-group">
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">Password *</label>
         <input
           type="password"
           id="password"
@@ -125,9 +131,13 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+        <small className="password-hint">
+          Must be at least 8 characters long and not entirely numeric
+        </small>
       </div>
+
       <div className="form-group">
-        <label htmlFor="confirmPassword">Confirm Password</label>
+        <label htmlFor="confirmPassword">Confirm Password *</label>
         <input
           type="password"
           id="confirmPassword"
@@ -138,7 +148,19 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
       </div>
 
       <div className="form-group">
-        <label htmlFor="city">City</label>
+        <label htmlFor="street">Street Address *</label>
+        <input
+          type="text"  // Fix: was type="street"
+          id="street"
+          value={street}
+          onChange={(e) => setStreet(e.target.value)}  // Fix: was setCity
+          placeholder="123 Main St"
+          required
+        />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="city">City *</label>
         <input
           type="text"
           id="city"
@@ -150,27 +172,39 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
       </div>
 
       <div className="form-group">
-        <label htmlFor="state">State</label>
+        <label htmlFor="state">State *</label>
         <input
           type="text"
           id="state"
           value={state}
           onChange={(e) => setState(e.target.value)}
-          placeholder="Enter your state"
+          placeholder="CA"
           required
         />
       </div>
 
       <div className="form-group">
-        <label htmlFor="zipCode">Zip Code</label>
+        <label htmlFor="zipCode">ZIP Code *</label>
         <input
           type="text"
           id="zipCode"
           value={zipCode}
           onChange={(e) => setZipCode(e.target.value)}
-          placeholder="Enter your zip code"
+          placeholder="12345"
           required
         />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="interests">Interests</label>
+        <input
+          type="text"
+          id="interests"
+          value={interests}
+          onChange={(e) => setInterests(e.target.value)}
+          placeholder="reading, gardening, cooking (separate with commas)"
+        />
+        <small className="hint">Optional - separate with commas</small>
       </div>
 
       <div className="form-group">
@@ -195,8 +229,16 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
         />
       </div>
 
+      <button type="submit" disabled={isLoading}>
+        {isLoading ? 'Creating Account...' : 'Sign Up'}
+      </button>
 
-      <button type="submit">Sign Up</button>
+      <p>
+        Already have an account?{' '}
+        <button type="button" onClick={switchToLogin} className="link-button">
+          Sign in here
+        </button>
+      </p>
     </form>
   );
 }
