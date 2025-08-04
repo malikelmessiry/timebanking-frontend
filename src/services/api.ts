@@ -266,3 +266,40 @@ export const createService = async (token: string, serviceData: CreateServiceDat
         throw error;
     }
 };
+
+// Update service by ID
+export const updateService = async (token: string, serviceId: number, serviceData: Partial<CreateServiceData>) => {
+    try {
+        const res = await fetch(`${BASE_URL}/services/${serviceId}/`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`,
+            },
+            body: JSON.stringify(serviceData),
+        });
+
+        if (!res.ok) {
+            const errorData = await res.json().catch(() => ({ error: 'Unknown error' }));
+
+            if (res.status === 400) {
+                throw new Error('Invalid service data');
+            } else if (res.status === 401) {
+                throw new Error('Session expired. Please log in again.');
+            } else if (res.status === 403) {
+                throw new Error('You can only edit your own services');
+            } else if (res.status === 404) {
+                throw new Error('Service not found');
+            } else if (res.status >= 500) {
+                throw new Error('Server error. Please try again later.');
+            } else {
+                throw new Error('Failed to update service');
+            }
+        }
+        
+        return await res.json();
+    } catch (error) {
+        console.error('Update service error:', error);
+        throw error;
+    }
+};
