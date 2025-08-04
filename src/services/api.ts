@@ -2,6 +2,7 @@
 
 const BASE_URL = 'http://localhost:8000' // local backend
 
+// Register
 export const registerUser = async (data: {
     email: string,
     password: string;
@@ -74,7 +75,7 @@ export const loginUser = async (data: {
     return await res.json();
 };
 
-// Improved getUserProfile
+// Get Profile
 export const getUserProfile = async (token: string) => {
     const res = await fetch(`${BASE_URL}/accounts/profile/`, {
         method: "GET",
@@ -97,7 +98,7 @@ export const getUserProfile = async (token: string) => {
     return await res.json();
 };
 
-// Keep updateUserProfile as-is (it's perfect for avatar uploads)
+// Update Profile
 export const updateUserProfile = async (token: string, formData: FormData) => {
     const res = await fetch(`${BASE_URL}/accounts/profile/`, {
         method: "PATCH",
