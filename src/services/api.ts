@@ -334,32 +334,21 @@ export const deleteService = async (token: string, serviceId: number) => {
 };
 
 // Get user's own services (my services)
-export const getMyServices = async (token: string, userId: number) => {
+export const getMyServices = async (token: string, userEmail: string): Promise<Service[]> => {
     try {
-        const res = await fetch(`${BASE_URL}/services/?owner_id=${userId}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Token ${token}`,
-            },
-        });
-
-        if (!res.ok) {
-            if (res.status === 401) {
-                throw new Error('Session expired. Please log in again.');
-            } else if (res.status >= 500) {
-                throw new Error('Server error. Please try again later.');
-            } else {
-                throw new Error('Failed to load your services');
-            }
-        }
-
-        return await res.json();
+        console.log('🔍 Getting my services for email:', userEmail);
+        
+        const allServices = await getAllServices(token);
+        const myServices = allServices.filter((service: Service) => service.owner_email === userEmail);
+        
+        console.log('✅ Found', myServices.length, 'services for user');
+        return myServices;
     } catch (error) {
         console.error('Get my services error:', error);
         throw error;
     }
 };
+
 
 // Get services by zip code 
 // export const getServicesByZipCode = async (token: string, zipCode: string) => {

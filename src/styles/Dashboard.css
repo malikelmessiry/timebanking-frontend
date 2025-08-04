@@ -127,3 +127,122 @@
   border-radius: 4px;
   cursor: pointer;
 }
+
+/* Service cards */
+.services-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.service-card {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(228, 165, 202, 0.3);
+  border-radius: 8px;
+  padding: 20px;
+  transition: transform 0.2s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.service-meta {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+  flex-wrap: wrap;
+}
+
+.service-meta .rate {
+  background: rgba(248, 169, 31, 0.2);
+  color: #f8a91f;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.service-meta .status.available {
+  background: rgba(114, 172, 67, 0.2);
+  color: #72ac43;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.service-meta .status.unavailable {
+  background: rgba(236, 100, 38, 0.2);
+  color: #ec6426;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.service-tags {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+
+.category-tag, .service-tag {
+  background: rgba(114, 172, 67, 0.2);
+  color: #72ac43;
+  padding: 2px 6px;
+  border-radius: 8px;
+  font-size: 11px;
+}
+
+.service-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.service-actions button,
+.service-actions a {
+  padding: 8px 12px;
+  border: 1px solid rgba(228, 165, 202, 0.3);
+  background: transparent;
+  color: #e4a5ca;
+  text-decoration: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.service-actions button:hover,
+.service-actions a:hover {
+  background: rgba(228, 165, 202, 0.1);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: rgba(253, 227, 207, 0.7);
+}
+
+.quick-actions {
+  margin-top: 30px;
+}
+
+.quick-actions button,
+.quick-actions a {
+  display: inline-block;
+  margin: 5px 10px 5px 0;
+  padding: 10px 15px;
+  background: rgba(248, 169, 31, 0.2);
+  color: #f8a91f;
+  text-decoration: none;
+  border: 1px solid rgba(248, 169, 31, 0.3);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quick-actions button:hover,
+.quick-actions a:hover {
+  background: rgba(248, 169, 31, 0.3);
+}

@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { getUserProfile } from '../services/api';
+import { getUserProfile, getAllServices, getMyServices, deleteService } from '../services/api';
+import type { Service } from '../services/api';
 import Navbar from '../components/Navbar';
 import '../styles/Dashboard.css';
 
 interface User {
+  id?: number; // Keep optional since we're not using it for getMyServices
   first_name: string;
   last_name: string;
-  email: string;
+  email: string; // ✅ This is what we'll use
   username: string;
   time_credits: number;
 }
@@ -18,6 +20,12 @@ export default function Dashboard() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<DashboardTab>('overview');
+
+  const [myServices, setMyServices] = useState<Service[]>([]);
+  const [allServices, setAllServices] = useState<Service[]>([]);
+  const [servicesLoading, setServicesLoading] = useState(false);
+  const [servicesError, setServicesError] = useState<string | null>(null);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -44,6 +52,82 @@ export default function Dashboard() {
 
     loadUserProfile();
   }, [navigate]);
+
+  useEffect(() => {
+    if (user && user.email) { // ✅ Check for email instead of id
+      loadAllServicesData();
+    } else if (user && !user.email) {
+      console.error('❌ User profile missing email:', user);
+      setServicesError('User profile is missing email. Please log out and log back in.');
+    }
+  }, [user]);
+
+  const loadAllServicesData = async () => {
+    if (!user || !user.email) { // ✅ Check for email instead of id
+      setServicesError('User email is required to load services');
+      return;
+    }
+
+    setServicesLoading(true);
+    setServicesError(null);
+
+    try {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        setServicesError('No authentication token found');
+        navigate('/auth');
+        return;
+      }
+
+      console.log('🔍 Loading services for user email:', user.email);
+
+      // ✅ Use email instead of id
+      const [allServicesData, myServicesData] = await Promise.all([
+        getAllServices(token),
+        getMyServices(token, user.email) // ✅ Pass email instead of user.id
+      ]);
+
+      console.log('✅ All services loaded:', allServicesData.length);
+      console.log('✅ My services loaded:', myServicesData.length);
+
+      setAllServices(allServicesData);
+      setMyServices(myServicesData);
+    } catch (error) {
+      console.error('❌ Services loading error:', error);
+      const errorMessage = typeof error === 'object' && error !== null && 'message' in error
+        ? String((error as { message?: unknown }).message)
+        : String(error);
+
+      setServicesError(`Failed to load services: ${errorMessage}`);
+      
+      if (errorMessage.includes('Session expired') || errorMessage.includes('401')) {
+        localStorage.removeItem('authToken');
+        navigate('/auth');
+      }
+    } finally {
+      setServicesLoading(false);
+    }
+  };
+
+  const handleDeleteService = async (serviceId: number) => {
+    if (!window.confirm('Are you sure you want to delete this service?')) return;
+
+    try {
+      const token = localStorage.getItem('authToken');
+      if (!token) return;
+
+      await deleteService(token, serviceId);
+
+      setMyServices(prev => prev.filter(service => service.id !== serviceId));
+      setAllServices(prev => prev.filter(service => service.id !== serviceId));
+
+      alert('Service deleted successfully');
+    } catch (error) {
+      console.error('Failed to delete service:', error);
+      alert('Failed to delete service');
+    }
+  };
+
   if (loading) {
     return (
       <div className='dashboard'>
@@ -101,7 +185,6 @@ export default function Dashboard() {
           >
             History
           </button>
-
         </div>
 
         {/* Tab Content */}
@@ -119,33 +202,30 @@ export default function Dashboard() {
                   </div>
 
                   <div className='stat-card'>
-                    <h3>Active Services</h3>
-                    <p>3</p>
+                    <h3>My Services</h3>
+                    <p>{myServices.length}</p>
+                  </div>
+
+                  <div className='stat-card'>
+                    <h3>Total Services</h3>
+                    <p>{allServices.length}</p>
                   </div>
 
                   <div className='stat-card'>
                     <h3>Pending Requests</h3>
                     <p>2</p>
                   </div>
-
-                  <div className='stat-card'>
-                    <h3>Unread Messages</h3>
-                    <p>1</p>
-                  </div>
                 </div>
 
-                {/* OPTIONAL: Quick Actions
+                {/* Quick Actions */}
                 <div className="quick-actions">
                   <h3>Quick Actions</h3>
-                  <button onClick={() => setActiveTab('services')}>
-                    Manage Services
+                  <Link to="/services/create" className="action-btn">+ Offer New Service</Link>
+                  <Link to="/services" className="action-btn">Browse All Services</Link>
+                  <button onClick={() => setActiveTab('services')} className="action-btn">
+                    Manage My Services
                   </button>
-                  <button onClick={() => setActiveTab('bookings')}>
-                    View Bookings
-                  </button>
-                  <Link to="/discover">Find Services</Link>
-                </div> */}
-
+                </div>
               </div>
             </div>
           )}
@@ -156,48 +236,73 @@ export default function Dashboard() {
               
               {/* Services you offer */}
               <div className="section-header">
-                <h3>Services I Offer</h3>
-                <button className='add-service-btn'>+ Offer New Service</button>
+                <h3>Services I Offer ({myServices.length})</h3>
+                <Link to='/services/create' className='add-service-btn'>+ Offer New Service</Link>
               </div>
-              
-              <div className='services-list'>
-                <div className='service-card'>
-                  <h3>Math Tutoring</h3>
-                  <p>Help with Algebra and Calculus</p>
-                  <span className='rate'>1 hour</span>
-                  <div className='service-actions'>
-                    <button>Edit</button>
-                    <button>Pause</button>
-                  </div>
+
+              {servicesLoading ? (
+                <p>Loading your services...</p>
+              ) : servicesError ? (
+                <p className="error">{servicesError}</p>
+              ) : myServices.length === 0 ? (
+                <div className="empty-state">
+                  <p>You haven't created any services yet.</p>
+                  <Link to="/services/create" className="cta-button">
+                    Create Your First Service
+                  </Link>
                 </div>
-              </div>
+              ) : (
+                <div className='services-list'>
+                  {myServices.map((service) => (
+                    <div key={service.id} className='service-card'>
+                      <h3>{service.name}</h3>
+                      <p>{service.description}</p>
+                      <div className="service-meta">
+                        <span className='rate'>{service.credit_required} credits</span>
+                        <span className={`status ${service.is_available ? 'available' : 'unavailable'}`}>
+                          {service.is_available ? 'Available' : 'Unavailable'}
+                        </span>
+                        <span className='sessions'>
+                          {service.remaining_sessions}/{service.total_sessions} sessions left
+                        </span>
+                      </div>
+                      <div className="service-tags">
+                        {service.category.map((cat, index) => (
+                          <span key={index} className="category-tag">{cat}</span>
+                        ))}
+                        {service.tags.map((tag, index) => (
+                          <span key={index} className="service-tag">{tag}</span>
+                        ))}
+                      </div>
+                      <div className='service-actions'>
+                        <Link to={`/services/${service.id}/edit`}>Edit</Link>
+                        <button onClick={() => handleDeleteService(service.id)}>
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
 
               {/* Booking requests for your services */}
               <div className="service-requests-section">
-                <h3>Requests</h3>
+                <h3>Recent Requests</h3>
                 <div className='booking-filters'>
                   <button>Pending</button>
                   <button>Accepted</button>
                   <button>Completed</button>
                   <button>Cancelled</button>
-                  <button>All</button>
-
                 </div>
                 
                 <div className='service-requests-list'>
+                  {/* This would be populated with real request data */}
                   <div className='booking-card incoming'>
                     <div className="request-header">
-                      <h4>Math Tutoring Request</h4>
+                      <h4>Service Request</h4>
                       <span className="service-badge">Your Service</span>
                     </div>
-                    <p>from Dehui H.</p>
-                    <span className='date'>Sep 5, 2025 - 3:00 PM</span>
-                    <span className='status pending'>Awaiting your response</span>
-                    <div className='booking-actions'>
-                      <button className='accept'>Accept</button>
-                      <button className='decline'>Decline</button>
-                      <button>Message</button>
-                    </div>
+                    <p>No pending requests</p>
                   </div>
                 </div>
               </div>
@@ -214,21 +319,17 @@ export default function Dashboard() {
                 <button>Confirmed</button>
                 <button>Completed</button>
                 <button>Cancelled</button>
-                <button>All</button>
               </div>
               
               <div className='bookings-list'>
                 <div className='booking-card outgoing'>
                   <div className="request-header">
-                    <h4>Tarot Reading</h4>
+                    <h4>No bookings yet</h4>
                     <span className="client-badge">You booked</span>
                   </div>
-                  <p>with Natasha</p>
-                  <span className='date'>Sep 2, 2025 - 8:00 AM</span>
-                  <span className='status pending'>Pending approval</span>
+                  <p>Browse services to make your first booking</p>
                   <div className='booking-actions'>
-                    <button>Message</button>
-                    <button>Cancel</button>
+                    <Link to="/services">Browse Services</Link>
                   </div>
                 </div>
               </div>
@@ -239,13 +340,7 @@ export default function Dashboard() {
             <div className='messages-section'>
               <h2>Messages</h2>
               <div className='messages-list'>
-                <div className='message-card'>
-                  <h3>Natasha Gaye</h3>
-                  <p>Hi! Looking forward to our reading...</p>
-                  <span className='time'>2 hours ago</span>
-                  <span className='unread'>•</span>
-                </div>
-                {/* more message cards */}
+                <p>No messages yet</p>
               </div>
             </div>
           )}
@@ -254,13 +349,7 @@ export default function Dashboard() {
             <div className='history-section'>
               <h2>Transaction History</h2>
               <div className='history-list'>
-                <div className='history-card'>
-                  <h3>Yoga Class</h3>
-                  <p>with Mikaela B.</p>
-                  <span className='date'>June 3, 2025</span>
-                  <span className='credits spent'>-1 hour</span>
-                </div>
-                {/* more history cards */}
+                <p>No transaction history yet</p>
               </div>
             </div>
           )}
