@@ -226,3 +226,43 @@ export const getServiceById = async (token: string, serviceId: number) => {
     }
 };
 
+// Create service 
+export const createService = async (token: string, serviceData: CreateServiceData) => {
+    try {
+        const res = await fetch(`${BASE_URL}/services/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`,
+            },
+            body: JSON.stringify(serviceData),
+        });
+
+        if (!res.ok) {
+            const errorData = await res.json().catch(() => ({ error: 'Unknown error' }));
+
+            if (res.status === 400) {
+                const errorMessages = [];
+                for (const [field, messages] of Object.entries(errorData)) {
+                    if (Array.isArray(messages)) {
+                        errorMessages.push(`${field}: ${messages.join(', ')}`);
+                    } else if (typeof messages === 'string') {
+                        errorMessages.push(`${field}: ${messages}`);
+                    }
+                }
+                throw new Error(errorMessages.join('. ') || 'Invalid service data');
+            } else if (res.status === 401) {
+                throw new Error('Session expired. Please log in again.');
+            } else if (res.status >= 500) {
+                throw new Error('Server error. Please try again later.');
+            } else {
+                throw new Error('Failed to create service');
+            }
+        }
+
+        return await res.json();
+    } catch (error) {
+        console.error('Create service error:', error);
+        throw error;
+    }
+};
