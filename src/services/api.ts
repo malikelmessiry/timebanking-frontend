@@ -226,7 +226,7 @@ export const getServiceById = async (token: string, serviceId: number) => {
     }
 };
 
-// Create service 
+// Create a service 
 export const createService = async (token: string, serviceData: CreateServiceData) => {
     try {
         const res = await fetch(`${BASE_URL}/services/`, {
@@ -267,7 +267,7 @@ export const createService = async (token: string, serviceData: CreateServiceDat
     }
 };
 
-// Update service by ID
+// Update a service
 export const updateService = async (token: string, serviceId: number, serviceData: Partial<CreateServiceData>) => {
     try {
         const res = await fetch(`${BASE_URL}/services/${serviceId}/`, {
@@ -280,8 +280,6 @@ export const updateService = async (token: string, serviceId: number, serviceDat
         });
 
         if (!res.ok) {
-            const errorData = await res.json().catch(() => ({ error: 'Unknown error' }));
-
             if (res.status === 400) {
                 throw new Error('Invalid service data');
             } else if (res.status === 401) {
@@ -303,3 +301,62 @@ export const updateService = async (token: string, serviceId: number, serviceDat
         throw error;
     }
 };
+
+// Delete a service 
+export const deleteService = async (token: string, serviceId: number) => {
+    try {
+        const res = await fetch(`${BASE_URL}/services/${serviceId}/`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Token ${token}`,
+            },
+        });
+
+        if (!res.ok) {
+            if (res.status === 401) {
+                throw new Error('Session expired. Please log in again.');
+            } else if (res.status === 403) {
+                throw new Error('You can only delete your own services');
+            } else if (res.status === 404) {
+                throw new Error('Service not found');
+            } else if (res.status >= 500) {
+                throw new Error('Server error. Please try again later.');
+            } else {
+                throw new Error('Failed to delete service');
+            }
+        }
+
+        return { message: 'Service deleted successfully' };
+    } catch (error) {
+        console.error('Delete service error:', error);
+        throw error;
+    }
+};
+
+// Get User's Own Services
+// export const getUserServices = async (token: string) => {
+//     try {
+//         const res = await fetch(`${BASE_URL}/services/my-services/`, {
+//             method: "GET",
+//             headers: {
+//                 "Content-Type": "application/json",
+//                 "Authorization": `Token ${token}`,
+//             },
+//         });
+
+//         if (!res.ok) {
+//             if (res.status === 401) {
+//                 throw new Error('Session expired. Please log in again.');
+//             } else if (res.status >= 500) {
+//                 throw new Error('Server error. Please try again later.');
+//             } else {
+//                 throw new Error('Failed to load your services');
+//             }
+//         }
+
+//         return await res.json();
+//     } catch (error) {
+//         console.error('Get user services error:', error);
+//         throw error;
+//     }
+// };
