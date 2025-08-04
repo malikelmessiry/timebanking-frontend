@@ -114,4 +114,26 @@ export const updateUserProfile = async (token: string, formData: FormData) => {
     }
 
     return await res.json();
-}
+};
+
+// Logout
+export const logoutUser = async (token: string) => {
+    try {
+        const res = await fetch(`${BASE_URL}/accounts/logout/`, {
+            method: "POST",
+            headers: {
+                "Authorization": `Token ${token}`,
+                "Content-Type": 'application/json',
+            }
+        });
+
+        if (!res.ok) {
+            throw new Error('Logout failed');
+        }
+
+        return await res.json();
+    } catch (error) {
+        console.error('Logout error:', error);
+        throw error;
+    }
+};

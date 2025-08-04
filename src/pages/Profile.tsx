@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUserProfile, updateUserProfile } from "../services/api";
+import { getUserProfile, logoutUser, updateUserProfile } from "../services/api";
 import { parseInterests } from "../utilities/validation"; // ✅ Add this import
 import Navbar from '../components/Navbar';
 import '../styles/Profile.css';
@@ -156,9 +156,18 @@ export default function Profile() {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem('authToken');
+      if (token) {
+        await logoutUser(token);
+      }
+    } catch (error) {
+      console.error('Server logout failed:', error);
+    } finally {
       localStorage.removeItem('authToken');
       navigate('/auth');
+    }
   };
 
   const handleCancel = () => {
