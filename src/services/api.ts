@@ -169,7 +169,7 @@ export interface CreateServiceData {
 }
 
 // Get all services
-export const getAllServices = async (token?: string) => {
+export const getAllServices = async (token: string) => {
     try {
         const res = await fetch(`${BASE_URL}/services/`, {
             method: 'GET',
