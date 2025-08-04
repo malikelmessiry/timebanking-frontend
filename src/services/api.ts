@@ -196,4 +196,33 @@ export const getAllServices = async (token?: string) => {
     }
 };
 
+// Get service by ID
+export const getServiceById = async (token: string, serviceId: number) => {
+    try {
+        const res = await fetch(`${BASE_URL}/services/${serviceId}/`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`,
+            },
+        });
+
+        if (!res.ok) {
+            if (res.status === 404) {
+                throw new Error('Service not found');
+            } else if (res.status === 401) {
+                throw new Error('Session expired. Please log in again.')
+            } else if (res.status >= 500) {
+                throw new Error('Server error. Please try again later.');
+            } else {
+                throw new Error('Failed to load service');
+            }
+        }
+
+        return await res.json();
+    } catch (error) {
+        console.error('Get service error:', error);
+        throw error;
+    }
+};
 
