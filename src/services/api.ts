@@ -424,6 +424,131 @@ export const getBookings = async (token: string): Promise<Booking[]> => {
   }
 }
 
+// Create a booking
+export const createBooking = async (token: string, serviceId: number): Promise<Booking> => {
+    try {
+        const res = await fetch(`${BASE_URL}/bookings/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`,
+            },
+            body: JSON.stringify({ service_id: serviceId }),
+        });
+
+        if (!res.ok) {
+            if (res.status === 401) {
+                throw new Error('Session expired. Please log in again.');
+            } else if (res.status === 400) {
+                const errorData = await res.json().catch(() => ({}));
+                // Handle specific booking errors
+                if (errorData.detail?.includes('credits')) {
+                    throw new Error('Insufficient credits to book this service');
+                } else if (errorData.detail?.includes('sessions')) {
+                    throw new Error('No sessions available for this service');
+                } else {
+                    throw new Error(errorData.detail || 'Unable to book this service');
+                }
+            } else {
+                const errorData = await res.json().catch(() => ({}));
+                throw new Error(errorData.detail || errorData.message || 'Failed to create booking');
+            }
+        }
+
+        return await res.json();
+    } catch (error) {
+        console.error('Create booking error:', error);
+        throw error;
+    }
+};
+
+// Cancel a booking
+export const cancelBooking = async (token: string, bookingId: number): Promise<Booking> => {
+    try {
+        const res = await fetch(`${BASE_URL}/bookings/${bookingId}/mark_cancelled/`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`,
+            },
+        });
+
+        if (!res.ok) {
+            if (res.status === 401) {
+                throw new Error('Session expired. Please log in again.');
+            } else if (res.status === 404) {
+                throw new Error('Booking not found');
+            } else {
+                const errorData = await res.json().catch(() => ({}));
+                throw new Error(errorData.detail || errorData.message || 'Failed to cancel booking');
+            }
+        }
+
+        return await res.json();
+    } catch (error) {
+        console.error('Cancel booking error:', error);
+        throw error;
+    }
+};
+
+// Confirm a booking (for service providers)
+export const confirmBooking = async (token: string, bookingId: number): Promise<Booking> => {
+    try {
+        const res = await fetch(`${BASE_URL}/bookings/${bookingId}/mark_confirmed/`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`,
+            },
+        });
+
+        if (!res.ok) {
+            if (res.status === 401) {
+                throw new Error('Session expired. Please log in again.');
+            } else if (res.status === 404) {
+                throw new Error('Booking not found');
+            } else {
+                const errorData = await res.json().catch(() => ({}));
+                throw new Error(errorData.detail || errorData.message || 'Failed to confirm booking');
+            }
+        }
+
+        return await res.json();
+    } catch (error) {
+        console.error('Confirm booking error:', error);
+        throw error;
+    }
+};
+
+// Complete a booking (for service providers)
+export const completeBooking = async (token: string, bookingId: number): Promise<Booking> => {
+    try {
+        const res = await fetch(`${BASE_URL}/bookings/${bookingId}/mark_completed/`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`,
+            },
+        });
+
+        if (!res.ok) {
+            if (res.status === 401) {
+                throw new Error('Session expired. Please log in again.');
+            } else if (res.status === 404) {
+                throw new Error('Booking not found');
+            } else {
+                const errorData = await res.json().catch(() => ({}));
+                throw new Error(errorData.detail || errorData.message || 'Failed to complete booking');
+            }
+        }
+
+        return await res.json();
+    } catch (error) {
+        console.error('Complete booking error:', error);
+        throw error;
+    }
+};
+
 // Get services by user AND zip code 
 // export const getServicesByUserAndZip = async (token: string, userId: number, zipCode: string) => {
 //     try {

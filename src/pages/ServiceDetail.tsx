@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { getServiceById, getUserProfile } from '../services/api';
+import { getServiceById, getUserProfile, createBooking } from '../services/api';
 import type { Service } from '../services/api';
 import Navbar from '../components/Navbar';
 import '../styles/ServiceDetail.css';
@@ -80,23 +80,67 @@ export default function ServiceDetail() {
   const handleBookService = async () => {
     if (!service || !currentUser) return;
 
+    // Validation checks
     if (currentUser.time_credits < service.credit_required) {
-      alert(`You need ${service.credit_required} credits but only have ${currentUser.time_credits} credits.`);
+      alert(`❌ Insufficient Credits\n\nYou need ${service.credit_required} credits but only have ${currentUser.time_credits} credits.\n\nPlease offer your own services to earn more credits!`);
       return;
     }
+
+    if (service.remaining_sessions <= 0) {
+      alert(`❌ No Sessions Available\n\nThis service has no remaining sessions.\n\nPlease check back later or browse other services.`);
+      return;
+    }
+
+    // Confirmation dialog
+    const confirmed = window.confirm(
+      `📅 Confirm Booking\n\n` +
+      `Service: ${service.name}\n` +
+      `Provider: ${service.owner_email}\n` +
+      `Cost: ${service.credit_required} credits\n\n` +
+      `Your balance will be: ${currentUser.time_credits - service.credit_required} credits\n\n` +
+      `Are you sure you want to book this service?`
+    );
+
+    if (!confirmed) return;
 
     setBookingLoading(true);
     
     try {
-      // TODO: Implement actual booking API call when backend supports it
-      console.log('🎯 Booking service:', service.name);
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        throw new Error('Please log in to book services');
+      }
+
+      console.log('🎯 Creating booking for service:', service.id);
+      const booking = await createBooking(token, service.id);
+      console.log('✅ Booking created successfully:', booking);
       
-      alert(`Successfully requested booking for "${service.name}"!\n\nThe provider (${service.owner_email}) will contact you soon to arrange the session details.`);
+      // Show success message with booking details
+      alert(
+        `🎉 Booking Successful!\n\n` +
+        `Service: ${service.name}\n` +
+        `Booking ID: #${booking.id}\n` +
+        `Status: ${booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}\n\n` +
+        `The provider (${service.owner_email}) will be notified and will contact you soon to arrange the session details.\n\n` +
+        `You can view your booking status in your dashboard.`
+      );
+
+      // Redirect to dashboard to see the new booking
       navigate('/dashboard');
     } catch (error: any) {
       console.error('❌ Booking failed:', error);
-      alert('Failed to request booking. Please try again.');
+      
+      // Show specific error messages
+      if (error.message.includes('credits')) {
+        alert(`❌ Booking Failed\n\nInsufficient credits. Please earn more credits by offering your own services.`);
+      } else if (error.message.includes('sessions')) {
+        alert(`❌ Booking Failed\n\nNo sessions available. This service may have been fully booked recently.`);
+      } else if (error.message.includes('Session expired')) {
+        alert(`❌ Session Expired\n\nPlease log in again to book services.`);
+        navigate('/auth');
+      } else {
+        alert(`❌ Booking Failed\n\n${error.message}\n\nPlease try again or contact support if the problem persists.`);
+      }
     } finally {
       setBookingLoading(false);
     }
@@ -357,11 +401,11 @@ export default function ServiceDetail() {
                       disabled={bookingLoading}
                       className="book-now-btn"
                     >
-                      {bookingLoading ? '⏳ Booking...' : '🎯 Request Booking'}
+                      {bookingLoading ? '⏳ Creating Booking...' : '🎯 Book Now'}
                     </button>
 
                     <p className="booking-note">
-                      💡 This will send a booking request to the provider. They will contact you to arrange the session details.
+                      💡 This will create a booking request. The provider will be notified and can confirm your booking.
                     </p>
                   </div>
                 )}
