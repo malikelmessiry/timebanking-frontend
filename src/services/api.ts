@@ -351,33 +351,80 @@ export const getMyServices = async (token: string, userEmail: string): Promise<S
 
 // Get services by zip code 
 export const getServicesByZipCode = async (token: string, zipCode: string) => {
-    try {
-        const res = await fetch(`${BASE_URL}/services/?zip_code=${zipCode}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Token ${token}`,
-            },
-        });
+  try {
+      const res = await fetch(`${BASE_URL}/services/?zip_code=${zipCode}`, {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Token ${token}`,
+          },
+      });
 
-        if (!res.ok) {
-            if (res.status === 401) {
-                throw new Error('Session expired. Please log in again.');
-            } else if (res.status >= 500) {
-                throw new Error('Server error. Please try again later.');
-            } else {
-                throw new Error('Failed to load services for this zip code');
-            }
-        }
+      if (!res.ok) {
+          if (res.status === 401) {
+              throw new Error('Session expired. Please log in again.');
+          } else if (res.status >= 500) {
+              throw new Error('Server error. Please try again later.');
+          } else {
+              throw new Error('Failed to load services for this zip code');
+          }
+      }
 
-        return await res.json();
-    } catch (error) {
-        console.error('Get services by zip code error:', error);
-        throw error;
-    }
+      return await res.json();
+  } catch (error) {
+      console.error('Get services by zip code error:', error);
+      throw error;
+  }
 };
 
-// Get services by user AND zip code - NEW
+// BOOKINGS
+
+export interface Booking {
+  id: number;
+  status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
+  booked_at: string;
+  completed_at: string | null;
+  customer_review: string | null;
+  customer_rating: number | null;
+  service_name: string;
+  owner_first_name: string;
+  owner_email: string;
+  customer_first_name: string;
+  customer_email: string;
+}
+
+export interface CreateBookingRequest {
+  service_id: number;
+}
+
+// Get all bookings
+export const getBookings = async (token: string): Promise<Booking[]> => {
+  try {
+    const res = await fetch(`${BASE_URL}/bookings/`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`,
+      },
+    });
+
+    if (!res.ok) {
+      if (res.status === 401) {
+        throw new Error('Session expired. Please log in again.');
+      } else {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.detail || errorData.message || 'Failed to load bookings');
+      }
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error('Get bookings error:', error);
+    throw error;
+  }
+}
+
+// Get services by user AND zip code 
 // export const getServicesByUserAndZip = async (token: string, userId: number, zipCode: string) => {
 //     try {
 //         const res = await fetch(`${BASE_URL}/services/?owner_id=${userId}&zip_code=${zipCode}`, {
