@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { getAllServices, getUserProfile } from '../services/api';
+import { getServiceById, getUserProfile } from '../services/api';
 import type { Service } from '../services/api';
 import Navbar from '../components/Navbar';
 import '../styles/ServiceDetail.css';
@@ -45,21 +45,13 @@ export default function ServiceDetail() {
         return;
       }
 
-      console.log('Fetching all services...');
-      const allServices = await getAllServices(token);
-      console.log('All services loaded:', allServices.length);
+      console.log('Fetching service by ID:', id);
+      const serviceData = await getServiceById(token, id!);
+      console.log('✅ Service loaded:', serviceData);
       
-      const foundService = allServices.find((s: Service) => s.id === parseInt(id!));
-      console.log('Found service:', foundService);
-      
-      if (!foundService) {
-        setError('Service not found');
-        return;
-      }
-
-      setService(foundService);
+      setService(serviceData);
     } catch (error: any) {
-      console.error('Failed to load service details:', error);
+      console.error('❌ Failed to load service details:', error);
       setError(error.message || 'Failed to load service details');
     }
   };
@@ -67,14 +59,19 @@ export default function ServiceDetail() {
   const loadCurrentUser = async () => {
     try {
       const token = localStorage.getItem('authToken');
-      if (!token) return;
+      if (!token) {
+        console.log('No token for user profile');
+        setLoading(false);
+        return;
+      }
 
       console.log('Loading current user...');
       const user = await getUserProfile(token);
-      console.log('Current user loaded:', user);
+      console.log('✅ Current user loaded:', user.email);
       setCurrentUser(user);
     } catch (error) {
-      console.error('Failed to load user profile:', error);
+      console.error('❌ Failed to load user profile:', error);
+      // Don't set error here, just continue without user profile
     } finally {
       setLoading(false);
     }
@@ -91,14 +88,15 @@ export default function ServiceDetail() {
     setBookingLoading(true);
     
     try {
-      // TODO: Implement actual booking API call
+      // TODO: Implement actual booking API call when backend supports it
+      console.log('🎯 Booking service:', service.name);
       await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
       
-      alert(`Successfully booked "${service.name}"! You will be contacted soon.`);
+      alert(`Successfully requested booking for "${service.name}"!\n\nThe provider (${service.owner_email}) will contact you soon to arrange the session details.`);
       navigate('/dashboard');
     } catch (error: any) {
-      console.error('Booking failed:', error);
-      alert('Failed to book service. Please try again.');
+      console.error('❌ Booking failed:', error);
+      alert('Failed to request booking. Please try again.');
     } finally {
       setBookingLoading(false);
     }
@@ -108,13 +106,15 @@ export default function ServiceDetail() {
     if (!service) return;
     
     const subject = encodeURIComponent(`Inquiry about: ${service.name}`);
-    const body = encodeURIComponent(`Hi,\n\nI'm interested in your service "${service.name}". Could you please provide more details?\n\nThanks!`);
+    const body = encodeURIComponent(`Hi,\n\nI'm interested in your service "${service.name}". Could you please provide more details about:\n\n- When you're available\n- What's included in the session\n- Any preparation needed\n\nThanks!\n\nBest regards`);
     
-    window.open(`mailto:${service.owner_email}?subject=${subject}&body=${body}`);
+    const mailtoLink = `mailto:${service.owner_email}?subject=${subject}&body=${body}`;
+    console.log('📧 Opening email to:', service.owner_email);
+    window.open(mailtoLink);
   };
 
   // Add debug info
-  console.log('ServiceDetail render - loading:', loading, 'error:', error, 'service:', service);
+  console.log('🔄 ServiceDetail render - loading:', loading, 'error:', error, 'service:', service?.name);
 
   if (loading) {
     return (
@@ -124,7 +124,7 @@ export default function ServiceDetail() {
           <div className="loading-state">
             <h2>📋 Loading Service Details...</h2>
             <p>Getting all the information for you</p>
-            <p style={{ fontSize: '12px', color: 'rgba(99, 39, 19, 0.5)' }}>
+            <p style={{ fontSize: '12px', color: 'rgba(99, 39, 19, 0.5)', marginTop: '16px' }}>
               Service ID: {id}
             </p>
           </div>
@@ -141,10 +141,19 @@ export default function ServiceDetail() {
           <div className="error-state">
             <h2>⚠️ {error || 'Service Not Found'}</h2>
             <p>The service you're looking for doesn't exist or has been removed.</p>
-            <p style={{ fontSize: '12px', color: 'rgba(99, 39, 19, 0.5)' }}>
-              Service ID: {id}, Error: {error}
-            </p>
-            <Link to="/services" className="back-btn">
+            <div style={{ 
+              fontSize: '12px', 
+              color: 'rgba(99, 39, 19, 0.5)', 
+              marginTop: '16px',
+              padding: '12px',
+              background: 'rgba(255, 255, 255, 0.1)',
+              borderRadius: '8px'
+            }}>
+              <p>Debug Info:</p>
+              <p>• Requested Service ID: {id}</p>
+              <p>• Error: {error}</p>
+            </div>
+            <Link to="/services" className="back-btn" style={{ marginTop: '24px' }}>
               ← Back to Services
             </Link>
           </div>
@@ -244,6 +253,10 @@ export default function ServiceDetail() {
                       <span className="stat-value">⭐ {service.average_rating.toFixed(1)}</span>
                     </div>
                   )}
+                  <div className="stat-item">
+                    <span className="stat-label">Service ID</span>
+                    <span className="stat-value">#{service.id}</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -266,6 +279,7 @@ export default function ServiceDetail() {
                 <button 
                   onClick={handleContactProvider}
                   className="contact-btn"
+                  title={`Send email to ${service.owner_email}`}
                 >
                   ✉️ Contact Provider
                 </button>
@@ -278,22 +292,45 @@ export default function ServiceDetail() {
                 {isOwner ? (
                   <div className="owner-notice">
                     <p>🏠 This is your service</p>
-                    <Link to={`/services/edit/${service.id}`} className="edit-service-btn">
-                      ✏️ Edit Service
-                    </Link>
+                    <p style={{ fontSize: '12px', color: 'rgba(99, 39, 19, 0.6)', marginTop: '8px' }}>
+                      You can't book your own service
+                    </p>
                   </div>
                 ) : !service.is_available ? (
                   <div className="unavailable-notice">
                     <p>😞 This service is currently unavailable</p>
+                    <p style={{ fontSize: '12px', color: 'rgba(99, 39, 19, 0.6)', marginTop: '8px' }}>
+                      The provider has temporarily disabled bookings
+                    </p>
                   </div>
                 ) : service.remaining_sessions === 0 ? (
                   <div className="unavailable-notice">
                     <p>📅 No sessions available</p>
+                    <p style={{ fontSize: '12px', color: 'rgba(99, 39, 19, 0.6)', marginTop: '8px' }}>
+                      All sessions for this service have been booked
+                    </p>
+                  </div>
+                ) : !currentUser ? (
+                  <div className="unavailable-notice">
+                    <p>🔐 Please log in to book</p>
+                    <Link to="/auth" className="login-btn" style={{ 
+                      display: 'block', 
+                      marginTop: '12px',
+                      padding: '10px',
+                      background: 'linear-gradient(135deg, #f8a91f, #ec6426)',
+                      color: '#632713',
+                      textDecoration: 'none',
+                      borderRadius: '8px',
+                      textAlign: 'center',
+                      fontWeight: '500'
+                    }}>
+                      Go to Login
+                    </Link>
                   </div>
                 ) : !hasEnoughCredits ? (
                   <div className="insufficient-credits">
                     <p>⚠️ You need {service.credit_required} credits</p>
-                    <p>You have: {currentUser?.time_credits || 0} credits</p>
+                    <p>You have: {currentUser.time_credits} credits</p>
                     <Link to="/dashboard" className="earn-credits-btn">
                       Earn More Credits
                     </Link>
@@ -307,11 +344,11 @@ export default function ServiceDetail() {
                       </div>
                       <div className="summary-row">
                         <span>Your balance:</span>
-                        <strong>{currentUser?.time_credits} credits</strong>
+                        <strong>{currentUser.time_credits} credits</strong>
                       </div>
                       <div className="summary-row total">
                         <span>After booking:</span>
-                        <strong>{(currentUser?.time_credits || 0) - service.credit_required} credits</strong>
+                        <strong>{currentUser.time_credits - service.credit_required} credits</strong>
                       </div>
                     </div>
 
@@ -320,11 +357,11 @@ export default function ServiceDetail() {
                       disabled={bookingLoading}
                       className="book-now-btn"
                     >
-                      {bookingLoading ? '⏳ Booking...' : '🎯 Book Now'}
+                      {bookingLoading ? '⏳ Booking...' : '🎯 Request Booking'}
                     </button>
 
                     <p className="booking-note">
-                      💡 The provider will contact you to arrange the session details.
+                      💡 This will send a booking request to the provider. They will contact you to arrange the session details.
                     </p>
                   </div>
                 )}
@@ -336,13 +373,19 @@ export default function ServiceDetail() {
                   onClick={() => {
                     const url = window.location.href;
                     if (navigator.share) {
-                      navigator.share({ title: service.name, url });
+                      navigator.share({ 
+                        title: `${service.name} - TimeBank Service`, 
+                        text: `Check out this service: ${service.name}`,
+                        url 
+                      });
                     } else {
-                      navigator.clipboard.writeText(url);
-                      alert('Link copied to clipboard!');
+                      navigator.clipboard.writeText(url).then(() => {
+                        alert('Service link copied to clipboard!');
+                      });
                     }
                   }}
                   className="share-btn"
+                  title="Share this service"
                 >
                   🔗 Share Service
                 </button>
