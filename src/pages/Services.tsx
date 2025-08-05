@@ -156,11 +156,6 @@ export default function Services() {
     setSearchParams({});
   };
 
-  const handleBookService = (service: Service) => {
-    // TODO: Implement booking functionality
-    alert(`Booking ${service.name} - Coming soon!`);
-  };
-
   if (loading) {
     return (
       <div>
@@ -344,7 +339,7 @@ export default function Services() {
                     key={service.id}
                     service={service}
                     viewMode={viewMode}
-                    onBook={() => handleBookService(service)}
+                    onBook={undefined} // Remove the handleBookService call
                     showActions={true}
                     isOwner={false}
                   />

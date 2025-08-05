@@ -46,7 +46,7 @@ export default function ServiceDetail() {
       }
 
       console.log('Fetching service by ID:', id);
-      const serviceData = await getServiceById(token, id!);
+      const serviceData = await getServiceById(token, Number(id));
       console.log('✅ Service loaded:', serviceData);
       
       setService(serviceData);
@@ -207,7 +207,6 @@ export default function ServiceDetail() {
   }
 
   const isOwner = currentUser?.email === service.owner_email;
-  const canBook = !isOwner && service.is_available && service.remaining_sessions > 0;
   const hasEnoughCredits = currentUser && currentUser.time_credits >= service.credit_required;
 
   return (
