@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import Auth from './pages/Auth';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
+import CreateService from './pages/CreateService';
 import './styles/App.css';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
           <Route path="/auth" element={<Auth />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/services/create" element={<CreateService />} />
         </Routes>
       </div>
     </Router>
