@@ -4,6 +4,7 @@ import Auth from './pages/Auth';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import CreateService from './pages/CreateService';
+import Services from './pages/Services';
 import './styles/App.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/services/create" element={<CreateService />} />
+          <Route path="/services" element={<Services />} />
         </Routes>
       </div>
     </Router>
