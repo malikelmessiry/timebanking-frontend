@@ -1,0 +1,104 @@
+/* Add this to src/styles/ServiceCard.css - Updated for lighter background */
+
+/* Service Card Styles - Light Theme */
+.service-card {
+  background: rgba(255, 255, 255, 0.25);
+  border: 2px solid rgba(99, 39, 19, 0.2);
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 4px 16px rgba(99, 39, 19, 0.1);
+}
+
+.service-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(248, 169, 31, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(248, 169, 31, 0.4);
+  box-shadow: 0 8px 32px rgba(248, 169, 31, 0.2);
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.service-card:hover::before {
+  left: 100%;
+}
+
+/* Update text colors for better contrast on light background */
+.service-name {
+  color: #632713;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.3;
+  flex: 1;
+  font-family: 'Georgia', serif;
+}
+
+.provider-label {
+  color: rgba(99, 39, 19, 0.6);
+  font-size: 12px;
+  font-style: italic;
+}
+
+.provider-email {
+  color: #632713;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.service-description {
+  color: rgba(99, 39, 19, 0.8);
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 12px 0;
+  font-family: 'Georgia', serif;
+}
+
+.service-date {
+  color: rgba(99, 39, 19, 0.5);
+  font-size: 11px;
+  font-style: italic;
+}
+
+/* Update action buttons for light theme */
+.action-btn {
+  flex: 1;
+  padding: 10px 16px;
+  border: 2px solid rgba(99, 39, 19, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #632713;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-family: 'Georgia', serif;
+}
+
+.action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 39, 19, 0.2);
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.service-actions {
+  border-top: 1px solid rgba(99, 39, 19, 0.1);
+}

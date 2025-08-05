@@ -1,15 +1,15 @@
-/* Services Browse Page Styles */
+/* Services Browse Page Styles - Lighter Background */
 .services-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #632713 0%, #2e573a 100%);
+  background: linear-gradient(135deg, #fde3cf 0%, #e4a5ca 50%, #72ac43 100%);
   font-family: 'Georgia', serif;
   padding-bottom: 40px;
 }
 
 /* Page Header */
 .services-header {
-  background: rgba(46, 87, 58, 0.2);
-  border-bottom: 2px solid rgba(228, 165, 202, 0.2);
+  background: rgba(255, 255, 255, 0.15);
+  border-bottom: 2px solid rgba(99, 39, 19, 0.2);
   padding: 40px 20px;
   backdrop-filter: blur(10px);
 }
@@ -25,15 +25,16 @@
 }
 
 .services-header h1 {
-  color: #fde3cf;
+  color: #632713;
   font-size: 36px;
   margin: 0;
   font-weight: 300;
   letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.3);
 }
 
 .services-header p {
-  color: rgba(253, 227, 207, 0.8);
+  color: rgba(99, 39, 19, 0.8);
   font-size: 18px;
   margin: 8px 0 0 0;
   font-style: italic;
@@ -50,13 +51,13 @@
 
 .stat-number {
   display: block;
-  color: #f8a91f;
+  color: #632713;
   font-size: 24px;
   font-weight: 700;
 }
 
 .stat-label {
-  color: rgba(248, 169, 31, 0.7);
+  color: rgba(99, 39, 19, 0.7);
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -74,14 +75,15 @@
 
 /* Filters Sidebar */
 .filters-sidebar {
-  background: rgba(46, 87, 58, 0.15);
-  border: 1px solid rgba(228, 165, 202, 0.2);
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(99, 39, 19, 0.2);
   border-radius: 16px;
   padding: 24px;
   height: fit-content;
   position: sticky;
   top: 20px;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(99, 39, 19, 0.1);
 }
 
 .filters-header {
@@ -90,11 +92,11 @@
   align-items: center;
   margin-bottom: 24px;
   padding-bottom: 16px;
-  border-bottom: 1px solid rgba(228, 165, 202, 0.2);
+  border-bottom: 1px solid rgba(99, 39, 19, 0.2);
 }
 
 .filters-header h3 {
-  color: #72ac43;
+  color: #632713;
   margin: 0;
   font-size: 18px;
   font-weight: 500;
@@ -122,7 +124,7 @@
 
 .filter-group label {
   display: block;
-  color: #72ac43;
+  color: #632713;
   font-weight: 500;
   margin-bottom: 8px;
   font-size: 14px;
@@ -132,10 +134,10 @@
 .zip-input {
   width: 100%;
   padding: 12px;
-  border: 2px solid rgba(228, 165, 202, 0.2);
+  border: 2px solid rgba(99, 39, 19, 0.2);
   border-radius: 8px;
-  background: rgba(253, 227, 207, 0.05);
-  color: #fde3cf;
+  background: rgba(255, 255, 255, 0.4);
+  color: #632713;
   font-family: 'Georgia', serif;
   transition: all 0.3s ease;
 }
@@ -144,12 +146,13 @@
 .zip-input:focus {
   outline: none;
   border-color: #f8a91f;
-  background: rgba(248, 169, 31, 0.05);
+  background: rgba(248, 169, 31, 0.1);
+  box-shadow: 0 0 0 3px rgba(248, 169, 31, 0.1);
 }
 
 .search-input::placeholder,
 .zip-input::placeholder {
-  color: rgba(228, 165, 202, 0.5);
+  color: rgba(99, 39, 19, 0.5);
   font-style: italic;
 }
 
@@ -157,10 +160,10 @@
 .categories-filter {
   max-height: 200px;
   overflow-y: auto;
-  border: 1px solid rgba(228, 165, 202, 0.2);
+  border: 1px solid rgba(99, 39, 19, 0.2);
   border-radius: 8px;
   padding: 12px;
-  background: rgba(253, 227, 207, 0.02);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .category-filter-item {
@@ -173,7 +176,7 @@
 }
 
 .category-filter-item:hover {
-  background: rgba(248, 169, 31, 0.05);
+  background: rgba(248, 169, 31, 0.1);
   margin: 0 -8px;
   padding-left: 8px;
   padding-right: 8px;
@@ -185,7 +188,7 @@
 }
 
 .category-filter-item span {
-  color: #e4a5ca;
+  color: #632713;
   font-size: 13px;
   text-transform: capitalize;
 }
@@ -200,15 +203,15 @@
 .credits-range input {
   flex: 1;
   padding: 8px;
-  border: 1px solid rgba(228, 165, 202, 0.2);
+  border: 1px solid rgba(99, 39, 19, 0.2);
   border-radius: 6px;
-  background: rgba(253, 227, 207, 0.05);
-  color: #fde3cf;
+  background: rgba(255, 255, 255, 0.3);
+  color: #632713;
   text-align: center;
 }
 
 .credits-range span {
-  color: rgba(228, 165, 202, 0.6);
+  color: rgba(99, 39, 19, 0.6);
   font-size: 12px;
 }
 
@@ -226,7 +229,7 @@
 }
 
 .availability-filter span {
-  color: #e4a5ca;
+  color: #632713;
   font-size: 13px;
 }
 
@@ -242,11 +245,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(46, 87, 58, 0.1);
-  border: 1px solid rgba(228, 165, 202, 0.2);
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(99, 39, 19, 0.2);
   border-radius: 12px;
   padding: 16px 20px;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 4px 16px rgba(99, 39, 19, 0.1);
 }
 
 .view-controls {
@@ -256,10 +260,10 @@
 
 .view-btn {
   padding: 8px 16px;
-  border: 2px solid rgba(228, 165, 202, 0.3);
+  border: 2px solid rgba(99, 39, 19, 0.3);
   border-radius: 8px;
-  background: rgba(253, 227, 207, 0.05);
-  color: #e4a5ca;
+  background: rgba(255, 255, 255, 0.2);
+  color: #632713;
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: 'Georgia', serif;
@@ -268,9 +272,10 @@
 
 .view-btn:hover,
 .view-btn.active {
-  background: rgba(248, 169, 31, 0.1);
+  background: rgba(248, 169, 31, 0.2);
   border-color: #f8a91f;
-  color: #f8a91f;
+  color: #632713;
+  box-shadow: 0 2px 8px rgba(248, 169, 31, 0.3);
 }
 
 .sort-controls {
@@ -280,17 +285,17 @@
 }
 
 .sort-controls label {
-  color: #72ac43;
+  color: #632713;
   font-size: 14px;
   font-weight: 500;
 }
 
 .sort-select {
   padding: 8px 12px;
-  border: 2px solid rgba(228, 165, 202, 0.2);
+  border: 2px solid rgba(99, 39, 19, 0.2);
   border-radius: 6px;
-  background: rgba(253, 227, 207, 0.05);
-  color: #fde3cf;
+  background: rgba(255, 255, 255, 0.3);
+  color: #632713;
   font-family: 'Georgia', serif;
   font-size: 13px;
 }
@@ -298,6 +303,7 @@
 .sort-select:focus {
   outline: none;
   border-color: #f8a91f;
+  box-shadow: 0 0 0 3px rgba(248, 169, 31, 0.1);
 }
 
 /* Services Grid */
@@ -318,18 +324,19 @@
 .loading-state {
   text-align: center;
   padding: 100px 20px;
-  color: #fde3cf;
+  color: #632713;
 }
 
 .loading-state h2 {
   font-size: 28px;
   margin-bottom: 16px;
   font-weight: 300;
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
 }
 
 .loading-state p {
   font-size: 16px;
-  color: rgba(253, 227, 207, 0.7);
+  color: rgba(99, 39, 19, 0.7);
   font-style: italic;
 }
 
@@ -337,10 +344,11 @@
 .empty-state {
   text-align: center;
   padding: 60px 20px;
-  background: rgba(46, 87, 58, 0.1);
-  border: 2px dashed rgba(228, 165, 202, 0.3);
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px dashed rgba(99, 39, 19, 0.3);
   border-radius: 16px;
-  color: #fde3cf;
+  color: #632713;
+  backdrop-filter: blur(10px);
 }
 
 .empty-state h3 {
@@ -351,7 +359,7 @@
 
 .empty-state p {
   font-size: 16px;
-  color: rgba(253, 227, 207, 0.7);
+  color: rgba(99, 39, 19, 0.7);
   margin-bottom: 24px;
 }
 
@@ -376,10 +384,11 @@
 .error-state {
   text-align: center;
   padding: 40px 20px;
-  background: rgba(236, 100, 38, 0.1);
+  background: rgba(236, 100, 38, 0.15);
   border: 2px solid rgba(236, 100, 38, 0.3);
   border-radius: 12px;
   color: #ec6426;
+  backdrop-filter: blur(10px);
 }
 
 .error-state button {
