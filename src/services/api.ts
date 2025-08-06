@@ -138,9 +138,6 @@ export const logoutUser = async (token: string) => {
     }
 };
 
-// Change password
-
-
 // Service Types
 export interface Service {
     id: number;
@@ -165,7 +162,6 @@ export interface CreateServiceData {
     tags: string[];
     credit_required: number;
     total_sessions?: number;
-    // is_available?: boolean;
 }
 
 // Get all services
