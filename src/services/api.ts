@@ -341,7 +341,7 @@ export const getMyServices = async (token: string, userEmail: string): Promise<S
         const allServices = await getAllServices(token);
         const myServices = allServices.filter((service: Service) => service.owner_email === userEmail);
         
-        console.log('✅ Found', myServices.length, 'services for user');
+        console.log('Found', myServices.length, 'services for user');
         return myServices;
     } catch (error) {
         console.error('Get my services error:', error);
@@ -352,23 +352,23 @@ export const getMyServices = async (token: string, userEmail: string): Promise<S
 // Get services by zip code 
 export const getServicesByZipCode = async (token: string, zipCode: string) => {
   try {
-      const res = await fetch(`${BASE_URL}/services/?zip_code=${zipCode}`, {
-          method: 'GET',
-          headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Token ${token}`,
-          },
-      });
+    const res = await fetch(`${BASE_URL}/services/?zip_code=${zipCode}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+    });
 
-      if (!res.ok) {
-          if (res.status === 401) {
-              throw new Error('Session expired. Please log in again.');
-          } else if (res.status >= 500) {
-              throw new Error('Server error. Please try again later.');
-          } else {
-              throw new Error('Failed to load services for this zip code');
-          }
-      }
+    if (!res.ok) {
+        if (res.status === 401) {
+            throw new Error('Session expired. Please log in again.');
+        } else if (res.status >= 500) {
+            throw new Error('Server error. Please try again later.');
+        } else {
+            throw new Error('Failed to load services for this zip code');
+        }
+    }
 
       return await res.json();
   } catch (error) {
@@ -400,24 +400,50 @@ export interface CreateBookingRequest {
 // Get all bookings
 export const getBookings = async (token: string): Promise<Booking[]> => {
   try {
-    const res = await fetch(`${BASE_URL}/bookings/`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${token}`,
-      },
-    });
+    // Get user profile to get email
+    const userProfile = await getUserProfile(token);
+    const userEmail = userProfile.email;
 
-    if (!res.ok) {
-      if (res.status === 401) {
-        throw new Error('Session expired. Please log in again.');
-      } else {
-        const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.detail || errorData.message || 'Failed to load bookings');
-      }
+    if (!userEmail) {
+        throw new Error('User email not found in profile');
     }
 
-    return await res.json();
+    console.log('🔍 Getting bookings for user email:', userEmail);
+
+    const possibleEndpoints = [
+        `${BASE_URL}/bookings/?owner_email=${userEmail}`,
+    ];
+
+    let allBookings: Booking[] = [];
+    
+    for (const endpoint of possibleEndpoints) {
+        try {
+            console.log('🔍 Trying bookings endpoint:', endpoint);
+            const res = await fetch(endpoint, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Token ${token}`,
+                },
+            });
+            
+            if (res.ok) {
+                const bookings = await res.json();
+                allBookings = [...allBookings, ...bookings];
+                console.log('✅ Bookings loaded from endpoint:', endpoint, bookings.length);
+            }
+        } catch (err) {
+            console.log('Endpoint failed:', endpoint, err);
+        }
+    }
+
+    // Remove duplicates
+    const uniqueBookings = allBookings.filter((booking, index, self) => 
+        index === self.findIndex(b => b.id === booking.id)
+    );
+
+    console.log('✅ Total unique bookings loaded:', uniqueBookings.length);
+    return uniqueBookings;
   } catch (error) {
     console.error('Get bookings error:', error);
     throw error;

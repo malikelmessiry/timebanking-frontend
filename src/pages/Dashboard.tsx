@@ -364,23 +364,78 @@ export default function Dashboard() {
 
               {/* Booking requests for your services */}
               <div className="service-requests-section">
-                <h3>Recent Requests</h3>
+                <h3>Service Requests ({allBookings.filter(b => b.owner_email === user.email).length})</h3>
                 <div className='booking-filters'>
-                  <button>Pending</button>
-                  <button>Accepted</button>
-                  <button>Completed</button>
-                  <button>Cancelled</button>
+                  <button>Pending ({allBookings.filter(b => b.owner_email === user.email && b.status === 'pending').length})</button>
+                  <button>Confirmed ({allBookings.filter(b => b.owner_email === user.email && b.status === 'confirmed').length})</button>
+                  <button>Completed ({allBookings.filter(b => b.owner_email === user.email && b.status === 'completed').length})</button>
+                  <button>All ({allBookings.filter(b => b.owner_email === user.email).length})</button>
                 </div>
                 
                 <div className='service-requests-list'>
-                  {/* This would be populated with real request data */}
-                  <div className='booking-card incoming'>
+                  {allBookings.filter(b => b.owner_email === user.email).length === 0 ? (
+                    <div className='booking-card incoming'>
                     <div className="request-header">
                       <h4>Service Request</h4>
                       <span className="service-badge">Your Service</span>
                     </div>
                     <p>No pending requests</p>
                   </div>
+                  ) : (
+                      allBookings.filter(booking => booking.owner_email === user.email)
+                        .map(booking => (
+                          <div key={booking.id} className='booking-card incoming'>
+                            <div className='request-header'>
+                              <h4>{booking.service_name}</h4>
+                              <span className='status-badge' style={{ backgroundColor: getStatusColor(booking.status), color: 'white', padding: '4px 8px', borderRadius: '4px' }}>
+                                {getStatusIcon(booking.status)} {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
+                              </span>
+                              <p><strong>Customer:</strong> {booking.customer_first_name} ({booking.customer_email})</p>
+                              <p><strong>Requested:</strong> {new Date(booking.booked_at).toLocaleDateString()}</p>
+                              <p><strong>Booking ID:</strong> #{booking.id}</p>
+                            </div>
+
+                            <div className='booking-actions'>
+                              {booking.status === 'pending' && (
+                                <>
+                                  <button 
+                                    onClick={() => handleBookingAction(booking.id, 'confirm')}
+                                    disabled={actionLoading[booking.id] === 'confirm'}
+                                    className="confirm-btn"
+                                  >
+                                    {actionLoading[booking.id] === 'confirm' ? '⏳ Confirming...' : '✅ Confirm'}
+                                  </button>
+                                  <button 
+                                    onClick={() => handleBookingAction(booking.id, 'cancel')}
+                                    disabled={actionLoading[booking.id] === 'cancel'}
+                                    className="cancel-btn"
+                                  >
+                                    {actionLoading[booking.id] === 'cancel' ? '⏳ Declining...' : '❌ Decline'}
+                                  </button>
+                                </>
+                              )}
+                              
+                              {booking.status === 'confirmed' && (
+                                <button 
+                                  onClick={() => handleBookingAction(booking.id, 'complete')}
+                                  disabled={actionLoading[booking.id] === 'complete'}
+                                  className="complete-btn"
+                                >
+                                  {actionLoading[booking.id] === 'complete' ? '⏳ Completing...' : '🎉 Mark Complete'}
+                                </button>
+                              )}
+                              
+                              <button 
+                                onClick={() => window.open(`mailto:${booking.customer_email}?subject=Your booking: ${booking.service_name}`)}
+                                className="contact-btn"
+                              >
+                                ✉️ Contact Customer
+                              </button>
+                            </div>
+                        </div>
+                      ))
+                  )}
+                  
                 </div>
               </div>
             </div>
@@ -395,8 +450,8 @@ export default function Dashboard() {
                 <button>Pending ({allBookings.filter(b => b.customer_email === user.email && b.status === 'pending').length})</button>
                 <button>Confirmed ({allBookings.filter(b => b.customer_email === user.email && b.status === 'confirmed').length})</button>
                 <button>Completed ({allBookings.filter(b => b.customer_email === user.email && b.status === 'completed').length})</button>
-                <button>Cancelled</button>
-                <button>All ({allBookings.filter(b => b.customer_email).length})</button>
+                <button>Cancelled ({allBookings.filter(b => b.customer_email === user.email && b.status === 'cancelled').length})</button>
+                <button>All ({allBookings.filter(b => b.customer_email === user.email).length})</button>
               </div>
               
               <div className='bookings-list'>
