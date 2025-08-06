@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { getUserProfile, getAllServices, getMyServices, deleteService } from '../services/api';
-import type { Service } from '../services/api';
+import { getUserProfile, getAllServices, getMyServices, deleteService, getBookings, confirmBooking, cancelBooking, completeBooking } from '../services/api';
+import type { Service, Booking } from '../services/api';
 import Navbar from '../components/Navbar';
 import '../styles/Dashboard.css';
 
 interface User {
-  id?: number; // Keep optional since we're not using it for getMyServices
+  id?: number; 
   first_name: string;
   last_name: string;
-  email: string; // ✅ This is what we'll use
+  email: string; 
   username: string;
   time_credits: number;
 }
@@ -25,6 +25,9 @@ export default function Dashboard() {
   const [allServices, setAllServices] = useState<Service[]>([]);
   const [servicesLoading, setServicesLoading] = useState(false);
   const [servicesError, setServicesError] = useState<string | null>(null);
+
+  const [allBookings, setAllBookings] = useState<Booking[]>([]);
+  const [actionLoading, setActionLoading] = useState<{ [key: number]: string }>({});
 
   const navigate = useNavigate();
 
@@ -54,16 +57,16 @@ export default function Dashboard() {
   }, [navigate]);
 
   useEffect(() => {
-    if (user && user.email) { // ✅ Check for email instead of id
+    if (user && user.email) {
       loadAllServicesData();
     } else if (user && !user.email) {
-      console.error('❌ User profile missing email:', user);
+      console.error('User profile missing email:', user);
       setServicesError('User profile is missing email. Please log out and log back in.');
     }
   }, [user]);
 
   const loadAllServicesData = async () => {
-    if (!user || !user.email) { // ✅ Check for email instead of id
+    if (!user || !user.email) { 
       setServicesError('User email is required to load services');
       return;
     }
@@ -81,19 +84,21 @@ export default function Dashboard() {
 
       console.log('🔍 Loading services for user email:', user.email);
 
-      // ✅ Use email instead of id
-      const [allServicesData, myServicesData] = await Promise.all([
+      const [allServicesData, myServicesData, bookings] = await Promise.all([
         getAllServices(token),
-        getMyServices(token, user.email) // ✅ Pass email instead of user.id
+        getMyServices(token, user.email),
+        getBookings
       ]);
 
-      console.log('✅ All services loaded:', allServicesData.length);
-      console.log('✅ My services loaded:', myServicesData.length);
+      console.log('All services loaded:', allServicesData.length);
+      console.log('My services loaded:', myServicesData.length);
+      console.log('Bookings loaded:', bookings.length);
 
       setAllServices(allServicesData);
       setMyServices(myServicesData);
+      setAllBookings(bookings);
     } catch (error) {
-      console.error('❌ Services loading error:', error);
+      console.error('Services loading error:', error);
       const errorMessage = typeof error === 'object' && error !== null && 'message' in error
         ? String((error as { message?: unknown }).message)
         : String(error);
@@ -128,6 +133,78 @@ export default function Dashboard() {
     }
   };
 
+  const handleBookingAction = async (bookingId: number, action: 'confirm' | 'cancel' | 'complete') => {
+    if (!bookingId) return;
+
+    setActionLoading(prev => ({ ...prev, [bookingId]: action }));
+
+    try {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        throw new Error('Please log in again');
+      }
+
+      let updatedBooking: Booking;
+    
+      switch (action) {
+        case 'confirm':
+          updatedBooking = await confirmBooking(token, bookingId);
+          break;
+        case 'cancel':
+          updatedBooking = await cancelBooking(token, bookingId);
+          break;
+        case 'complete':
+          updatedBooking = await completeBooking(token, bookingId);
+          break;
+        default:
+          throw new Error('Invalid action');
+      }
+
+      console.log(`Booking action completed:`, updatedBooking);
+
+      // Update bookings list
+      setAllBookings(prev => 
+        prev.map(booking => 
+          booking.id === bookingId ? updatedBooking : booking
+        )
+      );
+
+      // Show success message
+      const actionText = action === 'complete' ? 'completed' : `${action}ed`;
+      alert(`🎉 Booking ${actionText} successfully!\n\nBooking ID: #${updatedBooking.id}\nNew Status: ${updatedBooking.status}`);
+
+    } catch (error: any) {
+      console.error(`❌ Failed to ${action} booking:`, error);
+      alert(`❌ Failed to ${action} booking\n\n${error.message}`);
+    } finally {
+      setActionLoading(prev => {
+        const newState = { ...prev };
+        delete newState[bookingId];
+        return newState;
+      });
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'pending': return '#f8a91f';
+      case 'confirmed': return '#72ac43';
+      case 'completed': return '#4a90e2';
+      case 'cancelled': return '#e74c3c';
+      default: return '#632713';
+    }
+  };
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'pending': return '⏳';
+      case 'confirmed': return '✅';
+      case 'completed': return '🎉';
+      case 'cancelled': return '❌';
+      default: return '📋';
+    }
+  };
+
   if (loading) {
     return (
       <div className='dashboard'>
@@ -139,7 +216,7 @@ export default function Dashboard() {
   if (!user) {
     return (
       <div className='dashboard'>
-        <p>Failed to load user profile</p>
+        <p>Failed to load user dashboard</p>
       </div>
     );
   }
