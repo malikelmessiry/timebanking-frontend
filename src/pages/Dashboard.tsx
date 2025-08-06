@@ -87,7 +87,7 @@ export default function Dashboard() {
       const [allServicesData, myServicesData, bookings] = await Promise.all([
         getAllServices(token),
         getMyServices(token, user.email),
-        getBookings
+        getBookings(token)
       ]);
 
       console.log('All services loaded:', allServicesData.length);
