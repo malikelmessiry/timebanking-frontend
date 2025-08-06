@@ -284,13 +284,13 @@ export default function Dashboard() {
                   </div>
 
                   <div className='stat-card'>
-                    <h3>Total Services</h3>
-                    <p>{allServices.length}</p>
+                    <h3>My Bookings</h3>
+                    <p>{allBookings.filter(b => b.customer_email === user.email).length}</p>
                   </div>
 
                   <div className='stat-card'>
-                    <h3>Pending Requests</h3>
-                    <p>2</p>
+                    <h3>Service Requests</h3>
+                    <p>{allBookings.filter(b => b.owner_email === user.email && b.status === 'pending').length}</p>
                   </div>
                 </div>
 
@@ -392,23 +392,58 @@ export default function Dashboard() {
               <p className="section-description">Services you've booked from others</p>
               
               <div className='booking-filters'>
-                <button>Pending</button>
-                <button>Confirmed</button>
-                <button>Completed</button>
+                <button>Pending ({allBookings.filter(b => b.customer_email === user.email && b.status === 'pending').length})</button>
+                <button>Confirmed ({allBookings.filter(b => b.customer_email === user.email && b.status === 'confirmed').length})</button>
+                <button>Completed ({allBookings.filter(b => b.customer_email === user.email && b.status === 'completed').length})</button>
                 <button>Cancelled</button>
+                <button>All ({allBookings.filter(b => b.customer_email).length})</button>
               </div>
               
               <div className='bookings-list'>
-                <div className='booking-card outgoing'>
-                  <div className="request-header">
-                    <h4>No bookings yet</h4>
-                    <span className="client-badge">You booked</span>
+                {allBookings.filter(b => b.customer_email === user.email).length === 0 ? (
+                  <div className='booking-card outgoing'>
+                    <div className="request-header">
+                      <h4>No bookings yet</h4>
+                      <span className="client-badge">You booked</span>
+                    </div>
+                    <p>Browse services to make your first booking</p>
+                    <div className='booking-actions'>
+                      <Link to="/services">Browse Services</Link>
+                    </div>
                   </div>
-                  <p>Browse services to make your first booking</p>
-                  <div className='booking-actions'>
-                    <Link to="/services">Browse Services</Link>
-                  </div>
-                </div>
+                ) : (
+                  allBookings.filter(b => b.customer_email === user.email).map(b => (
+                    <div key={b.id} className='booking-card outgoing'>
+                      <div className='request-header'>
+                        <h4>{b.service_name}</h4>
+                        <span className='status-badge' style={{ backgroundColor: getStatusColor(b.status), color: 'white', padding: '4px 8px', borderRadius: '4px' }}>
+                          {getStatusIcon(b.status)} {b.status.charAt(0).toUpperCase() + b.status.slice(1)}
+                        </span>
+                      </div>
+                      <p><strong>Provider:</strong> {b.owner_first_name} ({b.owner_email})</p>
+                      <p><strong>Booked:</strong> {new Date(b.booked_at).toLocaleDateString()}</p>
+                      <p><strong>Booking ID:</strong> #{b.id}</p>
+
+                      <div className='booking-actions'>
+                        {b.status === 'pending' && (
+                          <button
+                            onClick={() => handleBookingAction(b.id, 'cancel')}
+                            disabled={actionLoading[b.id] === 'cancel'}
+                            className='cancel-btn'
+                          >
+                            {actionLoading[b.id] === 'cancel' ? '⏳ Cancelling...' : '❌ Cancel'}</button>
+                        )}
+
+                        <button
+                          onClick={() => window.open(`mailto:${b.owner_email}?subject=Booking: ${b.service_name}`)}
+                          className="contact-btn"
+                        >
+                          ✉️ Contact Provider
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           )}
