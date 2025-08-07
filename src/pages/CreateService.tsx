@@ -254,7 +254,18 @@ export default function CreateService() {
                   id="credit_required"
                   name="credit_required"
                   value={formData.credit_required}
-                  onChange={handleInputChange}
+                  // onChange={handleInputChange}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value === '') {
+                      setFormData({ ...formData, credit_required: 0 });
+                      return;
+                    }
+                    const numValue = parseFloat(value);
+                    if (!isNaN(numValue) && numValue >= 0) {
+                      setFormData({ ...formData, credit_required: numValue })
+                    }
+                  }}
                   min="0.5"
                   max="50"
                   step="0.5"
