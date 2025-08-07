@@ -163,6 +163,7 @@ export interface Service {
 export interface CreateServiceData {
   name: string;
   category: string[];
+  service_type: string;
   description: string;
   tags: string[];
   credit_required: number;

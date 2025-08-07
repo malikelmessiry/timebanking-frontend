@@ -22,6 +22,7 @@ export default function CreateService() {
   const [formData, setFormData] = useState<CreateServiceData>({
     name: '',
     category: [],
+    service_type: 'in-person',
     description: '',
     tags: [],
     credit_required: 1,
@@ -190,6 +191,40 @@ export default function CreateService() {
               <small className="hint">
                 Selected: {formData.category.join(', ') || 'None'}
               </small>
+            </div>
+
+            {/* Service Type */}
+            <div className='form-group'>
+              <label htmlFor='service_type'>Service Type *</label>
+              <div className='service-type-options'>
+                <label className='radio-option'>
+                  <input 
+                    type='radio'
+                    name='service_type'
+                    value='in-person'
+                    checked={formData.service_type === 'in-person'}
+                    onChange={(e) => setFormData({ ...formData, service_type: e.target.value })}
+                  />
+                  <span className='radio-label'>
+                    <span className='radio-icon'>🏠</span>
+                    In-Person
+                  </span>
+                </label>
+
+                <label className='radio-option'>
+                  <input
+                    type='radio'
+                    name='service_type'
+                    value='virtual'
+                    checked={formData.service_type === 'virtual'}
+                    onChange={(e) => setFormData({ ...formData, service_type: e.target.value })}
+                  />
+                  <span className='radio-label'>
+                    <span className='radio-icon'>💻</span>
+                    Virtual
+                  </span>
+                </label>
+              </div>
             </div>
 
             {/* Description */}
