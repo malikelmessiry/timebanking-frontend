@@ -254,7 +254,6 @@ export default function CreateService() {
                   id="credit_required"
                   name="credit_required"
                   value={formData.credit_required}
-                  // onChange={handleInputChange}
                   onChange={(e) => {
                     const value = e.target.value;
                     if (value === '') {
@@ -275,6 +274,15 @@ export default function CreateService() {
                 />
                 <small className="hint">
                   How many time credits per session?
+                  <span className="info-tooltip">
+                    <span className="info-icon">ℹ️</span>
+                    <span className="tooltip-text">
+                      Time credits are the currency of our platform - 1 credit is 1 hour. When someone books your service, 
+                      they'll spend this many credits from their account. You'll earn the same amount 
+                      to spend on other services. Consider the time and effort your service requires 
+                      when setting this amount.
+                    </span>
+                  </span>
                 </small>
               </div>
 
