@@ -66,7 +66,7 @@ export default function Dashboard() {
     }
   }, [user, searchParams]);
 
-  // Add a separate useEffect for loading bookings when switching to bookings tab:
+  // Separate useEffect for loading bookings when switching to bookings tab:
   useEffect(() => {
     if (user && user.id && activeTab === 'bookings') {
       loadBookings();
@@ -155,7 +155,6 @@ export default function Dashboard() {
 
     } catch (error) {
       console.error('Failed to load bookings:', error);
-      // Set empty bookings array on error
       setAllBookings([]);
     }
   };
