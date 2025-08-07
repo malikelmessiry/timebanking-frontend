@@ -25,6 +25,7 @@ export default function Services() {
   const [minCredits, setMinCredits] = useState<number>(0);
   const [maxCredits, setMaxCredits] = useState<number>(50);
   const [zipCode, setZipCode] = useState('');
+  const [city, setCity] = useState('');
   
   // View states
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -40,17 +41,19 @@ export default function Services() {
     // Handle URL parameters
     const category = searchParams.get('category');
     const zip = searchParams.get('zip_code');
+    const cityParam = searchParams.get('city');
     const search = searchParams.get('search');
     
     if (category) setSelectedCategories([category]);
     if (zip) setZipCode(zip);
+    if (cityParam) setCity(cityParam);
     if (search) setSearchTerm(search);
-  }, [searchParams, zipCode]);
+  }, [searchParams, zipCode, city]);
 
   // Apply filters whenever filter states change
   useEffect(() => {
     applyFilters();
-  }, [services, searchTerm, selectedCategories, minCredits, maxCredits, sortBy]);
+  }, [services, searchTerm, selectedCategories, minCredits, maxCredits, sortBy, city]);
 
   const loadServices = async () => {
     setLoading(true);
@@ -113,6 +116,11 @@ export default function Services() {
       service.credit_required >= minCredits && service.credit_required <= maxCredits
     );
 
+    // City filter
+    if (city.trim()) {
+      filtered = filtered.filter(service => service.city && service.city.toLowerCase().includes(city.toLowerCase()));
+    }
+
     // Sort
     filtered.sort((a, b) => {
       switch (sortBy) {
@@ -146,6 +154,7 @@ export default function Services() {
     setMinCredits(0);
     setMaxCredits(50);
     setZipCode('');
+    setCity('');
     setSearchParams({});
   };
 
@@ -217,6 +226,17 @@ export default function Services() {
                 onChange={(e) => setZipCode(e.target.value)}
                 placeholder="zip code"
                 className="zip-input"
+              />
+            </div>
+
+            {/* City */}
+            <div className='filter-group'>
+              <input
+                type="text"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                placeholder='city'
+                className='city-input'
               />
             </div>
 

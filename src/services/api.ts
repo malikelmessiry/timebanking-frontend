@@ -140,56 +140,61 @@ export const logoutUser = async (token: string) => {
 
 // Service Types
 export interface Service {
-    id: number;
-    name: string;
-    category: string[];
-    description: string;
-    tags: string[];
-    credit_required: number;
-    created_at: string;
-    is_available: boolean;
-    average_rating: number;
-    total_sessions: number;
-    remaining_sessions: number;
-    owner: number;
-    owner_email: string;
+  id: number;
+  name: string;
+  category: string[];
+  service_type: string;
+  description: string;
+  zip_code: string;
+  city: string;
+  tags: string[];
+  credit_required: number;
+  created_at: string;
+  is_available: boolean;
+  average_rating: number;
+  total_sessions: number;
+  remaining_sessions: number;
+  owner: number;
+  owner_email: string;
+  latitude: number;
+  longitude: number;
 }
 
 export interface CreateServiceData {
-    name: string;
-    category: string[];
-    description: string;
-    tags: string[];
-    credit_required: number;
-    total_sessions?: number;
+  name: string;
+  category: string[];
+  description: string;
+  tags: string[];
+  credit_required: number;
+  total_sessions?: number;
 }
 
 // Get all services
 export const getAllServices = async (token: string) => {
-    try {
-        const res = await fetch(`${BASE_URL}/services/`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Token ${token}`,
-            },
-        });
+  try {
+    const res = await fetch(`${BASE_URL}/services/`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`,
+    },
+  });
 
-        if (!res.ok) {
-            if (res.status === 401) {
-                throw new Error('Session expired. Please log in again.');
-            } else if (res.status >= 500) {
-                throw new Error('Server error. Please try again later.');
-            } else {
-                throw new Error('Failed to load services');
-            }
-        }
-
-        return await res.json();
-    } catch (error) {
-        console.error('Get services error:', error);
-        throw error;
+  if (!res.ok) {
+    if (res.status === 401) {
+      throw new Error('Session expired. Please log in again.');
+    } else if (res.status >= 500) {
+      throw new Error('Server error. Please try again later.');
+    } else {
+      throw new Error('Failed to load services');
     }
+  }
+
+    return await res.json();
+  } catch (error) {
+      console.error('Get services error:', error);
+      throw error;
+  }
 };
 
 // Get service by ID
