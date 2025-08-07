@@ -6,6 +6,7 @@ import Profile from './pages/Profile';
 import CreateService from './pages/CreateService';
 import Services from './pages/Services';
 import ServiceDetail from './pages/ServiceDetail';
+import EditService from './pages/EditService';
 import './styles/App.css';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path="/services/create" element={<CreateService />} />
           <Route path="/services" element={<Services />} />
           <Route path="/services/:id" element={<ServiceDetail />} />
+          <Route path="/services/:id/edit" element={<EditService />} />
         </Routes>
       </div>
     </Router>
