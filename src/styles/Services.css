@@ -215,24 +215,6 @@
   font-size: 12px;
 }
 
-/* Availability Filter */
-.availability-filter {
-  display: flex !important;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  margin-bottom: 0 !important;
-}
-
-.availability-filter input[type="checkbox"] {
-  accent-color: #72ac43;
-}
-
-.availability-filter span {
-  color: #632713;
-  font-size: 13px;
-}
-
 /* Services Main Content */
 .services-main {
   display: flex;
