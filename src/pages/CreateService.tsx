@@ -26,7 +26,12 @@ export default function CreateService() {
     description: '',
     tags: [],
     credit_required: 0.5,
-    total_sessions: 10
+    total_sessions: 10,
+    city: '',
+    zip_code: '',
+    latitude: 0,
+    longitude: 0,
+    is_available: true,
   });
 
   const [loading, setLoading] = useState(false);

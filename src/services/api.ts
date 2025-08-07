@@ -168,6 +168,11 @@ export interface CreateServiceData {
   tags: string[];
   credit_required: number;
   total_sessions?: number;
+  zip_code: string;
+  city: string;
+  is_available: boolean;
+  latitude: number;
+  longitude: number;
 }
 
 // Get all services
