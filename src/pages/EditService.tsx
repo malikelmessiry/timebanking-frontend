@@ -23,7 +23,7 @@ export default function EditService() {
     service_type: 'in-person',
     description: '',
     tags: [],
-    credit_required: 1,
+    credit_required: 0.5,
     total_sessions: 10,
     city: '',
     zip_code: '',
@@ -87,7 +87,7 @@ export default function EditService() {
     if (name === 'credit_required') {
       setFormData(prev => ({
         ...prev,
-        [name]: parseInt(value) || 0
+        [name]: parseFloat(value) || 0
       }));
     } else if (name === 'total_sessions') {
       setFormData(prev => ({
@@ -161,7 +161,7 @@ export default function EditService() {
       setError('Service description is required');
       return;
     }
-    if (formData.credit_required < 1) {
+    if (formData.credit_required < 0.5) {
       setError('Credit required must be at least 1');
       return;
     }
@@ -371,11 +371,11 @@ export default function EditService() {
                   name="credit_required"
                   value={formData.credit_required}
                   onChange={handleInputChange}
-                  min="1"
+                  min="0.5"
                   max="50"
-                  step="1"
+                  step="0.5"
                   className="form-input"
-                  placeholder="2"
+                  placeholder="1.5"
                   required
                 />
               </div>
