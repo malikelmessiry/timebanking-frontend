@@ -94,6 +94,22 @@ export default function ServiceCard({
           )}
         </div>
 
+        {/* Service Type */}
+        <div className='service-meta'>
+          <div className='service-categories'>
+            {service.category.map((cat, index) => (
+              <span key={index} className='category-tag'>{cat}</span>
+            ))}
+          </div>
+
+          <div className='service-type'>
+            <span className={`service-type-badge ${service.service_type}`}>
+              {service.service_type === 'virtual' ? '💻' : '🏠'}
+              {service.service_type === 'virtual' ? 'Virtual' : 'In-Person'}
+            </span>
+          </div>
+        </div>
+
         {/* Tags */}
         {service.tags.length > 0 && (
           <div className="service-tags">
