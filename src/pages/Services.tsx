@@ -26,6 +26,7 @@ export default function Services() {
   const [maxCredits, setMaxCredits] = useState<number>(50);
   const [zipCode, setZipCode] = useState('');
   const [city, setCity] = useState('');
+  const [selectedServiceType, setSelectedServiceType] = useState<string>('all');
   
   // View states
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -53,7 +54,7 @@ export default function Services() {
   // Apply filters whenever filter states change
   useEffect(() => {
     applyFilters();
-  }, [services, searchTerm, selectedCategories, minCredits, maxCredits, sortBy, city]);
+  }, [services, searchTerm, selectedCategories, minCredits, maxCredits, sortBy, city, selectedServiceType]);
 
   const loadServices = async () => {
     setLoading(true);
@@ -121,6 +122,11 @@ export default function Services() {
       filtered = filtered.filter(service => service.city && service.city.toLowerCase().includes(city.toLowerCase()));
     }
 
+    // Service type filter
+    if (selectedServiceType !== 'all') {
+      filtered = filtered.filter(service => service.service_type === selectedServiceType);
+    }
+
     // Sort
     filtered.sort((a, b) => {
       switch (sortBy) {
@@ -155,6 +161,7 @@ export default function Services() {
     setMaxCredits(50);
     setZipCode('');
     setCity('');
+    setSelectedServiceType('all');
     setSearchParams({});
   };
 
@@ -278,6 +285,43 @@ export default function Services() {
                   max="50"
                   placeholder="Max"
                 />
+              </div>
+            </div>
+
+            {/* Service Type Filter */}
+            <div className="filter-group">
+              <label>Service Type</label>
+              <div className="service-type-filter">
+                <label className="filter-option">
+                  <input
+                    type="radio"
+                    name="serviceType"
+                    value="all"
+                    checked={selectedServiceType === 'all'}
+                    onChange={(e) => setSelectedServiceType(e.target.value)}
+                  />
+                  <span>All</span>
+                </label>
+                <label className="filter-option">
+                  <input
+                    type="radio"
+                    name="serviceType"
+                    value="in-person"
+                    checked={selectedServiceType === 'in-person'}
+                    onChange={(e) => setSelectedServiceType(e.target.value)}
+                  />
+                  <span>🏠 In-Person</span>
+                </label>
+                <label className="filter-option">
+                  <input
+                    type="radio"
+                    name="serviceType"
+                    value="virtual"
+                    checked={selectedServiceType === 'virtual'}
+                    onChange={(e) => setSelectedServiceType(e.target.value)}
+                  />
+                  <span>💻 Virtual</span>
+                </label>
               </div>
             </div>
           </div>
