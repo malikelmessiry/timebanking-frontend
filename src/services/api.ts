@@ -346,7 +346,7 @@ export const getMyServices = async (token: string, userEmail: string): Promise<S
 };
 
 // Get services by zip code 
-export const getServicesByZipCode = async (token: string, zipCode: string) => {
+export const getServicesByZipCode = async (token: string, zipCode: string): Promise<Service[]> => {
   try {
     const res = await fetch(`${BASE_URL}/services/?zip_code=${zipCode}`, {
         method: 'GET',

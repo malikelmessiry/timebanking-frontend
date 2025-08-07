@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { getAllServices, getServiceById } from '../services/api';
+import { getAllServices, getServiceById, getServicesByZipCode } from '../services/api';
 import type { Service } from '../services/api';
-// TODO: In the future, implement getServicesByZipCode in ../services/api for zip code filtering
 import ServiceCard from '../components/ServiceCard';
 import Navbar from '../components/Navbar';
 import '../styles/Services.css';
@@ -46,12 +45,12 @@ export default function Services() {
     if (category) setSelectedCategories([category]);
     if (zip) setZipCode(zip);
     if (search) setSearchTerm(search);
-  }, [searchParams]);
+  }, [searchParams, zipCode]);
 
   // Apply filters whenever filter states change
   useEffect(() => {
     applyFilters();
-  }, [services, searchTerm, selectedCategories, minCredits, maxCredits, zipCode, sortBy]);
+  }, [services, searchTerm, selectedCategories, minCredits, maxCredits, sortBy]);
 
   const loadServices = async () => {
     setLoading(true);
@@ -71,6 +70,9 @@ export default function Services() {
       if (serviceId) {
         const service = await getServiceById(token, Number(serviceId));
         servicesData = service ? [service] : [];
+      } else if (zipCode.trim()) {
+        console.log('Filtering services by zip code:', zipCode);
+        servicesData = await getServicesByZipCode(token, zipCode);
       } else {
         servicesData = await getAllServices(token);
       }
@@ -196,24 +198,24 @@ export default function Services() {
 
             {/* Search */}
             <div className="filter-group">
-              <label>Search Services</label>
+              <label>search by...</label>
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search by name, description, or tags..."
+                placeholder="name, description, or tags..."
                 className="search-input"
               />
             </div>
 
             {/* Zip Code */}
             <div className="filter-group">
-              <label>Location (Zip Code)</label>
+              {/* <label>Location (Zip Code)</label> */}
               <input
                 type="text"
                 value={zipCode}
                 onChange={(e) => setZipCode(e.target.value)}
-                placeholder="Enter zip code"
+                placeholder="zip code"
                 className="zip-input"
               />
             </div>
