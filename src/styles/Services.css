@@ -131,7 +131,7 @@
 }
 
 .search-input,
-.zip-input {
+.zip-input, .city-input {
   width: 100%;
   padding: 12px;
   border: 2px solid rgba(99, 39, 19, 0.2);
@@ -143,7 +143,7 @@
 }
 
 .search-input:focus,
-.zip-input:focus {
+.zip-input:focus, .city-input:focus {
   outline: none;
   border-color: #f8a91f;
   background: rgba(248, 169, 31, 0.1);
@@ -151,7 +151,7 @@
 }
 
 .search-input::placeholder,
-.zip-input::placeholder {
+.zip-input::placeholder, .city-input:placeholder {
   color: rgba(99, 39, 19, 0.5);
   font-style: italic;
 }
