@@ -176,30 +176,24 @@ export interface CreateServiceData {
 }
 
 // Get all services
-export const getAllServices = async (token: string) => {
+export const getAllServices = async (token: string): Promise<Service[]> => {
   try {
     const res = await fetch(`${BASE_URL}/services/`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Token ${token}`,
-    },
-  });
+      },
+    });
 
-  if (!res.ok) {
-    if (res.status === 401) {
-      throw new Error('Session expired. Please log in again.');
-    } else if (res.status >= 500) {
-      throw new Error('Server error. Please try again later.');
-    } else {
-      throw new Error('Failed to load services');
+    if (!res.ok) {
+      throw new Error('Failed to get services');
     }
-  }
 
     return await res.json();
   } catch (error) {
-      console.error('Get services error:', error);
-      throw error;
+    console.error('Get all services error:', error);
+    throw error;
   }
 };
 
@@ -342,18 +336,16 @@ export const deleteService = async (token: string, serviceId: number) => {
 
 // Get user's own services (my services)
 export const getMyServices = async (token: string, userEmail: string): Promise<Service[]> => {
-    try {
-        console.log('🔍 Getting my services for email:', userEmail);
-        
-        const allServices = await getAllServices(token);
-        const myServices = allServices.filter((service: Service) => service.owner_email === userEmail);
-        
-        console.log('Found', myServices.length, 'services for user');
-        return myServices;
-    } catch (error) {
-        console.error('Get my services error:', error);
-        throw error;
-    }
+  try {    
+    // Get user profile to get the ID
+    const userProfile = await getUserProfile(token);    
+    const myServices = await getServicesByOwner(token, userProfile.id);
+    
+    return myServices;
+  } catch (error) {
+    console.error('Get my services error:', error);
+    throw error;
+  }
 };
 
 // Get services by zip code 
@@ -405,52 +397,22 @@ export interface CreateBookingRequest {
 }
 
 // Get all bookings
-export const getBookings = async (token: string): Promise<Booking[]> => {
-  try {
-    // Get user profile to get email
-    const userProfile = await getUserProfile(token);
-    const userEmail = userProfile.email;
+export const getBookings = async (token: string, queryParams: string): Promise<Booking[]> => {
+  try {    
+    const res = await fetch(`${BASE_URL}/bookings/?${queryParams}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`,
+      },
+    });
 
-    if (!userEmail) {
-        throw new Error('User email not found in profile');
+    if (!res.ok) {
+      throw new Error(`Failed to get bookings: ${res.status}`);
     }
-
-    console.log('🔍 Getting bookings for user email:', userEmail);
-
-    const possibleEndpoints = [
-        `${BASE_URL}/bookings/?owner_email=${userEmail}`,
-    ];
-
-    let allBookings: Booking[] = [];
     
-    for (const endpoint of possibleEndpoints) {
-        try {
-            console.log('🔍 Trying bookings endpoint:', endpoint);
-            const res = await fetch(endpoint, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Token ${token}`,
-                },
-            });
-            
-            if (res.ok) {
-                const bookings = await res.json();
-                allBookings = [...allBookings, ...bookings];
-                console.log('✅ Bookings loaded from endpoint:', endpoint, bookings.length);
-            }
-        } catch (err) {
-            console.log('Endpoint failed:', endpoint, err);
-        }
-    }
-
-    // Remove duplicates
-    const uniqueBookings = allBookings.filter((booking, index, self) => 
-        index === self.findIndex(b => b.id === booking.id)
-    );
-
-    console.log('✅ Total unique bookings loaded:', uniqueBookings.length);
-    return uniqueBookings;
+    const bookings = await res.json();
+    return bookings;
   } catch (error) {
     console.error('Get bookings error:', error);
     throw error;
@@ -609,3 +571,32 @@ export const completeBooking = async (token: string, bookingId: number): Promise
 //         throw error;
 //     }
 // };
+
+// Get services by owner
+export const getServicesByOwner = async (token: string, ownerId: number): Promise<Service[]> => {
+  try {    
+    const res = await fetch(`${BASE_URL}/services/?owner_id=${ownerId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`,
+      },
+    });
+
+    if (!res.ok) {
+      if (res.status === 401) {
+        throw new Error('Session expired. Please log in again.');
+      } else if (res.status >= 500) {
+        throw new Error('Server error. Please try again later.');
+      } else {
+        throw new Error('Failed to get services by owner');
+      }
+    }
+
+    const services = await res.json();
+    return services;
+  } catch (error) {
+    console.error('Get services by owner error:', error);
+    throw error;
+  }
+};

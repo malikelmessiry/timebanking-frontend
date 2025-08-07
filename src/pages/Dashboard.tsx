@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { getUserProfile, getAllServices, getMyServices, deleteService, getBookings, confirmBooking, cancelBooking, completeBooking } from '../services/api';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { getUserProfile, getAllServices, getMyServices, deleteService, getBookings, confirmBooking, cancelBooking, completeBooking, getServicesByOwner } from '../services/api';
 import type { Service, Booking } from '../services/api';
 import Navbar from '../components/Navbar';
 import '../styles/Dashboard.css';
 
 interface User {
-  id?: number; 
+  id: number; 
   first_name: string;
   last_name: string;
   email: string; 
@@ -30,6 +30,7 @@ export default function Dashboard() {
   const [actionLoading, setActionLoading] = useState<{ [key: number]: string }>({});
 
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     const loadUserProfile = async () => {
@@ -63,11 +64,26 @@ export default function Dashboard() {
       console.error('User profile missing email:', user);
       setServicesError('User profile is missing email. Please log out and log back in.');
     }
-  }, [user]);
+  }, [user, searchParams]);
+
+  // Add a separate useEffect for loading bookings when switching to bookings tab:
+  useEffect(() => {
+    if (user && user.id && activeTab === 'bookings') {
+      loadBookings();
+    }
+  }, [user, activeTab]);
+
+  // Handle tab switching from URL:
+  useEffect(() => {
+    const tab = searchParams.get('tab') as DashboardTab;
+    if (tab && ['overview', 'services', 'bookings', 'messages', 'history'].includes(tab)) {
+      setActiveTab(tab);
+    }
+  }, [searchParams]);
 
   const loadAllServicesData = async () => {
-    if (!user || !user.email) { 
-      setServicesError('User email is required to load services');
+    if (!user || !user.id) { 
+      setServicesError('User ID is required to load services');
       return;
     }
 
@@ -82,21 +98,14 @@ export default function Dashboard() {
         return;
       }
 
-      console.log('🔍 Loading services for user email:', user.email);
-
-      const [allServicesData, myServicesData, bookings] = await Promise.all([
-        getAllServices(token),
-        getMyServices(token, user.email),
-        getBookings(token)
+      const [allServicesData, myServicesData] = await Promise.all([
+        getAllServices(token), // excludes my services
+        getServicesByOwner(token, user.id), // my services
       ]);
-
-      console.log('All services loaded:', allServicesData.length);
-      console.log('My services loaded:', myServicesData.length);
-      console.log('Bookings loaded:', bookings.length);
 
       setAllServices(allServicesData);
       setMyServices(myServicesData);
-      setAllBookings(bookings);
+
     } catch (error) {
       console.error('Services loading error:', error);
       const errorMessage = typeof error === 'object' && error !== null && 'message' in error
@@ -111,6 +120,43 @@ export default function Dashboard() {
       }
     } finally {
       setServicesLoading(false);
+    }
+  };
+
+  const loadBookings = async () => {
+    if (!user || !user.id) {
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        navigate('/auth');
+        return;
+      }
+
+      // Get both bookings where user is owner and customer
+      const [ownerBookings, customerBookings] = await Promise.all([
+        getBookings(token, `owner_id=${user.id}`).catch(err => {
+          return []; // Return empty array if fails
+        }),
+        getBookings(token, `customer_id=${user.id}`).catch(err => {
+          return []; // Return empty array if fails
+        })
+      ]);
+
+      // Combine and deduplicate bookings
+      const allBookingsData = [...ownerBookings, ...customerBookings];
+      const uniqueBookings = allBookingsData.filter((booking, index, self) => 
+        index === self.findIndex(b => b.id === booking.id)
+      );
+
+      setAllBookings(uniqueBookings);
+
+    } catch (error) {
+      console.error('Failed to load bookings:', error);
+      // Set empty bookings array on error
+      setAllBookings([]);
     }
   };
 
@@ -174,8 +220,8 @@ export default function Dashboard() {
       alert(`🎉 Booking ${actionText} successfully!\n\nBooking ID: #${updatedBooking.id}\nNew Status: ${updatedBooking.status}`);
 
     } catch (error: any) {
-      console.error(`❌ Failed to ${action} booking:`, error);
-      alert(`❌ Failed to ${action} booking\n\n${error.message}`);
+      console.error(`Failed to ${action} booking:`, error);
+      alert(`Failed to ${action} booking\n\n${error.message}`);
     } finally {
       setActionLoading(prev => {
         const newState = { ...prev };

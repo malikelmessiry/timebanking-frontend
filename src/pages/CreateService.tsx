@@ -132,9 +132,9 @@ export default function CreateService() {
       console.log('✅ Service created:', newService);
       
       alert('Service created successfully!');
-      navigate('/dashboard?tab=services');
+      navigate('/dashboard?tab=services&refresh=' + Date.now());
     } catch (error: any) {
-      console.error('❌ Failed to create service:', error);
+      console.error('Failed to create service:', error);
       setError(error.message || 'Failed to create service');
     } finally {
       setLoading(false);
