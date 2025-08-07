@@ -274,6 +274,7 @@ export default function Services() {
                   onChange={(e) => setMinCredits(parseInt(e.target.value) || 0)}
                   min="0"
                   max="50"
+                  step="0.5"
                   placeholder="Min"
                 />
                 <span>to</span>
@@ -283,6 +284,7 @@ export default function Services() {
                   onChange={(e) => setMaxCredits(parseInt(e.target.value) || 50)}
                   min="0"
                   max="50"
+                  step="0.5"
                   placeholder="Max"
                 />
               </div>

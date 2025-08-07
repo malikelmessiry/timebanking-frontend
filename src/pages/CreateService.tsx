@@ -25,7 +25,7 @@ export default function CreateService() {
     service_type: 'in-person',
     description: '',
     tags: [],
-    credit_required: 1,
+    credit_required: 0.5,
     total_sessions: 10
   });
 
@@ -255,8 +255,11 @@ export default function CreateService() {
                   name="credit_required"
                   value={formData.credit_required}
                   onChange={handleInputChange}
-                  min="1"
+                  min="0.5"
                   max="50"
+                  step="0.5"
+                  className="form-input"
+                  placeholder="1.5"
                   required
                 />
                 <small className="hint">

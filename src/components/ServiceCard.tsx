@@ -47,7 +47,9 @@ export default function ServiceCard({
         <div className="service-header">
           <h3 className="service-name">{service.name}</h3>
           <div className="service-credit">
-            <span className="credit-amount">{service.credit_required}</span>
+            <span className="credit-amount">{service.credit_required % 1 === 0
+              ? service.credit_required.toString()
+              : service.credit_required.toFixed(1)}</span>
             <span className="credit-label">credits</span>
           </div>
         </div>
