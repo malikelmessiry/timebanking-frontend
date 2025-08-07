@@ -105,8 +105,8 @@ export default function CreateService() {
       setError('Service description is required');
       return;
     }
-    if (formData.credit_required < 1) {
-      setError('Credit required must be at least 1');
+    if (formData.credit_required < 0.5) {
+      setError('Credit required must be at least 0.5');
       return;
     }
     if (formData.total_sessions && formData.total_sessions < 1) {
