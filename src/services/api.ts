@@ -420,41 +420,51 @@ export const getBookings = async (token: string, queryParams: string): Promise<B
 }
 
 // Create a booking
-export const createBooking = async (token: string, serviceId: number): Promise<Booking> => {
-    try {
-        const res = await fetch(`${BASE_URL}/bookings/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Token ${token}`,
-            },
-            body: JSON.stringify({ service_id: serviceId }),
-        });
+export const createBooking = async (token: string, serviceId: number) => {
+  try {    
+    const res = await fetch(`${BASE_URL}/bookings/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`,
+      },
+      body: JSON.stringify({ service_id: serviceId }),
+    });
 
-        if (!res.ok) {
-            if (res.status === 401) {
-                throw new Error('Session expired. Please log in again.');
-            } else if (res.status === 400) {
-                const errorData = await res.json().catch(() => ({}));
-                // Handle specific booking errors
-                if (errorData.detail?.includes('credits')) {
-                    throw new Error('Insufficient credits to book this service');
-                } else if (errorData.detail?.includes('sessions')) {
-                    throw new Error('No sessions available for this service');
-                } else {
-                    throw new Error(errorData.detail || 'Unable to book this service');
-                }
-            } else {
-                const errorData = await res.json().catch(() => ({}));
-                throw new Error(errorData.detail || errorData.message || 'Failed to create booking');
-            }
+    if (!res.ok) {
+      // Get the actual error details from backend
+      const errorData = await res.json().catch(() => ({ error: 'Unknown error' }));
+      
+      if (res.status === 400) {
+        // Handle validation errors
+        const errorMessages = [];
+        for (const [field, messages] of Object.entries(errorData)) {
+          if (Array.isArray(messages)) {
+            errorMessages.push(`${field}: ${messages.join(', ')}`);
+          } else if (typeof messages === 'string') {
+            errorMessages.push(`${field}: ${messages}`);
+          }
         }
-
-        return await res.json();
-    } catch (error) {
-        console.error('Create booking error:', error);
-        throw error;
+        throw new Error(errorMessages.join('. ') || 'Invalid booking data');
+      } else if (res.status === 401) {
+        throw new Error('Session expired. Please log in again.');
+      } else if (res.status === 403) {
+        throw new Error('Permission denied. You cannot book this service.');
+      } else if (res.status === 404) {
+        throw new Error('Service not found.');
+      } else if (res.status >= 500) {
+        throw new Error('Server error. Please try again later.');
+      } else {
+        throw new Error(`HTTP ${res.status}: ${errorData.detail || errorData.message || 'Failed to create booking'}`);
+      }
     }
+
+    const booking = await res.json();
+    return booking;
+  } catch (error) {
+    console.error('❌ Create booking error:', error);
+    throw error;
+  }
 };
 
 // Cancel a booking

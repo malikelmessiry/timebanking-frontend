@@ -25,7 +25,6 @@ export default function ServiceDetail() {
   const [bookingLoading, setBookingLoading] = useState(false);
 
   useEffect(() => {
-    console.log('ServiceDetail mounted, id:', id);
     if (id) {
       loadServiceDetails();
       loadCurrentUser();
@@ -36,18 +35,14 @@ export default function ServiceDetail() {
   }, [id]);
 
   const loadServiceDetails = async () => {
-    console.log('Loading service details for ID:', id);
     try {
       const token = localStorage.getItem('authToken');
       if (!token) {
-        console.log('No auth token found, redirecting to auth');
         navigate('/auth');
         return;
       }
 
-      console.log('Fetching service by ID:', id);
       const serviceData = await getServiceById(token, Number(id));
-      console.log('✅ Service loaded:', serviceData);
       
       setService(serviceData);
     } catch (error: any) {
@@ -60,18 +55,14 @@ export default function ServiceDetail() {
     try {
       const token = localStorage.getItem('authToken');
       if (!token) {
-        console.log('No token for user profile');
         setLoading(false);
         return;
       }
 
-      console.log('Loading current user...');
       const user = await getUserProfile(token);
-      console.log('✅ Current user loaded:', user.email);
       setCurrentUser(user);
     } catch (error) {
       console.error('❌ Failed to load user profile:', error);
-      // Don't set error here, just continue without user profile
     } finally {
       setLoading(false);
     }
@@ -111,16 +102,18 @@ export default function ServiceDetail() {
         throw new Error('Please log in to book services');
       }
 
-      console.log('🎯 Creating booking for service:', service.id);
       const booking = await createBooking(token, service.id);
-      console.log('✅ Booking created successfully:', booking);
       
+      // Safely handle the status
+      const statusText = booking?.status 
+        ? booking.status.charAt(0).toUpperCase() + booking.status.slice(1)
+        : 'Pending';
+
       // Show success message with booking details
       alert(
         `🎉 Booking Successful!\n\n` +
         `Service: ${service.name}\n` +
-        `Booking ID: #${booking.id}\n` +
-        `Status: ${booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}\n\n` +
+        `Status: ${statusText}\n\n` +
         `The provider (${service.owner_email}) will be notified and will contact you soon to arrange the session details.\n\n` +
         `You can view your booking status in your dashboard.`
       );
@@ -153,12 +146,8 @@ export default function ServiceDetail() {
     const body = encodeURIComponent(`Hi,\n\nI'm interested in your service "${service.name}". Could you please provide more details about:\n\n- When you're available\n- What's included in the session\n- Any preparation needed\n\nThanks!\n\nBest regards`);
     
     const mailtoLink = `mailto:${service.owner_email}?subject=${subject}&body=${body}`;
-    console.log('📧 Opening email to:', service.owner_email);
     window.open(mailtoLink);
   };
-
-  // Add debug info
-  console.log('🔄 ServiceDetail render - loading:', loading, 'error:', error, 'service:', service?.name);
 
   if (loading) {
     return (
