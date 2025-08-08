@@ -463,6 +463,147 @@
   border-color: #72ac43;
 }
 
+/* History Section Styles */
+.history-section {
+  max-width: 800px;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.history-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+}
+
+.history-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.history-card.service_provided {
+  border-left: 4px solid #72ac43; /* Green for earned credits */
+}
+
+.history-card.service_received {
+  border-left: 4px solid #4a90e2; /* Blue for spent credits */
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.history-header h4 {
+  margin: 0;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.transaction-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.transaction-type {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.transaction-type.service_provided {
+  background: #e8f5e8;
+  color: #2d5016;
+}
+
+.transaction-type.service_received {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.credits-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: #f5f5f5;
+  color: #333;
+  white-space: nowrap;
+}
+
+.history-details {
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.history-details p {
+  margin: 4px 0;
+  color: #666;
+}
+
+.received-review, .given-review {
+  background: #f8f9fa;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-top: 8px;
+}
+
+.received-review {
+  border-left: 3px solid #72ac43;
+}
+
+.given-review {
+  border-left: 3px solid #4a90e2;
+}
+
+.history-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.contact-btn.small, .view-service-btn.small {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.contact-btn.small {
+  background: #f8f9fa;
+  color: #666;
+  border: 1px solid #ddd;
+}
+
+.contact-btn.small:hover {
+  background: #e9ecef;
+}
+
+.view-service-btn.small {
+  background: #4a90e2;
+  color: white;
+}
+
+.view-service-btn.small:hover {
+  background: #357abd;
+}
+
 /* Responsive design for mobile */
 @media (max-width: 768px) {
   .modal-content {
@@ -484,5 +625,19 @@
   
   .modal-actions button {
     width: 100%;
+  }
+  
+  .history-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .transaction-badges {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  .history-actions {
+    justify-content: flex-start;
   }
 }

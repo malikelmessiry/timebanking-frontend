@@ -676,8 +676,119 @@ export default function Dashboard() {
           {activeTab === 'history' && (
             <div className='history-section'>
               <h2>Transaction History</h2>
+              <p>All your completed services and bookings</p>
+              
               <div className='history-list'>
-                <p>No transaction history yet</p>
+                {(() => {
+                  // Get all completed transactions
+                  const completedServiceRequests = allBookings.filter(b => 
+                    b.owner_email === user.email && b.status === 'completed'
+                  );
+                  const completedBookings = allBookings.filter(b => 
+                    b.customer_email === user.email && b.status === 'completed'
+                  );
+
+                  // Combine and sort by completion date
+                  const allCompletedTransactions = [
+                    ...completedServiceRequests.map(booking => ({
+                      ...booking,
+                      transaction_type: 'service_provided' as const,
+                      credits_earned: myServices.find(s => s.name === booking.service_name)?.credit_required || 0
+                    })),
+                    ...completedBookings.map(booking => ({
+                      ...booking,
+                      transaction_type: 'service_received' as const,
+                      credits_spent: allServices.find(s => s.name === booking.service_name)?.credit_required || 
+                                    myServices.find(s => s.name === booking.service_name)?.credit_required || 0
+                    }))
+                  ].sort((a, b) => 
+                    new Date(b.completed_at || b.booked_at).getTime() - 
+                    new Date(a.completed_at || a.booked_at).getTime()
+                  );
+
+                  if (allCompletedTransactions.length === 0) {
+                    return (
+                      <div className="empty-state">
+                        <p>No completed transactions yet</p>
+                        <p>Complete services or bookings to see your history here</p>
+                      </div>
+                    );
+                  }
+
+                  return allCompletedTransactions.map((transaction) => (
+                    <div key={`${transaction.transaction_type}-${transaction.id}`} className={`history-card ${transaction.transaction_type}`}>
+                      <div className="history-header">
+                        <h4>{transaction.service_name}</h4>
+                        <div className="transaction-badges">
+                          <span className={`transaction-type ${transaction.transaction_type}`}>
+                            {transaction.transaction_type === 'service_provided' ? '💼 Service Provided' : '🛍️ Service Received'}
+                          </span>
+                          <span className="credits-badge">
+                            {transaction.transaction_type === 'service_provided' 
+                              ? `+${transaction.credits_earned} credits`
+                              : `-${transaction.credits_spent} credits`
+                            }
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <div className="history-details">
+                        <p>
+                          <strong>
+                            {transaction.transaction_type === 'service_provided' ? 'Customer:' : 'Provider:'}
+                          </strong> 
+                          {transaction.transaction_type === 'service_provided' 
+                            ? `${transaction.customer_first_name} (${transaction.customer_email})`
+                            : `${transaction.owner_first_name} (${transaction.owner_email})`
+                          }
+                        </p>
+                        <p><strong>Completed:</strong> {new Date(transaction.completed_at || transaction.booked_at).toLocaleDateString()}</p>
+                        
+                        {/* Show rating and review for services you provided */}
+                        {transaction.transaction_type === 'service_provided' && transaction.customer_rating && (
+                          <div className="received-review">
+                            <p><strong>Rating received:</strong> ⭐ {transaction.customer_rating}/5</p>
+                            {transaction.customer_review && (
+                              <p><strong>Review:</strong> "{transaction.customer_review}"</p>
+                            )}
+                          </div>
+                        )}
+                        
+                        {/* Show rating and review for services you received */}
+                        {transaction.transaction_type === 'service_received' && transaction.customer_rating && (
+                          <div className="given-review">
+                            <p><strong>Your rating:</strong> ⭐ {transaction.customer_rating}/5</p>
+                            {transaction.customer_review && (
+                              <p><strong>Your review:</strong> "{transaction.customer_review}"</p>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                      
+                      <div className="history-actions">
+                        <button
+                          onClick={() => window.open(`mailto:${
+                            transaction.transaction_type === 'service_provided' 
+                              ? transaction.customer_email 
+                              : transaction.owner_email
+                          }?subject=Follow-up: ${transaction.service_name}`)}
+                          className="contact-btn small"
+                        >
+                          ✉️ Contact
+                        </button>
+                        
+                        {transaction.transaction_type === 'service_provided' && (
+                          <Link 
+                            to={`/services/${myServices.find(s => s.name === transaction.service_name)?.id}`}
+                            className="view-service-btn small"
+                          >
+                            👁️ View Service
+                          </Link>
+                        )}
+                      </div>
+                    </div>
+                  ));
+                })()}
               </div>
             </div>
           )}
