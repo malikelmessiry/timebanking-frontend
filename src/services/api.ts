@@ -462,7 +462,7 @@ export const createBooking = async (token: string, serviceId: number) => {
     const booking = await res.json();
     return booking;
   } catch (error) {
-    console.error('❌ Create booking error:', error);
+    console.error('Create booking error:', error);
     throw error;
   }
 };
@@ -614,14 +614,22 @@ export const getServicesByOwner = async (token: string, ownerId: number): Promis
 // Add reviews
 export const completeBookingWithReview = async (token: string, bookingId: number, rating: number, review?: string) => {
   try {
-    const body: any = { 
+    // mark booking as completed using backend endpoint
+    console.log('🎯 Step 1: Marking booking as completed...');
+    const completedBooking = await completeBooking(token, bookingId);
+    console.log('✅ Step 1 completed:', completedBooking);
+
+    // add review and rating
+    console.log('🎯 Step 2: Adding review and rating...');
+    const reviewBody: any = { 
       customer_rating: rating,
-      status: 'completed'
     };
     
     if (review && review.trim()) {
-      body.customer_review = review.trim();
+      reviewBody.customer_review = review.trim();
     }
+
+    console.log('🎯 Sending review PATCH request:', reviewBody);
 
     const res = await fetch(`${BASE_URL}/bookings/${bookingId}/`, {
       method: 'PATCH',
@@ -629,26 +637,18 @@ export const completeBookingWithReview = async (token: string, bookingId: number
         'Content-Type': 'application/json',
         'Authorization': `Token ${token}`,
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(reviewBody),
     });
 
     if (!res.ok) {
-      if (res.status === 400) {
-        throw new Error('Invalid review data');
-      } else if (res.status === 401) {
-        throw new Error('Session expired. Please log in again.');
-      } else if (res.status === 403) {
-        throw new Error('You can only review your own bookings');
-      } else if (res.status === 404) {
-        throw new Error('Booking not found');
-      } else if (res.status >= 500) {
-        throw new Error('Server error. Please try again later.');
-      } else {
-        throw new Error('Failed to submit review');
-      }
+      const errorData = await res.json().catch(() => ({ error: 'Unknown error' }));
+      console.log('Error response data:', errorData);
+      throw new Error(`Failed to add review: ${errorData.detail || errorData.message || 'Unknown error'}`);
     }
 
-    return await res.json();
+    const updatedBooking = await res.json();
+    
+    return updatedBooking;
   } catch (error) {
     console.error('Complete booking with review error:', error);
     throw error;
