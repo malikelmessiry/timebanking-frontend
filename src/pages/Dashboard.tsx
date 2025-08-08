@@ -434,9 +434,7 @@ export default function Dashboard() {
                       <p>{service.description}</p>
                       <div className="service-meta">
                         <span className='rate'>
-                          {service.credit_required % 1 === 0 
-                            ? service.credit_required 
-                            : service.credit_required.toFixed(1)
+                          {service.credit_required
                           } credits
                         </span>
                         <span className='rating'>
