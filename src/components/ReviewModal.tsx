@@ -1,13 +1,12 @@
 import { useState } from "react";
 
 interface ReviewModalProps {
-  bookingId: number;
   serviceName: string;
   onSubmit: (rating: number, review: string) => void;
   onClose: () => void;
 }
 
-export default function ReviewModal({ bookingId, serviceName, onSubmit, onClose }: ReviewModalProps) {
+export default function ReviewModal({ serviceName, onSubmit, onClose }: ReviewModalProps) {
   const [rating, setRating] = useState(5);
   const [review, setReview] = useState('');
 
