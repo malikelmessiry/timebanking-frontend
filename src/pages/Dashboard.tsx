@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { getUserProfile, getAllServices, getMyServices, deleteService, getBookings, confirmBooking, cancelBooking, completeBooking, getServicesByOwner } from '../services/api';
+import { getUserProfile, getAllServices, getMyServices, deleteService, getBookings, confirmBooking, cancelBooking, completeBooking, getServicesByOwner, completeBookingWithReview } from '../services/api';
 import type { Service, Booking } from '../services/api';
 import Navbar from '../components/Navbar';
 import '../styles/Dashboard.css';
@@ -28,6 +28,11 @@ export default function Dashboard() {
 
   const [allBookings, setAllBookings] = useState<Booking[]>([]);
   const [actionLoading, setActionLoading] = useState<{ [key: number]: string }>({});
+
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [reviewBookingId, setReviewBookingId] = useState<number | null>(null);
+  const [reviewServiceName, setReviewServiceName] = useState('');
+  const [reviewData, setReviewData] = useState({ rating: 5, review: '' });
 
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -178,7 +183,7 @@ export default function Dashboard() {
     }
   };
 
-  const handleBookingAction = async (bookingId: number, action: 'confirm' | 'cancel' | 'complete') => {
+  const handleBookingAction = async (bookingId: number, action: 'confirm' | 'cancel' | 'complete', reviewData?: { rating: number; review: string }) => {
     if (!bookingId) return;
 
     setActionLoading(prev => ({ ...prev, [bookingId]: action }));
@@ -191,18 +196,23 @@ export default function Dashboard() {
 
       let updatedBooking: Booking;
     
-      switch (action) {
-        case 'confirm':
-          updatedBooking = await confirmBooking(token, bookingId);
-          break;
-        case 'cancel':
-          updatedBooking = await cancelBooking(token, bookingId);
-          break;
-        case 'complete':
-          updatedBooking = await completeBooking(token, bookingId);
-          break;
-        default:
-          throw new Error('Invalid action');
+      if (action === 'complete' && reviewData) {
+        // Add rating and review when completing
+        updatedBooking = await completeBookingWithReview(token, bookingId, reviewData.rating, reviewData.review);
+      } else {
+        switch (action) {
+          case 'confirm':
+            updatedBooking = await confirmBooking(token, bookingId);
+            break;
+          case 'cancel':
+            updatedBooking = await cancelBooking(token, bookingId);
+            break;
+          case 'complete':
+            updatedBooking = await completeBooking(token, bookingId);
+            break;
+          default:
+            throw new Error('Invalid action');
+        }
       }
 
       console.log(`Booking action completed:`, updatedBooking);
@@ -227,6 +237,49 @@ export default function Dashboard() {
         delete newState[bookingId];
         return newState;
       });
+    }
+  };
+
+  const openReviewModal = (bookingId: number, serviceName: string) => {
+    setReviewBookingId(bookingId);
+    setReviewServiceName(serviceName);
+    setReviewData({ rating: 5, review: '' });
+    setShowReviewModal(true);
+  };
+
+  const closeReviewModal = () => {
+    setShowReviewModal(false);
+    setReviewBookingId(null);
+    setReviewServiceName('');
+    setReviewData({ rating: 5, review: '' });
+  };
+
+  const handleReviewSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!reviewBookingId) return;
+
+    try {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        throw new Error('Please log in again');
+      }
+
+      const updatedBooking = await completeBookingWithReview(token, reviewBookingId, reviewData.rating, reviewData.review);
+
+      // Update bookings list
+      setAllBookings(prev => 
+        prev.map(booking => 
+          booking.id === reviewBookingId ? updatedBooking : booking
+        )
+      );
+
+      alert('🎉 Review submitted and booking completed!');
+      closeReviewModal();
+
+    } catch (error: any) {
+      console.error('Failed to submit review:', error);
+      alert(`Failed to submit review: ${error.message}`);
     }
   };
 
@@ -380,12 +433,17 @@ export default function Dashboard() {
                       <h3>{service.name}</h3>
                       <p>{service.description}</p>
                       <div className="service-meta">
-                        <span className='rate'>{service.credit_required} credits</span>
+                        <span className='rate'>
+                          {service.credit_required % 1 === 0 
+                            ? service.credit_required 
+                            : service.credit_required.toFixed(1)
+                          } credits
+                        </span>
+                        <span className='rating'>
+                          ⭐ {service.average_rating ? service.average_rating.toFixed(1) : 'No ratings'}
+                        </span>
                         <span className={`status ${service.is_available ? 'available' : 'unavailable'}`}>
                           {service.is_available ? 'Available' : 'Unavailable'}
-                        </span>
-                        <span className='sessions'>
-                          {service.remaining_sessions}/{service.total_sessions} sessions left
                         </span>
                       </div>
                       <div className="service-tags">
@@ -459,16 +517,6 @@ export default function Dashboard() {
                                   </button>
                                 </>
                               )}
-                              
-                              {booking.status === 'confirmed' && (
-                                <button
-                                  // onClick={() => openReviewModal(b.id, b.service_name)}
-                                  className="complete-btn"
-                                >
-                                  📝 Service Complete? Leave Review
-                                </button>
-                              )}
-                              
                               <button 
                                 onClick={() => window.open(`mailto:${booking.customer_email}?subject=Your booking: ${booking.service_name}`)}
                                 className="contact-btn"
@@ -533,6 +581,24 @@ export default function Dashboard() {
                             {actionLoading[b.id] === 'cancel' ? '⏳ Cancelling...' : '❌ Cancel'}</button>
                         )}
 
+                        {/* Review button for confirmed bookings */}
+                        {b.status === 'confirmed' && (
+                          <button
+                            onClick={() => openReviewModal(b.id, b.service_name)}
+                            className="complete-btn"
+                          >
+                            📝 Service Complete? Leave Review
+                          </button>
+                        )}
+
+                        {/* Show review if already completed */}
+                        {b.status === 'completed' && b.customer_rating && (
+                          <div className="completed-review">
+                            <p>Your review: ⭐ {b.customer_rating}/5</p>
+                            {b.customer_review && <p>"{b.customer_review}"</p>}
+                          </div>
+                        )}
+
                         <button
                           onClick={() => window.open(`mailto:${b.owner_email}?subject=Booking: ${b.service_name}`)}
                           className="contact-btn"
@@ -561,6 +627,58 @@ export default function Dashboard() {
               <h2>Transaction History</h2>
               <div className='history-list'>
                 <p>No transaction history yet</p>
+              </div>
+            </div>
+          )}
+
+          {/* Review Modal */}
+          {showReviewModal && (
+            <div className="modal-overlay" onClick={closeReviewModal}>
+              <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                <div className="modal-header">
+                  <h3>Rate & Review: {reviewServiceName}</h3>
+                  <button className="modal-close" onClick={closeReviewModal}>×</button>
+                </div>
+                
+                <form onSubmit={handleReviewSubmit} className="review-form">
+                  <div className="rating-section">
+                    <label>Rating (required) *</label>
+                    <div className="stars-container">
+                      {[1, 2, 3, 4, 5].map(star => (
+                        <button
+                          key={star}
+                          type="button"
+                          className={`star-btn ${star <= reviewData.rating ? 'filled' : ''}`}
+                          onClick={() => setReviewData(prev => ({ ...prev, rating: star }))}
+                        >
+                          ⭐
+                        </button>
+                      ))}
+                    </div>
+                    <p className="rating-text">{reviewData.rating}/5 stars</p>
+                  </div>
+                  
+                  <div className="review-section">
+                    <label htmlFor="review">Review (optional)</label>
+                    <textarea
+                      id="review"
+                      value={reviewData.review}
+                      onChange={(e) => setReviewData(prev => ({ ...prev, review: e.target.value }))}
+                      placeholder="Share your experience with this service..."
+                      rows={4}
+                      className="review-textarea"
+                    />
+                  </div>
+                  
+                  <div className="modal-actions">
+                    <button type="button" onClick={closeReviewModal} className="cancel-btn">
+                      Cancel
+                    </button>
+                    <button type="submit" className="submit-btn">
+                      Submit Review & Complete
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           )}

@@ -383,8 +383,8 @@ export interface Booking {
   status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
   booked_at: string;
   completed_at: string | null;
-  customer_review: string | null;
-  customer_rating: number | null;
+  customer_review?: string | null;
+  customer_rating?: number | null;
   service_name: string;
   owner_first_name: string;
   owner_email: string;
@@ -597,6 +597,50 @@ export const getServicesByOwner = async (token: string, ownerId: number): Promis
     return services;
   } catch (error) {
     console.error('Get services by owner error:', error);
+    throw error;
+  }
+};
+
+// Add reviews
+export const completeBookingWithReview = async (token: string, bookingId: number, rating: number, review?: string) => {
+  try {
+    const body: any = { 
+      customer_rating: rating,
+      status: 'completed'
+    };
+    
+    if (review && review.trim()) {
+      body.customer_review = review.trim();
+    }
+
+    const res = await fetch(`${BASE_URL}/bookings/${bookingId}/`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`,
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!res.ok) {
+      if (res.status === 400) {
+        throw new Error('Invalid review data');
+      } else if (res.status === 401) {
+        throw new Error('Session expired. Please log in again.');
+      } else if (res.status === 403) {
+        throw new Error('You can only review your own bookings');
+      } else if (res.status === 404) {
+        throw new Error('Booking not found');
+      } else if (res.status >= 500) {
+        throw new Error('Server error. Please try again later.');
+      } else {
+        throw new Error('Failed to submit review');
+      }
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error('Complete booking with review error:', error);
     throw error;
   }
 };
