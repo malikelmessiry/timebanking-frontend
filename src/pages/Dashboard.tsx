@@ -67,18 +67,12 @@ export default function Dashboard() {
   useEffect(() => {
     if (user && user.email) {
       loadAllServicesData();
+      loadBookings(); 
     } else if (user && !user.email) {
       console.error('User profile missing email:', user);
       setServicesError('User profile is missing email. Please log out and log back in.');
     }
   }, [user, searchParams]);
-
-  // Separate useEffect for loading bookings when switching to bookings tab:
-  useEffect(() => {
-    if (user && user.id && activeTab === 'bookings') {
-      loadBookings();
-    }
-  }, [user, activeTab]);
 
   // Handle tab switching from URL:
   useEffect(() => {
