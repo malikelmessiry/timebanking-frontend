@@ -285,11 +285,77 @@ export default function ServiceDetail() {
                       <span className="stat-value">⭐ {service.average_rating.toFixed(1)}</span>
                     </div>
                   )}
-                  <div className="stat-item">
-                    <span className="stat-label">Service ID</span>
-                    <span className="stat-value">#{service.id}</span>
-                  </div>
                 </div>
+              </div>
+
+              {/* Reviews Section */}
+              <div className="service-section reviews-section">
+                <h3>📝 Customer Reviews</h3>
+                
+                {!service?.customer_reviews || service.customer_reviews.length === 0 ? (
+                  <div className="no-reviews">
+                    <p>No reviews yet. Be the first to book and review this service!</p>
+                  </div>
+                ) : (
+                  <>
+                    <div className="reviews-summary">
+                      <div className="average-rating">
+                        <span className="rating-number">
+                          {service.average_rating ? service.average_rating.toFixed(1) : 'N/A'}
+                        </span>
+                        <div className="stars">
+                          {service.average_rating ? (
+                            Array.from({ length: 5 }, (_, i) => (
+                              <span 
+                                key={i} 
+                                className={i < Math.round(service.average_rating) ? 'star filled' : 'star'}
+                              >
+                                ⭐
+                              </span>
+                            ))
+                          ) : (
+                            <span className="no-rating">No ratings yet</span>
+                          )}
+                        </div>
+                        <span className="review-count">
+                          ({service.customer_reviews.length} review{service.customer_reviews.length !== 1 ? 's' : ''})
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="reviews-list">
+                      {service.customer_reviews.map((review, index) => (
+                        <div key={index} className="review-card">
+                          <div className="review-header">
+                            <div className="reviewer-info">
+                              <div className="reviewer-avatar">
+                                {index + 1}
+                              </div>
+                              <div className="reviewer-details">
+                                <strong className="reviewer-name">Customer #{index + 1}</strong>
+                                <span className="review-date">Verified Review</span>
+                              </div>
+                            </div>
+                            <div className="rating">
+                              {Array.from({ length: 5 }, (_, i) => (
+                                <span 
+                                  key={i} 
+                                  className={i < Math.round(service.average_rating) ? 'star filled' : 'star'}
+                                >
+                                  ⭐
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                          
+                          <div className="review-text">
+                            <p>"{review}"</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
             </div>
 

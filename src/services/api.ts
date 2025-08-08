@@ -158,6 +158,7 @@ export interface Service {
   owner_email: string;
   latitude: number;
   longitude: number;
+  customer_reviews: string[];
 }
 
 export interface CreateServiceData {
@@ -654,3 +655,4 @@ export const completeBookingWithReview = async (token: string, bookingId: number
     throw error;
   }
 };
+
