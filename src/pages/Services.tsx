@@ -341,20 +341,20 @@ export default function Services() {
                   onClick={() => setViewMode('grid')}
                   className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`}
                 >
-                  🔳 Grid
+                  <span className="view-icon">⊞</span>
                 </button>
                 <button
                   onClick={() => setViewMode('list')}
                   className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
                 >
-                  📋 List
+                  <span className="view-icon">☰</span>
                 </button>
                 <button 
                   className={`view-btn ${viewMode === 'map' ? 'active' : ''}`}
                   onClick={() => setViewMode('map')}
                   title="Map View"
                 >
-                  <span className="view-icon">🗺️ Map</span>
+                  <span className="view-icon">🗺️</span>
                 </button>
               </div>
 
@@ -384,12 +384,12 @@ export default function Services() {
             {/* Services Grid/List */}
             <div className="services-content">
               {viewMode === 'grid' && (
-                <div className="services-grid">
+                <div className="services-grid grid">  
                   {filteredServices.map(service => (
                     <ServiceCard
                       key={service.id}
                       service={service}
-                      viewMode={viewMode === 'grid' || viewMode === 'list' ? viewMode : undefined}
+                      viewMode="grid"
                       showActions={true}
                       isOwner={false}
                     />
@@ -398,7 +398,7 @@ export default function Services() {
               )}
 
               {viewMode === 'list' && (
-                <div className="services-list">
+                <div className="services-grid list"> 
                   {filteredServices.map(service => (
                     <ServiceCard
                       key={service.id}
@@ -411,7 +411,6 @@ export default function Services() {
                 </div>
               )}
 
-              {/* ADD THIS MAP VIEW */}
               {viewMode === 'map' && (
                 <MapView 
                   services={filteredServices} 

@@ -1,14 +1,15 @@
 /* Service Card Styles - Light Theme */
 .service-card {
-  background: rgba(255, 255, 255, 0.25);
-  border: 2px solid rgba(99, 39, 19, 0.2);
-  border-radius: 16px;
-  padding: 24px;
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(99, 39, 19, 0.2);
+  border-radius: 12px;
+  padding: 20px;
   transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(10px);
   box-shadow: 0 4px 16px rgba(99, 39, 19, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
 }
 
 .service-card::before {
@@ -24,9 +25,8 @@
 
 .service-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(248, 169, 31, 0.4);
-  box-shadow: 0 8px 32px rgba(248, 169, 31, 0.2);
-  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 8px 24px rgba(99, 39, 19, 0.15);
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .service-card:hover::before {
@@ -126,4 +126,89 @@
   background: rgba(74, 144, 226, 0.2);
   color: #4a90e2;
   border: 1px solid rgba(74, 144, 226, 0.3);
+}
+
+/* Grid view (default - vertical layout) */
+.service-card.grid {
+  /* Uses default flex-direction: column */
+}
+
+/* List view (horizontal layout) */
+.service-card.list {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 20px;
+  min-height: 120px;
+  padding: 16px 20px;
+}
+
+.service-card.list .service-card-link {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: flex-start;
+  text-decoration: none;
+  color: inherit;
+}
+
+.service-card.list .service-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.service-card.list .service-actions {
+  flex-shrink: 0;
+  margin-top: 0;
+  align-self: flex-start;
+}
+
+/* Adjust text for list view */
+.service-card.list .service-description {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 0.85rem;
+  line-height: 1.3;
+}
+
+.service-card.list .service-header {
+  margin-bottom: 8px;
+}
+
+.service-card.list .service-name {
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+
+.service-card.list .service-meta {
+  margin-bottom: 6px;
+}
+
+.service-card.list .service-categories {
+  margin-bottom: 6px;
+}
+
+.service-card.list .service-tags {
+  margin-bottom: 6px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .service-card.list {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .service-card.list .service-card-link {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .service-card.list .service-actions {
+    align-self: stretch;
+  }
 }
