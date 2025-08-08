@@ -228,7 +228,7 @@ export default function Dashboard() {
 
       // Show success message
       const actionText = action === 'complete' ? 'completed' : `${action}ed`;
-      alert(`🎉 Booking ${actionText} successfully!\n\nBooking ID: #${updatedBooking.id}\nNew Status: ${updatedBooking.status}`);
+      alert(`🎉 Booking ${actionText} successfully!`);
 
     } catch (error: any) {
       console.error(`Failed to ${action} booking:`, error);
@@ -392,16 +392,6 @@ export default function Dashboard() {
                     <h3>Service Requests</h3>
                     <p>{allBookings.filter(b => b.owner_email === user.email && b.status === 'pending').length}</p>
                   </div>
-                </div>
-
-                {/* Quick Actions */}
-                <div className="quick-actions">
-                  <h3>Quick Actions</h3>
-                  <Link to="/services/create" className="action-btn">+ Offer New Service</Link>
-                  <Link to="/services" className="action-btn">Browse All Services</Link>
-                  <button onClick={() => setActiveTab('services')} className="action-btn">
-                    Manage My Services
-                  </button>
                 </div>
               </div>
             </div>
