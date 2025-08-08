@@ -73,12 +73,12 @@ export default function ServiceDetail() {
 
     // Validation checks
     if (currentUser.time_credits < service.credit_required) {
-      alert(`❌ Insufficient Credits\n\nYou need ${service.credit_required} credits but only have ${currentUser.time_credits} credits.\n\nPlease offer your own services to earn more credits!`);
+      alert(`Insufficient Credits\n\nYou need ${service.credit_required} credits but only have ${currentUser.time_credits} credits.\n\nPlease offer your own services to earn more credits!`);
       return;
     }
 
     if (service.remaining_sessions <= 0) {
-      alert(`❌ No Sessions Available\n\nThis service has no remaining sessions.\n\nPlease check back later or browse other services.`);
+      alert(`No Sessions Available\n\nThis service has no remaining sessions.\n\nPlease check back later or browse other services.`);
       return;
     }
 
@@ -121,18 +121,18 @@ export default function ServiceDetail() {
       // Redirect to dashboard to see the new booking
       navigate('/dashboard');
     } catch (error: any) {
-      console.error('❌ Booking failed:', error);
+      console.error('Booking failed:', error);
       
       // Show specific error messages
       if (error.message.includes('credits')) {
-        alert(`❌ Booking Failed\n\nInsufficient credits. Please earn more credits by offering your own services.`);
+        alert(`Booking Failed\n\nInsufficient credits. Please earn more credits by offering your own services.`);
       } else if (error.message.includes('sessions')) {
-        alert(`❌ Booking Failed\n\nNo sessions available. This service may have been fully booked recently.`);
+        alert(`Booking Failed\n\nNo sessions available. This service may have been fully booked recently.`);
       } else if (error.message.includes('Session expired')) {
-        alert(`❌ Session Expired\n\nPlease log in again to book services.`);
+        alert(`Session Expired\n\nPlease log in again to book services.`);
         navigate('/auth');
       } else {
-        alert(`❌ Booking Failed\n\n${error.message}\n\nPlease try again or contact support if the problem persists.`);
+        alert(`Booking Failed\n\n${error.message}\n\nPlease try again or contact support if the problem persists.`);
       }
     } finally {
       setBookingLoading(false);

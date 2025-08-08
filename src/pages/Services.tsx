@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getAllServices, getServiceById, getServicesByZipCode } from '../services/api';
 import type { Service } from '../services/api';
 import ServiceCard from '../components/ServiceCard';
+import MapView from '../components/MapView';
 import Navbar from '../components/Navbar';
 import '../styles/Services.css';
 
@@ -381,27 +382,43 @@ export default function Services() {
             )}
 
             {/* Services Grid/List */}
-            {filteredServices.length === 0 ? (
-              <div className="empty-state">
-                <h3>🔍 No Services Found</h3>
-                <p>Try adjusting your filters or search terms</p>
-                <button onClick={clearFilters} className="clear-filters-btn">
-                  Clear All Filters
-                </button>
-              </div>
-            ) : (
-              <div className={`services-grid ${viewMode}`}>
-                {filteredServices.map(service => (
-                  <ServiceCard
-                    key={service.id}
-                    service={service}
-                    viewMode={viewMode === 'map' ? undefined : viewMode}
-                    showActions={true}
-                    isOwner={false}
-                  />
-                ))}
-              </div>
-            )}
+            <div className="services-content">
+              {viewMode === 'grid' && (
+                <div className="services-grid">
+                  {filteredServices.map(service => (
+                    <ServiceCard
+                      key={service.id}
+                      service={service}
+                      viewMode={viewMode === 'grid' || viewMode === 'list' ? viewMode : undefined}
+                      showActions={true}
+                      isOwner={false}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {viewMode === 'list' && (
+                <div className="services-list">
+                  {filteredServices.map(service => (
+                    <ServiceCard
+                      key={service.id}
+                      service={service}
+                      viewMode="list"
+                      showActions={true}
+                      isOwner={false}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {/* ADD THIS MAP VIEW */}
+              {viewMode === 'map' && (
+                <MapView 
+                  services={filteredServices} 
+                  loading={loading} 
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>
