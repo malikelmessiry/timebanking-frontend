@@ -434,6 +434,35 @@
   background: #357abd;
 }
 
+/* Add this to your Dashboard.css */
+.booking-filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.booking-filters button {
+  padding: 8px 16px;
+  border: 2px solid #ddd;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+
+.booking-filters button:hover {
+  border-color: #72ac43;
+  background: #f8f9fa;
+}
+
+.booking-filters button.active {
+  background: #72ac43;
+  color: white;
+  border-color: #72ac43;
+}
+
 /* Responsive design for mobile */
 @media (max-width: 768px) {
   .modal-content {

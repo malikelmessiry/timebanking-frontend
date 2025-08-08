@@ -137,7 +137,10 @@ export default function Services() {
         case 'credits-high':
           return b.credit_required - a.credit_required;
         case 'rating':
-          return b.average_rating - a.average_rating;
+          // Handle null/undefined ratings safely
+          const ratingA = a.average_rating || 0;
+          const ratingB = b.average_rating || 0;
+          return ratingB - ratingA;
         default:
           return 0;
       }
@@ -386,7 +389,6 @@ export default function Services() {
                     key={service.id}
                     service={service}
                     viewMode={viewMode}
-                    onBook={undefined} // Remove the handleBookService call
                     showActions={true}
                     isOwner={false}
                   />

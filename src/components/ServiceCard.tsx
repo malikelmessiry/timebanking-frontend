@@ -4,7 +4,7 @@ import '../styles/ServiceCard.css';
 
 interface ServiceCardProps {
   service: Service;
-  onBook?: () => void;
+  onBook?: (serviceId: number) => void;
   onEdit?: () => void;
   onDelete?: () => void;
   showActions?: boolean;
@@ -25,7 +25,7 @@ export default function ServiceCard({
   const handleBookClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (onBook) onBook();
+    if (onBook) onBook(service.id);
   };
 
   const handleEditClick = (e: React.MouseEvent) => {
@@ -40,6 +40,29 @@ export default function ServiceCard({
     if (onDelete) onDelete();
   };
 
+  const formatCredits = (credits: any) => {
+    try {
+      const num = Number(credits);
+      if (isNaN(num)) return '0';
+      return num % 1 === 0 ? num.toString() : num.toFixed(1);
+    } catch (error) {
+      console.error('Error formatting credits:', error);
+      return '0';
+    }
+  };
+
+  const formatRating = (rating: any) => {
+    try {
+      if (!rating || rating === null || rating === undefined) return 'No ratings';
+      const num = Number(rating);
+      if (isNaN(num)) return 'No ratings';
+      return num.toFixed(1);
+    } catch (error) {
+      console.error('Error formatting rating:', error);
+      return 'No ratings';
+    }
+  };
+
   return (
     <div className={`service-card ${viewMode} ${!service.is_available ? 'unavailable' : ''}`}>
       <Link to={`/services/${service.id}`} className="service-card-link">
@@ -47,9 +70,7 @@ export default function ServiceCard({
         <div className="service-header">
           <h3 className="service-name">{service.name}</h3>
           <div className="service-credit">
-            <span className="credit-amount">{service.credit_required % 1 === 0
-              ? service.credit_required.toString()
-              : service.credit_required.toFixed(1)}</span>
+            <span className="credit-amount">{formatCredits(service.credit_required)}</span>
             <span className="credit-label">credits</span>
           </div>
         </div>
@@ -65,7 +86,7 @@ export default function ServiceCard({
             {service.average_rating > 0 && (
               <div className="rating">
                 <span className="rating-stars">⭐</span>
-                <span className="rating-value">{service.average_rating.toFixed(1)}</span>
+                <span className="rating-value">{formatRating(service.average_rating)}</span>
               </div>
             )}
             

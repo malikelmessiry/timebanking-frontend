@@ -28,6 +28,8 @@ export default function Dashboard() {
 
   const [allBookings, setAllBookings] = useState<Booking[]>([]);
   const [actionLoading, setActionLoading] = useState<{ [key: number]: string }>({});
+  const [bookingFilter, setBookingFilter] = useState<'all' | 'pending' | 'confirmed' | 'completed' | 'cancelled'>('all');
+  const [customerBookingFilter, setCustomerBookingFilter] = useState<'all' | 'pending' | 'confirmed' | 'completed' | 'cancelled'>('all');
 
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [reviewBookingId, setReviewBookingId] = useState<number | null>(null);
@@ -467,65 +469,111 @@ export default function Dashboard() {
               <div className="service-requests-section">
                 <h3>Service Requests ({allBookings.filter(b => b.owner_email === user.email).length})</h3>
                 <div className='booking-filters'>
-                  <button>Pending ({allBookings.filter(b => b.owner_email === user.email && b.status === 'pending').length})</button>
-                  <button>Confirmed ({allBookings.filter(b => b.owner_email === user.email && b.status === 'confirmed').length})</button>
-                  <button>Completed ({allBookings.filter(b => b.owner_email === user.email && b.status === 'completed').length})</button>
-                  <button>All ({allBookings.filter(b => b.owner_email === user.email).length})</button>
+                  <button 
+                    className={bookingFilter === 'pending' ? 'active' : ''}
+                    onClick={() => setBookingFilter('pending')}
+                  >
+                    Pending ({allBookings.filter(b => b.owner_email === user.email && b.status === 'pending').length})
+                  </button>
+                  <button 
+                    className={bookingFilter === 'confirmed' ? 'active' : ''}
+                    onClick={() => setBookingFilter('confirmed')}
+                  >
+                    Confirmed ({allBookings.filter(b => b.owner_email === user.email && b.status === 'confirmed').length})
+                  </button>
+                  <button 
+                    className={bookingFilter === 'completed' ? 'active' : ''}
+                    onClick={() => setBookingFilter('completed')}
+                  >
+                    Completed ({allBookings.filter(b => b.owner_email === user.email && b.status === 'completed').length})
+                  </button>
+                  <button 
+                    className={bookingFilter === 'all' ? 'active' : ''}
+                    onClick={() => setBookingFilter('all')}
+                  >
+                    All ({allBookings.filter(b => b.owner_email === user.email).length})
+                  </button>
                 </div>
                 
                 <div className='service-requests-list'>
-                  {allBookings.filter(b => b.owner_email === user.email).length === 0 ? (
-                    <div className='booking-card incoming'>
-                    <div className="request-header">
-                      <h4>Service Request</h4>
-                      <span className="service-badge">Your Service</span>
-                    </div>
-                    <p>No pending requests</p>
-                  </div>
-                  ) : (
-                      allBookings.filter(booking => booking.owner_email === user.email)
-                        .map(booking => (
-                          <div key={booking.id} className='booking-card incoming'>
-                            <div className='request-header'>
-                              <h4>{booking.service_name}</h4>
-                              <span className='status-badge' style={{ backgroundColor: getStatusColor(booking.status), color: 'white', padding: '4px 8px', borderRadius: '4px' }}>
-                                {getStatusIcon(booking.status)} {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
-                              </span>
-                              <p><strong>Customer:</strong> {booking.customer_first_name} ({booking.customer_email})</p>
-                              <p><strong>Requested:</strong> {new Date(booking.booked_at).toLocaleDateString()}</p>
-                              <p><strong>Booking ID:</strong> #{booking.id}</p>
-                            </div>
+                  {(() => {
+                    // Filter bookings based on selected filter
+                    const serviceRequests = allBookings.filter(b => b.owner_email === user.email);
+                    const filteredRequests = bookingFilter === 'all' 
+                      ? serviceRequests 
+                      : serviceRequests.filter(b => b.status === bookingFilter);
 
-                            <div className='booking-actions'>
-                              {booking.status === 'pending' && (
-                                <>
-                                  <button 
-                                    onClick={() => handleBookingAction(booking.id, 'confirm')}
-                                    disabled={actionLoading[booking.id] === 'confirm'}
-                                    className="confirm-btn"
-                                  >
-                                    {actionLoading[booking.id] === 'confirm' ? '⏳ Confirming...' : '✅ Confirm'}
-                                  </button>
-                                  <button 
-                                    onClick={() => handleBookingAction(booking.id, 'cancel')}
-                                    disabled={actionLoading[booking.id] === 'cancel'}
-                                    className="cancel-btn"
-                                  >
-                                    {actionLoading[booking.id] === 'cancel' ? '⏳ Declining...' : '❌ Decline'}
-                                  </button>
-                                </>
-                              )}
-                              <button 
-                                onClick={() => window.open(`mailto:${booking.customer_email}?subject=Your booking: ${booking.service_name}`)}
-                                className="contact-btn"
-                              >
-                                ✉️ Contact Customer
-                              </button>
-                            </div>
+                    if (filteredRequests.length === 0) {
+                      return (
+                        <div className='booking-card incoming'>
+                          <div className="request-header">
+                            <h4>No {bookingFilter === 'all' ? 'service requests' : bookingFilter + ' requests'} yet</h4>
+                            <span className="service-badge">Your Service</span>
+                          </div>
                         </div>
-                      ))
-                  )}
-                  
+                      );
+                    }
+
+                    return filteredRequests.map(booking => (
+                      <div key={booking.id} className='booking-card incoming'>
+                        <div className="request-header">
+                          <h4>Service Request</h4>
+                          <span className="service-badge">Your Service</span>
+                        </div>
+                        <p><strong>Service:</strong> {booking.service_name}</p>
+                        <p><strong>Customer:</strong> {booking.customer_first_name} ({booking.customer_email})</p>
+                        <p><strong>Status:</strong> {getStatusIcon(booking.status)} {booking.status}</p>
+                        <p><strong>Booked:</strong> {new Date(booking.booked_at).toLocaleDateString()}</p>
+                        {booking.completed_at && (
+                          <p><strong>Completed:</strong> {new Date(booking.completed_at).toLocaleDateString()}</p>
+                        )}
+                        {booking.customer_rating && (
+                          <p><strong>Rating:</strong> ⭐ {booking.customer_rating}/5</p>
+                        )}
+                        {booking.customer_review && (
+                          <p><strong>Review:</strong> "{booking.customer_review}"</p>
+                        )}
+
+                        <div className='booking-actions'>
+                          {booking.status === 'pending' && (
+                            <>
+                              <button
+                                onClick={() => handleBookingAction(booking.id, 'confirm')}
+                                disabled={actionLoading[booking.id] === 'confirm'}
+                                className='confirm-btn'
+                              >
+                                {actionLoading[booking.id] === 'confirm' ? '⏳ Confirming...' : '✅ Confirm'}
+                              </button>
+                              <button
+                                onClick={() => handleBookingAction(booking.id, 'cancel')}
+                                disabled={actionLoading[booking.id] === 'cancel'}
+                                className='cancel-btn'
+                              >
+                                {actionLoading[booking.id] === 'cancel' ? '⏳ Declining...' : '❌ Decline'}
+                              </button>
+                            </>
+                          )}
+
+                          {booking.status === 'confirmed' && (
+                            <button
+                              onClick={() => handleBookingAction(booking.id, 'complete')}
+                              disabled={actionLoading[booking.id] === 'complete'}
+                              className='complete-btn'
+                            >
+                              {actionLoading[booking.id] === 'complete' ? '⏳ Completing...' : '🎉 Mark Complete'}
+                            </button>
+                          )}
+
+                          <button
+                            onClick={() => window.open(`mailto:${booking.customer_email}?subject=Booking: ${booking.service_name}`)}
+                            className="contact-btn"
+                          >
+                            ✉️ Contact Customer
+                          </button>
+                        </div>
+                      </div>
+                    ));
+                  })()}
                 </div>
               </div>
             </div>
@@ -534,79 +582,100 @@ export default function Dashboard() {
           {activeTab === 'bookings' && (
             <div className='bookings-section'>
               <h2>My Bookings</h2>
-              <p className="section-description">Services you've booked from others</p>
+              <p>Services you've booked from other providers</p>
               
+              {/* Add filter buttons */}
               <div className='booking-filters'>
-                <button>Pending ({allBookings.filter(b => b.customer_email === user.email && b.status === 'pending').length})</button>
-                <button>Confirmed ({allBookings.filter(b => b.customer_email === user.email && b.status === 'confirmed').length})</button>
-                <button>Completed ({allBookings.filter(b => b.customer_email === user.email && b.status === 'completed').length})</button>
-                <button>Cancelled ({allBookings.filter(b => b.customer_email === user.email && b.status === 'cancelled').length})</button>
-                <button>All ({allBookings.filter(b => b.customer_email === user.email).length})</button>
+                <button 
+                  className={customerBookingFilter === 'pending' ? 'active' : ''}
+                  onClick={() => setCustomerBookingFilter('pending')}
+                >
+                  Pending ({allBookings.filter(b => b.customer_email === user.email && b.status === 'pending').length})
+                </button>
+                <button 
+                  className={customerBookingFilter === 'confirmed' ? 'active' : ''}
+                  onClick={() => setCustomerBookingFilter('confirmed')}
+                >
+                  Confirmed ({allBookings.filter(b => b.customer_email === user.email && b.status === 'confirmed').length})
+                </button>
+                <button 
+                  className={customerBookingFilter === 'completed' ? 'active' : ''}
+                  onClick={() => setCustomerBookingFilter('completed')}
+                >
+                  Completed ({allBookings.filter(b => b.customer_email === user.email && b.status === 'completed').length})
+                </button>
+                <button 
+                  className={customerBookingFilter === 'all' ? 'active' : ''}
+                  onClick={() => setCustomerBookingFilter('all')}
+                >
+                  All ({allBookings.filter(b => b.customer_email === user.email).length})
+                </button>
               </div>
               
               <div className='bookings-list'>
-                {allBookings.filter(b => b.customer_email === user.email).length === 0 ? (
-                  <div className='booking-card outgoing'>
-                    <div className="request-header">
-                      <h4>No bookings yet</h4>
-                      <span className="client-badge">You booked</span>
-                    </div>
-                    <p>Browse services to make your first booking</p>
-                    <div className='booking-actions'>
-                      <Link to="/services">Browse Services</Link>
-                    </div>
-                  </div>
-                ) : (
-                  allBookings.filter(b => b.customer_email === user.email).map(b => (
-                    <div key={b.id} className='booking-card outgoing'>
-                      <div className='request-header'>
-                        <h4>{b.service_name}</h4>
-                        <span className='status-badge' style={{ backgroundColor: getStatusColor(b.status), color: 'white', padding: '4px 8px', borderRadius: '4px' }}>
-                          {getStatusIcon(b.status)} {b.status.charAt(0).toUpperCase() + b.status.slice(1)}
-                        </span>
-                      </div>
-                      <p><strong>Provider:</strong> {b.owner_first_name} ({b.owner_email})</p>
-                      <p><strong>Booked:</strong> {new Date(b.booked_at).toLocaleDateString()}</p>
-                      <p><strong>Booking ID:</strong> #{b.id}</p>
+                {
+                  (() => {
+                    // Filter customer bookings
+                    const customerBookings = allBookings.filter(b => b.customer_email === user.email);
+                    const filteredBookings = customerBookingFilter === 'all' 
+                      ? customerBookings 
+                      : customerBookings.filter(b => b.status === customerBookingFilter);
 
-                      <div className='booking-actions'>
-                        {b.status === 'pending' && (
-                          <button
-                            onClick={() => handleBookingAction(b.id, 'cancel')}
-                            disabled={actionLoading[b.id] === 'cancel'}
-                            className='cancel-btn'
-                          >
-                            {actionLoading[b.id] === 'cancel' ? '⏳ Cancelling...' : '❌ Cancel'}</button>
-                        )}
+                    if (filteredBookings.length === 0) {
+                      return <p>No {customerBookingFilter === 'all' ? 'bookings' : customerBookingFilter + ' bookings'} yet</p>;
+                    }
 
-                        {/* Review button for confirmed bookings */}
-                        {b.status === 'confirmed' && (
+                    return filteredBookings.map((b) => (
+                      <div key={b.id} className='booking-card outgoing'>
+                        <div className='request-header'>
+                          <h4>{b.service_name}</h4>
+                          <span className='status-badge' style={{ backgroundColor: getStatusColor(b.status), color: 'white', padding: '4px 8px', borderRadius: '4px' }}>
+                            {getStatusIcon(b.status)} {b.status.charAt(0).toUpperCase() + b.status.slice(1)}
+                          </span>
+                        </div>
+                        <p><strong>Provider:</strong> {b.owner_first_name} ({b.owner_email})</p>
+                        <p><strong>Booked:</strong> {new Date(b.booked_at).toLocaleDateString()}</p>
+                        {/* <p><strong>Booking ID:</strong> #{b.id}</p> */}
+
+                        <div className='booking-actions'>
+                          {b.status === 'pending' && (
+                            <button
+                              onClick={() => handleBookingAction(b.id, 'cancel')}
+                              disabled={actionLoading[b.id] === 'cancel'}
+                              className='cancel-btn'
+                            >
+                              {actionLoading[b.id] === 'cancel' ? '⏳ Cancelling...' : '❌ Cancel'}</button>
+                          )}
+
+                          {/* Review button for confirmed bookings */}
+                          {b.status === 'confirmed' && (
+                            <button
+                              onClick={() => openReviewModal(b.id, b.service_name)}
+                              className="complete-btn"
+                            >
+                              📝 Service Complete? Leave Review
+                            </button>
+                          )}
+
+                          {/* Show review if already completed */}
+                          {b.status === 'completed' && b.customer_rating && (
+                            <div className="completed-review">
+                              <p>Your review: ⭐ {b.customer_rating}/5</p>
+                              {b.customer_review && <p>"{b.customer_review}"</p>}
+                            </div>
+                          )}
+
                           <button
-                            onClick={() => openReviewModal(b.id, b.service_name)}
-                            className="complete-btn"
+                            onClick={() => window.open(`mailto:${b.owner_email}?subject=Booking: ${b.service_name}`)}
+                            className="contact-btn"
                           >
-                            📝 Service Complete? Leave Review
+                            ✉️ Contact Provider
                           </button>
-                        )}
-
-                        {/* Show review if already completed */}
-                        {b.status === 'completed' && b.customer_rating && (
-                          <div className="completed-review">
-                            <p>Your review: ⭐ {b.customer_rating}/5</p>
-                            {b.customer_review && <p>"{b.customer_review}"</p>}
-                          </div>
-                        )}
-
-                        <button
-                          onClick={() => window.open(`mailto:${b.owner_email}?subject=Booking: ${b.service_name}`)}
-                          className="contact-btn"
-                        >
-                          ✉️ Contact Provider
-                        </button>
+                        </div>
                       </div>
-                    </div>
-                  ))
-                )}
+                    ));
+                  })()
+                }
               </div>
             </div>
           )}
