@@ -28,8 +28,8 @@ export default function Dashboard() {
 
   const [allBookings, setAllBookings] = useState<Booking[]>([]);
   const [actionLoading, setActionLoading] = useState<{ [key: number]: string }>({});
-  const [bookingFilter, setBookingFilter] = useState<'all' | 'pending' | 'confirmed' | 'completed' | 'cancelled'>('all');
-  const [customerBookingFilter, setCustomerBookingFilter] = useState<'all' | 'pending' | 'confirmed' | 'completed' | 'cancelled'>('all');
+  const [bookingFilter, setBookingFilter] = useState<'all' | 'pending' | 'confirmed' | 'completed' | 'cancelled'>('pending');
+  const [customerBookingFilter, setCustomerBookingFilter] = useState<'all' | 'pending' | 'confirmed' | 'completed' | 'cancelled'>('pending');
 
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [reviewBookingId, setReviewBookingId] = useState<number | null>(null);
