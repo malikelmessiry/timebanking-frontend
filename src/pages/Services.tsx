@@ -29,7 +29,7 @@ export default function Services() {
   const [selectedServiceType, setSelectedServiceType] = useState<string>('all');
   
   // View states
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [viewMode, setViewMode] = useState<'grid' | 'list' | 'map'>('grid');
   const [sortBy, setSortBy] = useState<'newest' | 'credits-low' | 'credits-high' | 'rating'>('newest');
   
   const navigate = useNavigate();
@@ -348,6 +348,13 @@ export default function Services() {
                 >
                   📋 List
                 </button>
+                <button 
+                  className={`view-btn ${viewMode === 'map' ? 'active' : ''}`}
+                  onClick={() => setViewMode('map')}
+                  title="Map View"
+                >
+                  <span className="view-icon">🗺️ Map</span>
+                </button>
               </div>
 
               <div className="sort-controls">
@@ -388,7 +395,7 @@ export default function Services() {
                   <ServiceCard
                     key={service.id}
                     service={service}
-                    viewMode={viewMode}
+                    viewMode={viewMode === 'map' ? undefined : viewMode}
                     showActions={true}
                     isOwner={false}
                   />
