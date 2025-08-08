@@ -461,12 +461,11 @@ export default function Dashboard() {
                               )}
                               
                               {booking.status === 'confirmed' && (
-                                <button 
-                                  onClick={() => handleBookingAction(booking.id, 'complete')}
-                                  disabled={actionLoading[booking.id] === 'complete'}
+                                <button
+                                  // onClick={() => openReviewModal(b.id, b.service_name)}
                                   className="complete-btn"
                                 >
-                                  {actionLoading[booking.id] === 'complete' ? '⏳ Completing...' : '🎉 Mark Complete'}
+                                  📝 Service Complete? Leave Review
                                 </button>
                               )}
                               
