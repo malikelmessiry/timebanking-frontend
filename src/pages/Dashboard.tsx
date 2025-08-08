@@ -538,14 +538,14 @@ export default function Dashboard() {
                             </>
                           )}
 
-                          {booking.status === 'confirmed' && (
-                            <button
-                              onClick={() => handleBookingAction(booking.id, 'complete')}
-                              disabled={actionLoading[booking.id] === 'complete'}
-                              className='complete-btn'
-                            >
-                              {actionLoading[booking.id] === 'complete' ? '⏳ Completing...' : '🎉 Mark Complete'}
-                            </button>
+                          {/* Show completion info if already completed */}
+                          {booking.status === 'completed' && (
+                            <div className="completed-info">
+                              <p>✅ Service completed by customer</p>
+                              {booking.customer_rating && (
+                                <p>Rating received: ⭐ {booking.customer_rating}/5</p>
+                              )}
+                            </div>
                           )}
 
                           <button
@@ -619,7 +619,6 @@ export default function Dashboard() {
                         </div>
                         <p><strong>Provider:</strong> {b.owner_first_name} ({b.owner_email})</p>
                         <p><strong>Booked:</strong> {new Date(b.booked_at).toLocaleDateString()}</p>
-                        {/* <p><strong>Booking ID:</strong> #{b.id}</p> */}
 
                         <div className='booking-actions'>
                           {b.status === 'pending' && (
