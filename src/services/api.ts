@@ -1,6 +1,6 @@
-const BASE_URL = import.meta.env.VITE_BACKEND_URL || 'https://timebanking-backend.onrender.com'; // deployed backend
+// const BASE_URL = import.meta.env.VITE_BACKEND_URL || 'https://timebanking-backend.onrender.com'; // deployed backend
 
-// const BASE_URL = 'http://localhost:8000' // local backend
+const BASE_URL = 'http://localhost:8000' // local backend
 
 // Register
 export const registerUser = async (data: {
