@@ -80,7 +80,20 @@ const MapView: React.FC<MapViewProps> = ({ services, loading }) => {
   return (
     <div className="map-container">
       <div className="map-info">
-        <p>📍 Showing {servicesWithUniqueCoords.length} service{servicesWithUniqueCoords.length !== 1 ? 's' : ''} on map</p>
+        <div style={{
+          backgroundColor: '#f8f9fa', 
+          padding: '10px', 
+          borderRadius: '6px', 
+          border: '1px solid #e9ecef',
+          marginBottom: '10px'
+        }}>
+          <p style={{margin: 0, fontSize: '14px'}}>
+            📍 Showing {servicesWithUniqueCoords.length} service{servicesWithUniqueCoords.length !== 1 ? 's' : ''} with approximate locations
+          </p>
+          <p style={{margin: '5px 0 0 0', fontSize: '13px', color: '#666'}}>
+            Exact addresses are shared after booking for privacy
+          </p>
+        </div>
       </div>
       
       <MapContainer
