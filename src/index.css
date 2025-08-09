@@ -57,7 +57,7 @@ button {
   font-family: 'Georgia', serif;
   background-color: rgba(228, 165, 202, 0.1);
   cursor: pointer;
-  transition: all 0.3s ease;
+  /* transition: all 0.3s ease; */
   color: #632713;
 }
 

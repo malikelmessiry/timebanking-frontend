@@ -11,7 +11,7 @@
   background: rgba(255, 255, 255, 0.15);
   border-bottom: 2px solid rgba(99, 39, 19, 0.2);
   padding: 40px 20px;
-  backdrop-filter: blur(10px);
+  /* backdrop-filter: blur(10px); */
 }
 
 .services-header .header-content {
@@ -82,7 +82,7 @@
   height: fit-content;
   position: sticky;
   top: 20px;
-  backdrop-filter: blur(20px);
+  /* backdrop-filter: blur(20px); */
   box-shadow: 0 8px 32px rgba(99, 39, 19, 0.1);
 }
 
@@ -110,7 +110,7 @@
   border-radius: 6px;
   font-size: 11px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  /* transition: all 0.3s ease; */
 }
 
 .clear-filters:hover {
@@ -139,7 +139,8 @@
   background: rgba(255, 255, 255, 0.4);
   color: #632713;
   font-family: 'Georgia', serif;
-  transition: all 0.3s ease;
+  /* transition: all 0.3s ease; */
+  /* transition: border-color 0.3s ease, background-color 0.3s ease; */
 }
 
 .search-input:focus,
@@ -177,9 +178,9 @@
 
 .category-filter-item:hover {
   background: rgba(248, 169, 31, 0.1);
-  margin: 0 -8px;
+  /* margin: 0 -8px;
   padding-left: 8px;
-  padding-right: 8px;
+  padding-right: 8px; */
   border-radius: 4px;
 }
 
@@ -231,7 +232,7 @@
   border: 1px solid rgba(99, 39, 19, 0.2);
   border-radius: 12px;
   padding: 16px 20px;
-  backdrop-filter: blur(20px);
+  /* backdrop-filter: blur(20px); */
   box-shadow: 0 4px 16px rgba(99, 39, 19, 0.1);
 }
 
@@ -330,7 +331,7 @@
   border: 2px dashed rgba(99, 39, 19, 0.3);
   border-radius: 16px;
   color: #632713;
-  backdrop-filter: blur(10px);
+  /* backdrop-filter: blur(10px); */
 }
 
 .empty-state h3 {
@@ -370,7 +371,7 @@
   border: 2px solid rgba(236, 100, 38, 0.3);
   border-radius: 12px;
   color: #ec6426;
-  backdrop-filter: blur(10px);
+  /* backdrop-filter: blur(10px); */
 }
 
 .error-state button {
@@ -528,7 +529,7 @@
   cursor: pointer;
   font-family: 'Georgia', serif;
   font-size: 14px;
-  transition: all 0.3s ease;
+  /* transition: all 0.3s ease; */
   text-align: left;
 }
 
