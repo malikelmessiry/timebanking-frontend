@@ -511,36 +511,37 @@
   transform: translateY(-1px);
 }
 
-/* View Button Updates */
-.view-btn {
+/* Button-style service type filter */
+.service-type-buttons {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: 1px solid #ddd;
-  background: white;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.service-type-btn {
+  padding: 10px 16px;
+  border: 2px solid rgba(99, 39, 19, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  color: #632713;
   cursor: pointer;
-  transition: all 0.2s;
-  position: relative;
+  font-family: 'Georgia', serif;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  text-align: left;
 }
 
-.view-btn.active {
-  background: #72ac43;
-  color: white;
-  border-color: #72ac43;
+.service-type-btn:hover {
+  background: rgba(248, 169, 31, 0.1);
+  border-color: rgba(248, 169, 31, 0.5);
 }
 
-.view-btn:hover {
-  background: #f8f9fa;
-}
-
-.view-btn.active:hover {
-  background: #5d8a37;
-}
-
-.view-icon {
-  font-size: 16px;
+.service-type-btn.active {
+  background: rgba(248, 169, 31, 0.2);
+  border-color: #f8a91f;
+  font-weight: 500;
+  box-shadow: 0 0 0 2px rgba(248, 169, 31, 0.1);
 }
 
 /* Mobile Responsive */

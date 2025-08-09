@@ -297,37 +297,30 @@ export default function Services() {
             {/* Service Type Filter */}
             <div className="filter-group">
               <label>Service Type</label>
-              <div className="service-type-filter">
-                <label className="filter-option">
-                  <input
-                    type="radio"
-                    name="serviceType"
-                    value="all"
-                    checked={selectedServiceType === 'all'}
-                    onChange={(e) => setSelectedServiceType(e.target.value)}
-                  />
-                  <span>All</span>
-                </label>
-                <label className="filter-option">
-                  <input
-                    type="radio"
-                    name="serviceType"
-                    value="in-person"
-                    checked={selectedServiceType === 'in-person'}
-                    onChange={(e) => setSelectedServiceType(e.target.value)}
-                  />
-                  <span>🏠 In-Person</span>
-                </label>
-                <label className="filter-option">
-                  <input
-                    type="radio"
-                    name="serviceType"
-                    value="virtual"
-                    checked={selectedServiceType === 'virtual'}
-                    onChange={(e) => setSelectedServiceType(e.target.value)}
-                  />
-                  <span>💻 Virtual</span>
-                </label>
+              <div className="service-type-buttons">
+                <button
+                  type="button"
+                  className={`service-type-btn ${selectedServiceType === 'all' ? 'active' : ''}`}
+                  onClick={() => setSelectedServiceType('all')}
+                >
+                  All Services
+                </button>
+                
+                <button
+                  type="button"
+                  className={`service-type-btn ${selectedServiceType === 'in-person' ? 'active' : ''}`}
+                  onClick={() => setSelectedServiceType('in-person')}
+                >
+                  🏠 In-Person
+                </button>
+                
+                <button
+                  type="button"
+                  className={`service-type-btn ${selectedServiceType === 'virtual' ? 'active' : ''}`}
+                  onClick={() => setSelectedServiceType('virtual')}
+                >
+                  💻 Virtual
+                </button>
               </div>
             </div>
           </div>
