@@ -1,7 +1,7 @@
 /* Services Browse Page Styles - Lighter Background */
 .services-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #fde3cf 0%, #e4a5ca 50%, #72ac43 100%);
+  background: #181A1B;
   font-family: 'Georgia', serif;
   padding-bottom: 40px;
 }

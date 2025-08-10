@@ -1,7 +1,7 @@
-/* Service Detail Page Styles */
+/* Service Detail Page Styles - Dark Theme */
 .service-detail-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #fde3cf 0%, #e4a5ca 50%, #72ac43 100%);
+  background: #876029;
   font-family: 'Georgia', serif;
   padding: 20px 0 40px 0;
 }
@@ -22,24 +22,24 @@
 }
 
 .breadcrumb a {
-  color: #632713;
+  color: #B8CEE8;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .breadcrumb a:hover {
-  color: #f8a91f;
+  color: #EFCE7B;
 }
 
 .breadcrumb span:last-child {
-  color: rgba(99, 39, 19, 0.6);
+  color: rgba(184, 206, 232, 0.6);
   font-style: italic;
 }
 
 /* Service Header */
 .service-detail-header {
-  background: rgba(255, 255, 255, 0.25);
-  border: 2px solid rgba(99, 39, 19, 0.2);
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(170, 204, 150, 0.2);
   border-radius: 16px;
   padding: 32px;
   margin-bottom: 32px;
@@ -48,7 +48,7 @@
   align-items: flex-start;
   gap: 24px;
   backdrop-filter: blur(20px);
-  box-shadow: 0 8px 32px rgba(99, 39, 19, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .service-title-section {
@@ -56,7 +56,7 @@
 }
 
 .service-title {
-  color: #632713;
+  color: #F4BEAE;
   font-size: 36px;
   font-weight: 300;
   margin: 0 0 16px 0;
@@ -71,8 +71,9 @@
   border-radius: 20px;
   font-size: 14px;
   font-weight: 500;
-  background: rgba(255, 255, 255, 0.3);
-  border: 1px solid rgba(99, 39, 19, 0.2);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(170, 204, 150, 0.3);
+  color: #AACC96;
 }
 
 .status-dot {
@@ -82,11 +83,13 @@
 }
 
 .status-dot.available {
-  background: #72ac43;
+  background: #AACC96;
+  box-shadow: 0 0 8px rgba(170, 204, 150, 0.5);
 }
 
 .status-dot.unavailable {
-  background: #ec6426;
+  background: #EF6F3C;
+  box-shadow: 0 0 8px rgba(239, 111, 60, 0.5);
 }
 
 .service-credit-info {
@@ -94,8 +97,8 @@
 }
 
 .credit-display {
-  background: linear-gradient(135deg, rgba(248, 169, 31, 0.3), rgba(248, 169, 31, 0.4));
-  border: 2px solid rgba(248, 169, 31, 0.5);
+  background: rgba(239, 206, 123, 0.15);
+  border: 2px solid rgba(239, 206, 123, 0.4);
   border-radius: 16px;
   padding: 20px;
   min-width: 140px;
@@ -103,14 +106,14 @@
 
 .credit-amount {
   display: block;
-  color: #632713;
+  color: #EFCE7B;
   font-size: 32px;
   font-weight: 700;
   line-height: 1;
 }
 
 .credit-label {
-  color: rgba(99, 39, 19, 0.7);
+  color: #F4BEAE;
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -127,8 +130,8 @@
 
 /* Service Sections */
 .service-section {
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(99, 39, 19, 0.15);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(109, 31, 66, 0.3);
   border-radius: 12px;
   padding: 24px;
   margin-bottom: 24px;
@@ -136,7 +139,7 @@
 }
 
 .service-section h3 {
-  color: #632713;
+  color: #D3B6D3;
   font-size: 20px;
   font-weight: 500;
   margin: 0 0 16px 0;
@@ -146,7 +149,7 @@
 }
 
 .service-full-description {
-  color: rgba(99, 39, 19, 0.8);
+  color: rgba(244, 190, 174, 0.9);
   font-size: 16px;
   line-height: 1.6;
   margin: 0;
@@ -160,19 +163,20 @@
 }
 
 .category-link {
-  background: rgba(114, 172, 67, 0.2);
-  color: #632713;
+  background: rgba(82, 165, 206, 0.2);
+  color: #B8CEE8;
   padding: 8px 16px;
   border-radius: 20px;
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
-  border: 1px solid rgba(114, 172, 67, 0.3);
+  border: 1px solid rgba(82, 165, 206, 0.4);
   transition: all 0.3s ease;
 }
 
 .category-link:hover {
-  background: rgba(114, 172, 67, 0.3);
+  background: rgba(82, 165, 206, 0.4);
+  color: #F4BEAE;
   transform: translateY(-1px);
 }
 
@@ -184,12 +188,12 @@
 }
 
 .tag-item {
-  background: rgba(228, 165, 202, 0.2);
-  color: rgba(99, 39, 19, 0.8);
+  background: rgba(255, 123, 172, 0.2);
+  color: #FF7BAC;
   padding: 4px 12px;
   border-radius: 12px;
   font-size: 12px;
-  border: 1px solid rgba(228, 165, 202, 0.3);
+  border: 1px solid rgba(255, 123, 172, 0.3);
 }
 
 /* Service Stats */
@@ -203,34 +207,38 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(175, 171, 35, 0.3);
 }
 
 .stat-label {
-  color: rgba(99, 39, 19, 0.6);
+  color: #AFAB23;
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .stat-value {
-  color: #632713;
+  color: #EFCE7B;
   font-size: 16px;
   font-weight: 600;
 }
 
 /* Sidebar Cards */
 .service-sidebar > div {
-  background: rgba(255, 255, 255, 0.25);
-  border: 2px solid rgba(99, 39, 19, 0.2);
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(109, 31, 66, 0.3);
   border-radius: 16px;
   padding: 24px;
   margin-bottom: 24px;
   backdrop-filter: blur(20px);
-  box-shadow: 0 4px 16px rgba(99, 39, 19, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 .service-sidebar h3 {
-  color: #632713;
+  color: #D3B6D3;
   font-size: 18px;
   font-weight: 500;
   margin: 0 0 16px 0;
@@ -251,24 +259,25 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #f8a91f, #ec6426);
+  background: #876029;
+  border: 2px solid #EFCE7B;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #632713;
+  color: #F4BEAE;
   font-size: 20px;
   font-weight: 700;
 }
 
 .provider-details h4 {
-  color: #632713;
+  color: #F4BEAE;
   margin: 0;
   font-size: 16px;
   font-weight: 600;
 }
 
 .provider-details p {
-  color: rgba(99, 39, 19, 0.6);
+  color: #B8CEE8;
   margin: 4px 0 0 0;
   font-size: 12px;
   font-style: italic;
@@ -300,28 +309,30 @@
 }
 
 .contact-btn {
-  background: rgba(228, 165, 202, 0.3);
-  color: #632713;
-  border: 2px solid rgba(228, 165, 202, 0.4);
+  background: rgba(255, 123, 172, 0.3);
+  color: #FF7BAC;
+  border: 2px solid rgba(255, 123, 172, 0.5);
 }
 
 .contact-btn:hover {
-  background: rgba(228, 165, 202, 0.4);
+  background: rgba(255, 123, 172, 0.5);
+  color: #F4BEAE;
   transform: translateY(-1px);
 }
 
 .book-now-btn {
-  background: linear-gradient(135deg, #72ac43, #5a8a35);
-  color: white;
+  background: #52A5CE;
+  color: #F4BEAE;
   font-size: 16px;
   font-weight: 600;
   padding: 16px 20px;
+  border: 2px solid #AACC96;
 }
 
 .book-now-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg, #5a8a35, #4a7329);
+  background: #AACC96;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(114, 172, 67, 0.3);
+  box-shadow: 0 6px 20px rgba(37, 83, 63, 0.4);
 }
 
 .book-now-btn:disabled {
@@ -332,34 +343,37 @@
 
 .edit-service-btn,
 .earn-credits-btn {
-  background: linear-gradient(135deg, #f8a91f, #ec6426);
-  color: #632713;
+  background: #6D1F42;
+  color: #EFCE7B;
+  border: 2px solid #876029;
 }
 
 .edit-service-btn:hover,
 .earn-credits-btn:hover {
-  background: linear-gradient(135deg, #ec6426, #f8a91f);
+  background: #876029;
+  color: #F4BEAE;
   transform: translateY(-1px);
 }
 
 .share-btn,
 .back-to-services-btn {
-  background: rgba(255, 255, 255, 0.2);
-  color: #632713;
-  border: 2px solid rgba(99, 39, 19, 0.2);
+  background: rgba(0, 0, 0, 0.3);
+  color: #AFAB23;
+  border: 2px solid rgba(175, 171, 35, 0.5);
   font-size: 13px;
 }
 
 .share-btn:hover,
 .back-to-services-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(175, 171, 35, 0.2);
+  color: #EFCE7B;
   transform: translateY(-1px);
 }
 
 /* Booking Section */
 .booking-summary {
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(99, 39, 19, 0.2);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(82, 165, 206, 0.4);
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 16px;
@@ -370,21 +384,21 @@
   justify-content: space-between;
   align-items: center;
   padding: 4px 0;
-  color: rgba(99, 39, 19, 0.8);
+  color: #B8CEE8;
   font-size: 14px;
 }
 
 .summary-row.total {
-  border-top: 1px solid rgba(99, 39, 19, 0.2);
+  border-top: 1px solid rgba(109, 31, 66, 0.5);
   margin-top: 8px;
   padding-top: 8px;
   font-weight: 600;
-  color: #632713;
+  color: #D3B6D3;
 }
 
 .booking-note {
   font-size: 12px;
-  color: rgba(99, 39, 19, 0.6);
+  color: rgba(244, 190, 174, 0.7);
   font-style: italic;
   text-align: center;
   margin: 12px 0 0 0;
@@ -402,21 +416,21 @@
 }
 
 .owner-notice {
-  background: rgba(114, 172, 67, 0.2);
-  border: 1px solid rgba(114, 172, 67, 0.3);
-  color: #632713;
+  background: rgba(170, 204, 150, 0.2);
+  border: 1px solid rgba(170, 204, 150, 0.4);
+  color: #AACC96;
 }
 
 .unavailable-notice {
-  background: rgba(236, 100, 38, 0.2);
-  border: 1px solid rgba(236, 100, 38, 0.3);
-  color: #632713;
+  background: rgba(239, 111, 60, 0.2);
+  border: 1px solid rgba(239, 111, 60, 0.4);
+  color: #EF6F3C;
 }
 
 .insufficient-credits {
-  background: rgba(248, 169, 31, 0.2);
-  border: 1px solid rgba(248, 169, 31, 0.3);
-  color: #632713;
+  background: rgba(239, 206, 123, 0.2);
+  border: 1px solid rgba(239, 206, 123, 0.4);
+  color: #EFCE7B;
 }
 
 /* Loading and Error States */
@@ -424,7 +438,7 @@
 .error-state {
   text-align: center;
   padding: 100px 20px;
-  color: #632713;
+  color: #F4BEAE;
 }
 
 .loading-state h2,
@@ -437,24 +451,26 @@
 .loading-state p,
 .error-state p {
   font-size: 16px;
-  color: rgba(99, 39, 19, 0.7);
+  color: #B8CEE8;
   margin-bottom: 24px;
 }
 
 .back-btn {
   display: inline-block;
   padding: 12px 24px;
-  background: linear-gradient(135deg, #f8a91f, #ec6426);
-  color: #632713;
+  background: #876029;
+  color: #EFCE7B;
   text-decoration: none;
   border-radius: 8px;
   font-weight: 500;
   transition: all 0.3s ease;
+  border: 2px solid #876029;
 }
 
 .back-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(248, 169, 31, 0.3);
+  box-shadow: 0 6px 20px rgba(135, 96, 41, 0.3);
+  background: #25533F;
 }
 
 /* Mobile Responsive */
