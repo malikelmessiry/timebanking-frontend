@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getAllServices, getServiceById, getServicesByZipCode } from '../services/api';
 import type { Service } from '../services/api';
@@ -50,12 +50,23 @@ export default function Services() {
     if (zip) setZipCode(zip);
     if (cityParam) setCity(cityParam);
     if (search) setSearchTerm(search);
-  }, [searchParams, zipCode, city]);
+  }, [searchParams]);
 
-  // Apply filters whenever filter states change
+  // apply filters whenever filter states change
   useEffect(() => {
     applyFilters();
   }, [services, searchTerm, selectedCategories, minCredits, maxCredits, sortBy, city, selectedServiceType]);
+
+  // add debouncing for zip code and city search
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      // only reload services when user stops typing for 500ms
+      loadServices();
+    }, 1300);
+
+    // clear timeout if user keeps typing
+    return () => clearTimeout(timer);
+  }, [zipCode, city]); // only trigger on zipCode or city changes
 
   const loadServices = async () => {
     setLoading(true);
@@ -70,7 +81,7 @@ export default function Services() {
 
       let servicesData: Service[];
       
-      // Use service ID search if provided
+      // use service ID search if provided
       const serviceId = searchParams.get('service_id');
       if (serviceId) {
         const service = await getServiceById(token, Number(serviceId));

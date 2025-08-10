@@ -91,7 +91,7 @@ const MapView: React.FC<MapViewProps> = ({ services, loading }) => {
             📍 Showing {servicesWithUniqueCoords.length} service{servicesWithUniqueCoords.length !== 1 ? 's' : ''} with approximate locations
           </p>
           <p style={{margin: '5px 0 0 0', fontSize: '13px', color: '#666'}}>
-            Exact addresses are shared after booking for privacy
+            Exact addresses are shared after booking
           </p>
         </div>
       </div>
