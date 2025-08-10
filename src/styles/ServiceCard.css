@@ -2,10 +2,10 @@
 .service-card {
   background: rgba(255, 255, 255, 0.3);
   border: 1px solid rgba(99, 39, 19, 0.2);
-  border-radius: 12px;
-  padding: 20px;
+  border-radius: 8px;
+  padding: 10px 14px;
   transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-  box-shadow: 0 4px 16px rgba(99, 39, 19, 0.1);
+  box-shadow: 0 2px 8px rgba(99, 39, 19, 0.08);
   display: flex;
   flex-direction: column;
   height: fit-content;
@@ -76,12 +76,12 @@
 /* Update action buttons for light theme */
 .action-btn {
   flex: 1;
-  padding: 10px 16px;
+  padding: 6px 10px;
   border: 2px solid rgba(99, 39, 19, 0.3);
-  border-radius: 8px;
+  border-radius: 6px;
   background: rgba(255, 255, 255, 0.2);
   color: #632713;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
@@ -90,7 +90,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 2px;
   font-family: 'Georgia', serif;
   position: relative;
   z-index: 1;
@@ -144,9 +144,9 @@
 .service-card.list {
   flex-direction: row;
   align-items: flex-start;
-  gap: 20px;
-  min-height: 120px;
-  padding: 16px 20px;
+  gap: 12px;
+  min-height: 70px;
+  padding: 10px 14px;
 }
 
 .service-card.list .service-card-link {

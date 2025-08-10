@@ -435,9 +435,9 @@ export default function Dashboard() {
                         <span className='rating'>
                           ⭐ {service.average_rating ? service.average_rating.toFixed(1) : 'No ratings'}
                         </span>
-                        <span className={`status ${service.is_available ? 'available' : 'unavailable'}`}>
+                        {/* <span className={`status ${service.is_available ? 'available' : 'unavailable'}`}>
                           {service.is_available ? 'Available' : 'Unavailable'}
-                        </span>
+                        </span> */}
                       </div>
                       <div className="service-tags">
                         {service.category.map((cat, index) => (

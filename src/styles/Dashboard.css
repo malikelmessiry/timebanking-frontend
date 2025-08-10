@@ -30,11 +30,26 @@
   cursor: pointer;
   border-bottom: 2px solid transparent;
   transition: all 0.3s ease;
+  position: relative;
+}
+
+/* Hand-drawn underline on hover */
+.tab-btn:hover::after,
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: 6px;
+  height: 7px;
+  background: url("data:image/svg+xml,%3csvg width='100' height='7' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M2,5 Q20,2 40,5 Q60,8 80,4 Q90,6 98,5' stroke='%23B8CEE8' stroke-width='2.5' fill='none' stroke-linecap='round'/%3e%3c/svg%3e") center/100% 100% no-repeat;  pointer-events: none;
+  z-index: 2;
+  opacity: 0.85;
 }
 
 .tab-btn.active {
-  border-bottom-color: darkgoldenrod;
-  color: darkgoldenrod;
+  /* border-bottom-color: #B8CEE8; */
+  color: #B8CEE8;
 }
 
 .user-welcome {
@@ -82,10 +97,25 @@
   border-bottom: 1px solid #eee;
 }
 
+.section-header {
+  border-bottom: none;
+  position: relative;
+}
+
+.section-header::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 8px;
+  background: url("data:image/svg+xml,%3csvg width='100' height='8' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M0,6 Q20,2 40,6 Q60,10 80,4 Q90,6 100,6' stroke='%23876029' stroke-width='2' fill='none' stroke-linecap='round'/%3e%3c/svg%3e") repeat-x;
+  background-size: 100px 8px;
+  opacity: 0.7;
+}
+
 .service-requests-section {
   margin-top: 3rem;
   padding-top: 2rem;
-  border-top: 2px solid #f0f0f0;
+  /* border-top: 2px solid #f0f0f0; */
 }
 
 .request-header {
@@ -113,14 +143,29 @@
   font-weight: 600;
 }
 
+.booking-card.incoming,
+.booking-card.outgoing {
+  position: relative;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+  background: rgba(255, 255, 255, 0.13); /* Match service-card */
+  border: 1px solid rgba(228, 165, 202, 0.3);
+  box-shadow: 0 2px 8px rgba(99, 39, 19, 0.06);
+  overflow: visible;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .booking-card.incoming {
-  border-left: 4px solid #f59e0b; /* Orange for service requests */
-  background: #fffbeb;
+  border-left: 4px solid #f59e0b; /* Orange accent for incoming */
 }
 
 .booking-card.outgoing {
   border-left: 4px solid #4ade80; /* Green for your bookings */
-  background: #f0fdf4;
+  background: #f0fdf480;
 }
 
 .accept {
@@ -177,21 +222,21 @@
   font-size: 12px;
 }
 
-.service-meta .status.available {
+/* .service-meta .status.available {
   background: rgba(114, 172, 67, 0.2);
   color: #72ac43;
   padding: 4px 8px;
   border-radius: 12px;
   font-size: 12px;
-}
+} */
 
-.service-meta .status.unavailable {
+/* .service-meta .status.unavailable {
   background: rgba(236, 100, 38, 0.2);
   color: #ec6426;
   padding: 4px 8px;
   border-radius: 12px;
   font-size: 12px;
-}
+} */
 
 .service-tags {
   display: flex;
@@ -202,7 +247,7 @@
 
 .category-tag, .service-tag {
   background: rgba(114, 172, 67, 0.2);
-  color: #72ac43;
+  color: #6D1F42;
   padding: 2px 6px;
   border-radius: 8px;
   font-size: 11px;
@@ -210,16 +255,16 @@
 
 .service-actions {
   display: flex;
-  gap: 10px;
+  gap: 6px;
   margin-top: 15px;
 }
 
 .service-actions button,
 .service-actions a {
-  padding: 8px 12px;
-  border: 1px solid rgba(228, 165, 202, 0.3);
+  padding: 5px;
+  /* border: 1px solid rgba(228, 165, 202, 0.3); */
   background: transparent;
-  color: #e4a5ca;
+  color: #25533F;
   text-decoration: none;
   border-radius: 4px;
   cursor: pointer;
@@ -237,7 +282,7 @@
   color: rgba(253, 227, 207, 0.7);
 }
 
-.quick-actions {
+/* .quick-actions {
   margin-top: 30px;
 }
 
@@ -258,7 +303,7 @@
 .quick-actions button:hover,
 .quick-actions a:hover {
   background: rgba(248, 169, 31, 0.3);
-}
+} */
 
 /* Review Modal Styles */
 .modal-overlay {
@@ -488,7 +533,7 @@
 }
 
 .history-card {
-  background: white;
+  background: rgba(209, 235, 233, 0.589); /* Match service-card */
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 20px;

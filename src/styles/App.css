@@ -20,6 +20,11 @@
   padding: 0 20px;
 }
 
+.tab-btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 /* Updated Auth section - Minimalist & Artsy with custom colors */
 
 
