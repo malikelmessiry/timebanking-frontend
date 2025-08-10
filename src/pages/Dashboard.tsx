@@ -328,7 +328,7 @@ export default function Dashboard() {
     <div>
       <Navbar />
       <div className='dashboard'>
-        <h1>TimeBank Dashboard</h1>
+        {/* <h1>TimeBank Dashboard</h1> */}
         
         {/* Dashboard Navigation Tabs */}
         <div className='dashboard-tabs'>

@@ -1,5 +1,14 @@
 .dashboard {
   padding: 2rem;
+  background: #EFCE7B;
+  background-image:
+    url('../assets/background.png'),
+    radial-gradient(circle at 1px 1px, rgba(135, 96, 41, 0.1) 1px, transparent 0),
+    linear-gradient(135deg, #efce7b 0%, #F4BEAE 100%);
+  background-size: cover, 20px 20px, 100% 100%;
+  background-repeat: no-repeat, repeat, no-repeat;
+  min-height: 100vh;
+  position: relative;
 }
 
 .dashboard-tabs {
@@ -26,6 +35,10 @@
 .tab-btn.active {
   border-bottom-color: darkgoldenrod;
   color: darkgoldenrod;
+}
+
+.user-welcome {
+  text-align: center;
 }
 
 .dashboard-content {
