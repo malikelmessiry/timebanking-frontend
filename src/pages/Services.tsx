@@ -291,7 +291,7 @@ export default function Services() {
               <div className="credits-range">
                 <input
                   type="number"
-                  value={minCredits}
+                  value={minCredits === 0 ? '' : minCredits}
                   onChange={(e) => setMinCredits(parseInt(e.target.value) || 0)}
                   min="0"
                   max="50"
@@ -301,7 +301,7 @@ export default function Services() {
                 <span>to</span>
                 <input
                   type="number"
-                  value={maxCredits}
+                  value={maxCredits === 50 ? '' : maxCredits}
                   onChange={(e) => setMaxCredits(parseInt(e.target.value) || 50)}
                   min="0"
                   max="50"
