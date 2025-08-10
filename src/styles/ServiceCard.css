@@ -4,12 +4,13 @@
   border: 1px solid rgba(99, 39, 19, 0.2);
   border-radius: 12px;
   padding: 20px;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
   box-shadow: 0 4px 16px rgba(99, 39, 19, 0.1);
   display: flex;
   flex-direction: column;
   height: fit-content;
+  cursor: default;
+  position: relative;
 }
 
 .service-card::before {
@@ -20,13 +21,16 @@
   width: 100%;
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(248, 169, 31, 0.1), transparent);
-  transition: left 0.5s;
+  transition: left 0.5s ease;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .service-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(99, 39, 19, 0.15);
   background: rgba(255, 255, 255, 0.4);
+  cursor: default;
 }
 
 .service-card:hover::before {
@@ -80,7 +84,7 @@
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
   text-decoration: none;
   text-align: center;
   display: flex;
@@ -88,12 +92,15 @@
   justify-content: center;
   gap: 4px;
   font-family: 'Georgia', serif;
+  position: relative;
+  z-index: 1;
 }
 
 .action-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(99, 39, 19, 0.2);
   background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
 }
 
 .service-actions {
