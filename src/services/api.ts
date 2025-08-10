@@ -350,32 +350,32 @@ export const getMyServices = async (token: string, userEmail: string): Promise<S
 };
 
 // Get services by zip code 
-export const getServicesByZipCode = async (token: string, zipCode: string): Promise<Service[]> => {
-  try {
-    const res = await fetch(`${BASE_URL}/services/?zip_code=${zipCode}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Token ${token}`,
-        },
-    });
+// export const getServicesByZipCode = async (token: string, zipCode: string): Promise<Service[]> => {
+//   try {
+//     const res = await fetch(`${BASE_URL}/services/?zip_code=${zipCode}`, {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Authorization': `Token ${token}`,
+//         },
+//     });
 
-    if (!res.ok) {
-        if (res.status === 401) {
-            throw new Error('Session expired. Please log in again.');
-        } else if (res.status >= 500) {
-            throw new Error('Server error. Please try again later.');
-        } else {
-            throw new Error('Failed to load services for this zip code');
-        }
-    }
+//     if (!res.ok) {
+//         if (res.status === 401) {
+//             throw new Error('Session expired. Please log in again.');
+//         } else if (res.status >= 500) {
+//             throw new Error('Server error. Please try again later.');
+//         } else {
+//             throw new Error('Failed to load services for this zip code');
+//         }
+//     }
 
-      return await res.json();
-  } catch (error) {
-      console.error('Get services by zip code error:', error);
-      throw error;
-  }
-};
+//       return await res.json();
+//   } catch (error) {
+//       console.error('Get services by zip code error:', error);
+//       throw error;
+//   }
+// };
 
 // BOOKINGS
 

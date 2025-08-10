@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { getAllServices, getServiceById, getServicesByZipCode } from '../services/api';
+import { getAllServices, getServiceById } from '../services/api';
 import type { Service } from '../services/api';
 import ServiceCard from '../components/ServiceCard';
 import MapView from '../components/MapView';
@@ -55,18 +55,7 @@ export default function Services() {
   // apply filters whenever filter states change
   useEffect(() => {
     applyFilters();
-  }, [services, searchTerm, selectedCategories, minCredits, maxCredits, sortBy, city, selectedServiceType]);
-
-  // add debouncing for zip code and city search
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      // only reload services when user stops typing for 500ms
-      loadServices();
-    }, 1300);
-
-    // clear timeout if user keeps typing
-    return () => clearTimeout(timer);
-  }, [zipCode, city]); // only trigger on zipCode or city changes
+  }, [services, searchTerm, selectedCategories, minCredits, maxCredits, sortBy, city, zipCode, selectedServiceType]);
 
   const loadServices = async () => {
     setLoading(true);
@@ -86,15 +75,15 @@ export default function Services() {
       if (serviceId) {
         const service = await getServiceById(token, Number(serviceId));
         servicesData = service ? [service] : [];
-      } else if (zipCode.trim()) {
-        console.log('Filtering services by zip code:', zipCode);
-        servicesData = await getServicesByZipCode(token, zipCode);
+        console.log('🔍 Loading single service by ID:', serviceId);
       } else {
+        // Always get ALL services, then filter on frontend
+        console.log('🔍 Loading ALL services for frontend filtering');
         servicesData = await getAllServices(token);
+        console.log('🔍 Total services loaded:', servicesData.length);
       }
 
       setServices(servicesData);
-      console.log('Services loaded:', servicesData.length);
     } catch (error: any) {
       console.error('Failed to load services:', error);
       setError(error.message || 'Failed to load services');
@@ -104,6 +93,8 @@ export default function Services() {
   };
 
   const applyFilters = () => {
+    console.log('🔍 Applying filters...');
+    console.log('🔍 Starting with services:', services.length);
     let filtered = [...services];
 
     // Text search
@@ -115,31 +106,46 @@ export default function Services() {
         service.tags.some(tag => tag.toLowerCase().includes(term)) ||
         service.category.some(cat => cat.toLowerCase().includes(term))
       );
+      console.log('🔍 After text search:', filtered.length);
     }
 
-    // Category filter
+    // zip code filter
+    if (zipCode.trim()) {
+      filtered = filtered.filter(service => 
+        service.zip_code && service.zip_code.includes(zipCode.trim())
+      );
+      console.log('🔍 After zip code filter (' + zipCode + '):', filtered.length);
+    }
+
+    // city filter 
+    if (city.trim()) {
+      filtered = filtered.filter(service => 
+        service.city && service.city.toLowerCase().includes(city.toLowerCase())
+      );
+      console.log('🔍 After city filter (' + city + '):', filtered.length);
+    }
+
+    // category filter
     if (selectedCategories.length > 0) {
       filtered = filtered.filter(service =>
         service.category.some(cat => selectedCategories.includes(cat))
       );
+      console.log('🔍 After category filter:', filtered.length);
     }
 
-    // Credits filter
+    // credits filter
     filtered = filtered.filter(service =>
       service.credit_required >= minCredits && service.credit_required <= maxCredits
     );
+    console.log('🔍 After credits filter:', filtered.length);
 
-    // City filter
-    if (city.trim()) {
-      filtered = filtered.filter(service => service.city && service.city.toLowerCase().includes(city.toLowerCase()));
-    }
-
-    // Service type filter
+    // service type filter
     if (selectedServiceType !== 'all') {
       filtered = filtered.filter(service => service.service_type === selectedServiceType);
+      console.log('🔍 After service type filter:', filtered.length);
     }
 
-    // Sort
+    // sort
     filtered.sort((a, b) => {
       switch (sortBy) {
         case 'newest':
@@ -149,7 +155,6 @@ export default function Services() {
         case 'credits-high':
           return b.credit_required - a.credit_required;
         case 'rating':
-          // Handle null/undefined ratings safely
           const ratingA = a.average_rating || 0;
           const ratingB = b.average_rating || 0;
           return ratingB - ratingA;
@@ -158,6 +163,7 @@ export default function Services() {
       }
     });
 
+    console.log('🔍 Final filtered services:', filtered.length);
     setFilteredServices(filtered);
   };
 
