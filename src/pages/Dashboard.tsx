@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { getUserProfile, getAllServices, getMyServices, deleteService, getBookings, confirmBooking, cancelBooking, completeBooking, getServicesByOwner, completeBookingWithReview } from '../services/api';
+import { getUserProfile, getAllServices, deleteService, getBookings, confirmBooking, cancelBooking, completeBooking, getServicesByOwner, completeBookingWithReview } from '../services/api';
 import type { Service, Booking } from '../services/api';
 import Navbar from '../components/Navbar';
 import '../styles/Dashboard.css';
@@ -138,10 +138,10 @@ export default function Dashboard() {
 
       // Get both bookings where user is owner and customer
       const [ownerBookings, customerBookings] = await Promise.all([
-        getBookings(token, `owner_id=${user.id}`).catch(err => {
+        getBookings(token, `owner_id=${user.id}`).catch(_ => {
           return []; // Return empty array if fails
         }),
-        getBookings(token, `customer_id=${user.id}`).catch(err => {
+        getBookings(token, `customer_id=${user.id}`).catch(_ => {
           return []; // Return empty array if fails
         })
       ]);
