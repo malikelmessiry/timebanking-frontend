@@ -149,47 +149,16 @@ export default function ServiceDetail() {
     window.open(mailtoLink);
   };
 
-  if (loading) {
-    return (
-      <div>
-        <Navbar />
-        <div className="service-detail-page">
-          <div className="loading-state">
-            <h2>📋 Loading Service Details...</h2>
-            <p>Getting all the information for you</p>
-            <p style={{ fontSize: '12px', color: 'rgba(99, 39, 19, 0.5)', marginTop: '16px' }}>
-              Service ID: {id}
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   if (error || !service) {
+    if (error && !loading) {
+      setTimeout(() => navigate('/services'), 100);
+    }
+    
     return (
       <div>
         <Navbar />
-        <div className="service-detail-page">
-          <div className="error-state">
-            <h2>⚠️ {error || 'Service Not Found'}</h2>
-            <p>The service you're looking for doesn't exist or has been removed.</p>
-            <div style={{ 
-              fontSize: '12px', 
-              color: 'rgba(99, 39, 19, 0.5)', 
-              marginTop: '16px',
-              padding: '12px',
-              background: 'rgba(255, 255, 255, 0.1)',
-              borderRadius: '8px'
-            }}>
-              <p>Debug Info:</p>
-              <p>• Requested Service ID: {id}</p>
-              <p>• Error: {error}</p>
-            </div>
-            <Link to="/services" className="back-btn" style={{ marginTop: '24px' }}>
-              ← Back to Services
-            </Link>
-          </div>
+        <div className="service-detail-page" style={{ minHeight: '60vh' }}>
+          {/* Silent - no flash content */}
         </div>
       </div>
     );

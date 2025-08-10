@@ -186,19 +186,19 @@ export default function Services() {
     setSearchParams({});
   };
 
-  if (loading) {
-    return (
-      <div>
-        <Navbar />
-        <div className="services-page">
-          <div className="loading-state">
-            <h2>🔍 Loading Services...</h2>
-            <p>Finding amazing services for you</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div>
+  //       <Navbar />
+  //       <div className="services-page">
+  //         <div className="loading-state">
+  //           <h2>🔍 Loading Services...</h2>
+  //           <p>Finding amazing services for you</p>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div>
