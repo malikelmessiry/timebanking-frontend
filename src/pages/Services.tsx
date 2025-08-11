@@ -75,12 +75,8 @@ export default function Services() {
       if (serviceId) {
         const service = await getServiceById(token, Number(serviceId));
         servicesData = service ? [service] : [];
-        console.log('🔍 Loading single service by ID:', serviceId);
       } else {
-        // Always get ALL services, then filter on frontend
-        console.log('🔍 Loading ALL services for frontend filtering');
         servicesData = await getAllServices(token);
-        console.log('🔍 Total services loaded:', servicesData.length);
       }
 
       setServices(servicesData);
@@ -93,8 +89,6 @@ export default function Services() {
   };
 
   const applyFilters = () => {
-    console.log('🔍 Applying filters...');
-    console.log('🔍 Starting with services:', services.length);
     let filtered = [...services];
 
     // Text search
@@ -163,7 +157,6 @@ export default function Services() {
       }
     });
 
-    console.log('🔍 Final filtered services:', filtered.length);
     setFilteredServices(filtered);
   };
 
@@ -247,7 +240,6 @@ export default function Services() {
 
             {/* Zip Code */}
             <div className="filter-group">
-              {/* <label>Location (Zip Code)</label> */}
               <input
                 type="text"
                 value={zipCode}
