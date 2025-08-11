@@ -1,17 +1,17 @@
 /* src/styles/Home.css - Minimalist & Artsy */
 .home-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #fde3cf 0%, #f8f6f0 100%);
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(228, 165, 202, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(114, 172, 67, 0.08) 0%, transparent 50%);
   color: #632713;
 }
 
 /* Hero section */
 .hero-section {
-  padding: 120px 0;
+  padding: 50px 0;
   text-align: center;
-  background-image: 
-    radial-gradient(circle at 20% 80%, rgba(228, 165, 202, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(114, 172, 67, 0.08) 0%, transparent 50%);
+
 }
 
 .hero-container {
@@ -21,7 +21,7 @@
 }
 
 .hero-title {
-  font-size: 4rem;
+  font-size: 3.5rem;
   color: #632713;
   font-family: 'Georgia', serif;
   margin-bottom: 30px;
@@ -34,7 +34,7 @@
 .hero-subtitle {
   font-size: 1.3rem;
   color: #2e573a;
-  margin-bottom: 60px;
+  margin: 50px auto;
   font-family: 'Georgia', serif;
   max-width: 700px;
   margin-left: auto;
@@ -47,7 +47,7 @@
 
 .hero-cta {
   display: inline-block;
-  background: linear-gradient(135deg, #f8a91f, #ec6426);
+  background: linear-gradient(135deg, #fdb22f, #ec6426);
   color: white;
   padding: 20px 50px;
   text-decoration: none;
@@ -57,21 +57,57 @@
   text-transform: lowercase;
   letter-spacing: 2px;
   transition: all 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  border: none;
+  /* Add scribbled border using border-radius variations */
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+
+  /* Add hand-drawn shadow */
+  box-shadow:
+    2px 8px 4px -6px rgba(0, 0, 0, .3),
+    inset 0 0 0 2px #632713;
+
+  /* Add slight rotation for hand-drawn feel */
+  transform: rotate(-1deg);
+
+  /* Rough, sketchy font effect */
+  text-shadow: 0.5px 0.5px 0px rgba(0, 0, 0, 0.3);
 }
 
 .hero-cta:hover {
   background: linear-gradient(135deg, #ec6426, #f8a91f);
-  transform: translateY(-2px);
-  box-shadow: 0 15px 35px rgba(248, 169, 31, 0.3);
+  transform: translateY(-2px) rotate(1deg);
   color: white;
+
+  /* Animate the scribbled effect on hover */
+  border-radius: 225px 25px 255px 25px/25px 255px 25px 225px;
+  box-shadow:
+    4px 12px 8px -6px rgba(0, 0, 0, .4),
+    inset 0 0 0 2px #632713;
+}
+
+/* Alternative: SVG scribbled border overlay */
+.hero-cta::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  background: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%23632713' stroke-width='3' stroke-dasharray='5%2c 8' stroke-dashoffset='0' stroke-linecap='round'/%3e%3c/svg%3e");
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.cta-section {
+  text-align: center;
+  margin-bottom: 60px;
 }
 
 /* Features section */
 .features-section {
-  padding: 100px 0;
-  background: rgba(255, 255, 255, 0.3);
-  border-top: 1px solid rgba(228, 165, 202, 0.3);
+  padding: 50px 0;
 }
 
 .features-container {
@@ -101,47 +137,111 @@
   background: rgba(253, 227, 207, 0.7);
   padding: 50px 40px;
   text-align: center;
-  border: 1px solid rgba(228, 165, 202, 0.3);
   transition: all 0.3s ease;
   backdrop-filter: blur(5px);
+  position: relative;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+
+  /* Hand-drawn border effect */
+  box-shadow:
+    0 0 0 3px #e4a5ca,
+    0 20px 40px rgba(228, 165, 202, 0.15);
+}
+
+/* Alternative blob shapes for variety */
+.feature-card:nth-child(1) {
+  border-radius: 50% 60% 70% 40% / 50% 60% 30% 70%;
+  transform: rotate(-2deg);
+}
+
+.feature-card:nth-child(2) {
+  border-radius: 40% 60% 60% 40% / 70% 30% 70% 30%;
+  transform: rotate(1deg);
+}
+
+.feature-card:nth-child(3) {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  transform: rotate(-1deg);
 }
 
 .feature-card:hover {
   background: rgba(253, 227, 207, 0.9);
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(228, 165, 202, 0.2);
+  transform: translateY(-8px) rotate(0deg) scale(1.02);
+  box-shadow:
+    0 0 0 3px #632713,
+    0 25px 50px rgba(228, 165, 202, 0.3);
+
+  /* Morph the blob shape on hover */
+  border-radius: 40% 70% 60% 30% / 40% 50% 60% 50%;
 }
 
-.feature-icon {
-  font-size: 2.5rem;
-  margin-bottom: 30px;
-  color: #e4a5ca;
+/* Add scribbled line art overlay */
+/* .feature-card::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M10,90 Q90,90 90,45 Q90,10 50,10 Q10,10 10,45 Q10,70 45,70 Q70,70 75,50' stroke='%23e4a5ca' stroke-width='2' fill='none' stroke-dasharray='3,4' stroke-linecap='round'/%3e%3c/svg%3e");
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.6;
+  animation: float 6s ease-in-out infinite;
+} */
+
+/* Different scribbled patterns for each card */
+/* .feature-card:nth-child(2)::before {
+  background: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M20,80 Q80,85 85,45 Q80,15 45,20 Q15,15 15,50 Q20,75 50,75 Q75,70 70,45' stroke='%23e4a5ca' stroke-width='2' fill='none' stroke-dasharray='4,3' stroke-linecap='round'/%3e%3c/svg%3e");
+  animation-delay: -2s;
+} */
+
+.feature-card:nth-child(3)::before {
+  background: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M15,85 Q85,80 80,40 Q85,20 50,15 Q20,20 20,50 Q15,80 55,80 Q80,75 75,50' stroke='%23e4a5ca' stroke-width='2' fill='none' stroke-dasharray='2,5' stroke-linecap='round'/%3e%3c/svg%3e");
+  animation-delay: -4s;
 }
 
-.feature-title {
-  font-size: 1.3rem;
-  color: #632713;
-  margin-bottom: 20px;
-  font-family: 'Georgia', serif;
-  font-weight: 400;
-  letter-spacing: 1px;
-  text-transform: lowercase;
+/* Subtle floating animation */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: translateY(-3px) rotate(1deg);
+    opacity: 0.8;
+  }
 }
 
-.feature-description {
-  color: #2e573a;
-  line-height: 1.7;
-  font-size: 0.95rem;
-  font-weight: 300;
-  font-style: italic;
-}
+/* Add some inner doodles */
+/* .feature-card::after {
+  content: '';
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  background: url("data:image/svg+xml,%3csvg width='30' height='30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5,15 Q15,5 25,15 Q15,25 5,15' stroke='%23632713' stroke-width='1.5' fill='none' stroke-linecap='round'/%3e%3cpath d='M10,15 Q15,10 20,15' stroke='%23632713' stroke-width='1' fill='none' stroke-linecap='round'/%3e%3c/svg%3e");
+  opacity: 0.3;
+  pointer-events: none;
+} */
+
+/* Different doodles for each card */
+/* .feature-card:nth-child(2)::after {
+  background: url("data:image/svg+xml,%3csvg width='30' height='30' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='15' cy='15' r='8' stroke='%23632713' stroke-width='1.5' fill='none' stroke-dasharray='2,2'/%3e%3ccircle cx='15' cy='15' r='3' stroke='%23632713' stroke-width='1' fill='none'/%3e%3c/svg%3e");
+} */
+
+/* .feature-card:nth-child(3)::after {
+  background: url("data:image/svg+xml,%3csvg width='30' height='30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M8,22 L15,8 L22,22 Z' stroke='%23632713' stroke-width='1.5' fill='none' stroke-dasharray='3,2' stroke-linecap='round'/%3e%3cpath d='M12,18 L18,18' stroke='%23632713' stroke-width='1' fill='none'/%3e%3c/svg%3e");
+} */
 
 /* Community section */
 .community-section {
-  padding: 100px 0;
+  padding: 50px 0;
   text-align: center;
-  background-image: 
-    radial-gradient(circle at 30% 20%, rgba(114, 172, 67, 0.08) 0%, transparent 50%);
 }
 
 .community-container {
@@ -166,7 +266,6 @@
   line-height: 1.7;
   font-style: italic;
   font-weight: 300;
-  margin-bottom: 50px;
 }
 
 .community-cta {
@@ -197,28 +296,31 @@
     font-size: 2.8rem;
     letter-spacing: 2px;
   }
-  
+
   .hero-subtitle {
     font-size: 1.1rem;
     letter-spacing: 0.5px;
   }
-  
+
   .hero-cta {
     padding: 15px 35px;
     font-size: 1rem;
     letter-spacing: 1px;
   }
-  
-  .features-title, .community-title {
+
+  .features-title,
+  .community-title {
     font-size: 2rem;
     letter-spacing: 1px;
   }
-  
+
   .feature-card {
     padding: 40px 30px;
   }
-  
-  .hero-container, .features-container, .community-container {
+
+  .hero-container,
+  .features-container,
+  .community-container {
     padding: 0 30px;
   }
 }
@@ -227,15 +329,15 @@
   .hero-title {
     font-size: 2.2rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1rem;
   }
-  
+
   .features-grid {
     gap: 30px;
   }
-  
+
   .feature-card {
     padding: 30px 25px;
   }
