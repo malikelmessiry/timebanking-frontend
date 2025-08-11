@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import '../styles/Home.css';
+import doodle1 from '../assets/Doodle Images/Cartwheel Joy with Blue Star.png'; // adjust path as needed
 
 export default function Home() {
   return (
@@ -36,8 +37,6 @@ export default function Home() {
         </div>
       </div>
 
-      
-
       {/* Community Section */}
       <div className="community-section">
         <div className="community-container">
@@ -54,7 +53,20 @@ export default function Home() {
           </Link>
         </div>
       </div>
-      
+
+      <img
+        src={doodle1}
+        alt="Decorative doodle"
+        className="home-doodle"
+        style={{
+          position: 'absolute',
+          top: '80px',
+          right: '180px',
+          width: '120px',
+          pointerEvents: 'none',
+          zIndex: 0,
+        }}
+      />
     </div>
   );
 }
