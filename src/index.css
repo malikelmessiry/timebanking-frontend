@@ -20,7 +20,6 @@
   box-sizing: border-box;
 }
 
-/* Remove the conflicting body styles */
 body {
   margin: 0;
   min-width: 320px;
@@ -28,7 +27,6 @@ body {
   font-family: "Oldenburg", serif;
   /* background: #fde3cf; */
   color: #632713;
-  /* REMOVED: display: flex and place-items: center */
 }
 
 a {

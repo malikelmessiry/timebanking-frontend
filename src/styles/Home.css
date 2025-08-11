@@ -46,7 +46,7 @@
 
 .hero-cta {
   display: inline-block;
-  background: linear-gradient(135deg, #fdb22f, #ec6426);
+  background: linear-gradient(135deg, #493209, #ec6426);
   color: white;
   padding: 20px 50px;
   text-decoration: none;
@@ -67,14 +67,14 @@
     inset 0 0 0 2px #632713;
 
   /* Add slight rotation for hand-drawn feel */
-  transform: rotate(-1deg);
+  /* transform: rotate(-1deg); */
 
   /* Rough, sketchy font effect */
   text-shadow: 0.5px 0.5px 0px rgba(0, 0, 0, 0.3);
 }
 
 .hero-cta:hover {
-  background: linear-gradient(135deg, #ec6426, #f8a91f);
+  background: linear-gradient(135deg, #934927, #b27b1e);
   transform: translateY(-2px) rotate(1deg);
   color: white;
 
@@ -83,20 +83,6 @@
   box-shadow:
     4px 12px 8px -6px rgba(0, 0, 0, .4),
     inset 0 0 0 2px #632713;
-}
-
-/* Alternative: SVG scribbled border overlay */
-.hero-cta::before {
-  content: '';
-  position: absolute;
-  top: -3px;
-  left: -3px;
-  right: -3px;
-  bottom: -3px;
-  background: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%23632713' stroke-width='3' stroke-dasharray='5%2c 8' stroke-dashoffset='0' stroke-linecap='round'/%3e%3c/svg%3e");
-  border-radius: inherit;
-  pointer-events: none;
-  opacity: 0.8;
 }
 
 .cta-section {
@@ -174,26 +160,6 @@
   border-radius: 40% 70% 60% 30% / 40% 50% 60% 50%;
 }
 
-/* Add scribbled line art overlay */
-/* .feature-card::before {
-  content: '';
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  right: -5px;
-  bottom: -5px;
-  background: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M10,90 Q90,90 90,45 Q90,10 50,10 Q10,10 10,45 Q10,70 45,70 Q70,70 75,50' stroke='%23e4a5ca' stroke-width='2' fill='none' stroke-dasharray='3,4' stroke-linecap='round'/%3e%3c/svg%3e");
-  border-radius: inherit;
-  pointer-events: none;
-  opacity: 0.6;
-  animation: float 6s ease-in-out infinite;
-} */
-
-/* Different scribbled patterns for each card */
-/* .feature-card:nth-child(2)::before {
-  background: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M20,80 Q80,85 85,45 Q80,15 45,20 Q15,15 15,50 Q20,75 50,75 Q75,70 70,45' stroke='%23e4a5ca' stroke-width='2' fill='none' stroke-dasharray='4,3' stroke-linecap='round'/%3e%3c/svg%3e");
-  animation-delay: -2s;
-} */
 
 .feature-card:nth-child(3)::before {
   background: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M15,85 Q85,80 80,40 Q85,20 50,15 Q20,20 20,50 Q15,80 55,80 Q80,75 75,50' stroke='%23e4a5ca' stroke-width='2' fill='none' stroke-dasharray='2,5' stroke-linecap='round'/%3e%3c/svg%3e");
@@ -214,28 +180,6 @@
     opacity: 0.8;
   }
 }
-
-/* Add some inner doodles */
-/* .feature-card::after {
-  content: '';
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 30px;
-  height: 30px;
-  background: url("data:image/svg+xml,%3csvg width='30' height='30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5,15 Q15,5 25,15 Q15,25 5,15' stroke='%23632713' stroke-width='1.5' fill='none' stroke-linecap='round'/%3e%3cpath d='M10,15 Q15,10 20,15' stroke='%23632713' stroke-width='1' fill='none' stroke-linecap='round'/%3e%3c/svg%3e");
-  opacity: 0.3;
-  pointer-events: none;
-} */
-
-/* Different doodles for each card */
-/* .feature-card:nth-child(2)::after {
-  background: url("data:image/svg+xml,%3csvg width='30' height='30' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='15' cy='15' r='8' stroke='%23632713' stroke-width='1.5' fill='none' stroke-dasharray='2,2'/%3e%3ccircle cx='15' cy='15' r='3' stroke='%23632713' stroke-width='1' fill='none'/%3e%3c/svg%3e");
-} */
-
-/* .feature-card:nth-child(3)::after {
-  background: url("data:image/svg+xml,%3csvg width='30' height='30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M8,22 L15,8 L22,22 Z' stroke='%23632713' stroke-width='1.5' fill='none' stroke-dasharray='3,2' stroke-linecap='round'/%3e%3cpath d='M12,18 L18,18' stroke='%23632713' stroke-width='1' fill='none'/%3e%3c/svg%3e");
-} */
 
 /* Community section */
 .community-section {
