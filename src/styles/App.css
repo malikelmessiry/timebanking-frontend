@@ -25,8 +25,11 @@
   box-shadow: none;
 }
 
-/* Updated Auth section - Minimalist & Artsy with custom colors */
-
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
 /* Mobile adjustments */
 @media (max-width: 600px) {
