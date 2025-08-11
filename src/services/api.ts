@@ -29,7 +29,6 @@ export const registerUser = async (data: {
         const errorData = await res.json().catch(() => ({ error: 'Network error' }));
         
         if (res.status === 400) {
-            // Common backend errors
             if (errorData.email && errorData.email[0].includes('already exists')) {
                 throw new Error('This email is already registered. Try logging in instead.');
             } else if (errorData.non_field_errors) {
@@ -336,7 +335,7 @@ export const deleteService = async (token: string, serviceId: number) => {
 };
 
 // Get user's own services (my services)
-export const getMyServices = async (token: string, userEmail: string): Promise<Service[]> => {
+export const getMyServices = async (token: string): Promise<Service[]> => {
   try {    
     // Get user profile to get the ID
     const userProfile = await getUserProfile(token);    
