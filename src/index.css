@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Comforter+Brush&family=Fredericka+the+Great&family=Give+You+Glory&family=Just+Another+Hand&family=Londrina+Outline&family=Oldenburg&family=Poiret+One&family=Square+Peg&family=Sue+Ellen+Francisco&family=Viaoda+Libre&family=Zeyada&display=swap');
+
+
 /* src/index.css - Updated to work with your custom design */
 :root {
-  font-family: 'Georgia', 'Times New Roman', serif;
+  font-family: "Oldenburg", serif;
   line-height: 1.7;
   font-weight: 400;
   color: #632713;
@@ -22,7 +25,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  font-family: 'Georgia', 'Times New Roman', serif;
+  font-family: "Oldenburg", serif;
   background: #fde3cf;
   color: #632713;
   /* REMOVED: display: flex and place-items: center */
@@ -43,7 +46,7 @@ h1 {
   font-size: 2.5em;
   line-height: 1.2;
   color: #632713;
-  font-family: 'Georgia', serif;
+  font-family: "Viaoda Libre", serif;
   font-weight: 300;
 }
 
@@ -54,7 +57,7 @@ button {
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 300;
-  font-family: 'Georgia', serif;
+  font-family: "Viaoda Libre", serif;
   background-color: rgba(228, 165, 202, 0.1);
   cursor: pointer;
   /* transition: all 0.3s ease; */
@@ -75,4 +78,28 @@ button:focus-visible {
 #root {
   width: 100%;
   min-height: 100vh;
+}
+
+.londrina-outline-regular {
+  font-family: "Londrina Outline", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.fredericka-the-great-regular {
+  font-family: "Fredericka the Great", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.oldenburg-regular {
+  font-family: "Oldenburg", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.viaoda-libre-regular {
+  font-family: "Viaoda Libre", serif;
+  font-weight: 400;
+  font-style: normal;
 }
