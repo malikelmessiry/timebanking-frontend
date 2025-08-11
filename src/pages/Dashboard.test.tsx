@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import * as api from '../services/api'; // Adjust the path if needed
+import * as api from '../services/api'; 
 import Dashboard from './Dashboard';
 import { vi } from 'vitest';
 
