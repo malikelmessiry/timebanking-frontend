@@ -21,10 +21,11 @@
 
 .hero-title {
   font-size: 3.5rem;
-  color: #632713;
-  font-family: 'Georgia', serif;
+  color: #876029;
+  font-family: "Londrina Outline", sans-serif;
   margin-bottom: 30px;
   font-weight: 300;
+  font-size: 4.5rem;
   letter-spacing: 3px;
   line-height: 1.2;
   /* text-transform: lowercase; */
@@ -32,13 +33,15 @@
 
 .hero-subtitle {
   font-size: 1.3rem;
-  color: #2e573a;
+  color: #5d5b09;
   margin: 50px auto;
-  font-family: 'Georgia', serif;
+  font-family: "Viaoda Libre", serif;
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
+  white-space: nowrap;
   font-style: italic;
+  font-size: 2rem;
   font-weight: 300;
   letter-spacing: 1px;
   line-height: 1.6;
@@ -46,7 +49,7 @@
 
 .hero-cta {
   display: inline-block;
-  background: linear-gradient(135deg, #493209, #ec6426);
+  background: linear-gradient(135deg, #25533f, #876029);
   color: white;
   padding: 20px 50px;
   text-decoration: none;
