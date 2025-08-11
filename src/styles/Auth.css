@@ -107,6 +107,16 @@ h2 {
   gap: 25px;
 }
 
+.signup-form input, .login-form input {
+  color: #111;
+}
+
+.signup-form input::placeholder,
+.signup-form textarea::placeholder {
+  color: #444;
+  opacity: 1;
+}
+
 /* Form layout */
 .form-row {
   display: grid;

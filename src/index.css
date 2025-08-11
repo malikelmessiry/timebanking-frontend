@@ -7,7 +7,7 @@
   line-height: 1.7;
   font-weight: 400;
   color: #632713;
-  /* background-color: #fde3cf; */
+  background-color: #fde3cf;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -25,7 +25,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   font-family: "Oldenburg", serif;
-  /* background: #fde3cf; */
+  background: #fde3cf;
   color: #632713;
 }
 
