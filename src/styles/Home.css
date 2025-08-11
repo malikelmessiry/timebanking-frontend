@@ -119,7 +119,7 @@
 }
 
 .feature-card {
-  background: rgba(253, 227, 207, 0.7);
+  background: rgba(151, 95, 52, 0.7);
   padding: 50px 40px;
   text-align: center;
   transition: all 0.3s ease;
@@ -131,6 +131,10 @@
   box-shadow:
     0 0 0 3px #e4a5ca,
     0 20px 40px rgba(228, 165, 202, 0.15);
+}
+
+.feature-description {
+  color: rgb(218, 213, 207);
 }
 
 /* Alternative blob shapes for variety */
@@ -149,36 +153,21 @@
   transform: rotate(-1deg);
 }
 
-.feature-card:hover {
-  background: rgba(253, 227, 207, 0.9);
+/* .feature-card:hover {
+  background: rgba(209, 150, 74, 0.9);
   transform: translateY(-8px) rotate(0deg) scale(1.02);
   box-shadow:
     0 0 0 3px #632713,
     0 25px 50px rgba(228, 165, 202, 0.3);
 
   /* Morph the blob shape on hover */
-  border-radius: 40% 70% 60% 30% / 40% 50% 60% 50%;
-}
+  /* border-radius: 40% 70% 60% 30% / 40% 50% 60% 50%;
+} */ 
 
 
 .feature-card:nth-child(3)::before {
   background: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M15,85 Q85,80 80,40 Q85,20 50,15 Q20,20 20,50 Q15,80 55,80 Q80,75 75,50' stroke='%23e4a5ca' stroke-width='2' fill='none' stroke-dasharray='2,5' stroke-linecap='round'/%3e%3c/svg%3e");
   animation-delay: -4s;
-}
-
-/* Subtle floating animation */
-@keyframes float {
-
-  0%,
-  100% {
-    transform: translateY(0px) rotate(0deg);
-    opacity: 0.6;
-  }
-
-  50% {
-    transform: translateY(-3px) rotate(1deg);
-    opacity: 0.8;
-  }
 }
 
 /* Community section */
