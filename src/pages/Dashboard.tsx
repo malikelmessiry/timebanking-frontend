@@ -402,7 +402,7 @@ export default function Dashboard() {
 
           {activeTab === 'services' && (
             <div className='services-section'>
-              <h2>My Services</h2>
+              {/* <h2>My Services</h2> */}
               
               {/* Services you offer */}
               <div className="section-header">
@@ -510,15 +510,15 @@ export default function Dashboard() {
                     return filteredRequests.map(booking => (
                       <div key={booking.id} className='booking-card incoming'>
                         <div className="request-header">
-                          <h4>Service Request</h4>
+                          {/* <h4>Service Request</h4> */}
                           <span className="service-badge">Your Service</span>
                         </div>
-                        <p><strong>Service:</strong> {booking.service_name}</p>
-                        <p><strong>Customer:</strong> {booking.customer_first_name} ({booking.customer_email})</p>
-                        <p><strong>Status:</strong> {getStatusIcon(booking.status)} {booking.status}</p>
-                        <p><strong>Booked:</strong> {new Date(booking.booked_at).toLocaleDateString()}</p>
+                        <p> <strong>{booking.service_name}</strong></p>
+                        <p>booked by {booking.customer_first_name} ({booking.customer_email})</p>
+                        <p>{getStatusIcon(booking.status)} {booking.status}</p>
+                        <p>booked at {new Date(booking.booked_at).toLocaleDateString()}</p>
                         {booking.completed_at && (
-                          <p><strong>Completed:</strong> {new Date(booking.completed_at).toLocaleDateString()}</p>
+                          <p>completed at {new Date(booking.completed_at).toLocaleDateString()}</p>
                         )}
                         {booking.customer_rating && (
                           <p><strong>Rating:</strong> ⭐ {booking.customer_rating}/5</p>
@@ -574,7 +574,7 @@ export default function Dashboard() {
 
           {activeTab === 'bookings' && (
             <div className='bookings-section'>
-              <h2>My Bookings</h2>
+              {/* <h2>My Bookings</h2> */}
               <p>Services you've booked from other providers</p>
               
               {/* Add filter buttons */}
@@ -626,8 +626,8 @@ export default function Dashboard() {
                             {getStatusIcon(b.status)} {b.status.charAt(0).toUpperCase() + b.status.slice(1)}
                           </span>
                         </div>
-                        <p><strong>Provider:</strong> {b.owner_first_name} ({b.owner_email})</p>
-                        <p><strong>Booked:</strong> {new Date(b.booked_at).toLocaleDateString()}</p>
+                        <p>offered by {b.owner_first_name} ({b.owner_email})</p>
+                        <p>booked at {new Date(b.booked_at).toLocaleDateString()}</p>
 
                         <div className='booking-actions'>
                           {b.status === 'pending' && (

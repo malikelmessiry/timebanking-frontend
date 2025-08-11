@@ -176,7 +176,7 @@
 }
 
 /* Add scribbled line art overlay */
-.feature-card::before {
+/* .feature-card::before {
   content: '';
   position: absolute;
   top: -5px;
@@ -188,13 +188,13 @@
   pointer-events: none;
   opacity: 0.6;
   animation: float 6s ease-in-out infinite;
-}
+} */
 
 /* Different scribbled patterns for each card */
-.feature-card:nth-child(2)::before {
+/* .feature-card:nth-child(2)::before {
   background: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M20,80 Q80,85 85,45 Q80,15 45,20 Q15,15 15,50 Q20,75 50,75 Q75,70 70,45' stroke='%23e4a5ca' stroke-width='2' fill='none' stroke-dasharray='4,3' stroke-linecap='round'/%3e%3c/svg%3e");
   animation-delay: -2s;
-}
+} */
 
 .feature-card:nth-child(3)::before {
   background: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M15,85 Q85,80 80,40 Q85,20 50,15 Q20,20 20,50 Q15,80 55,80 Q80,75 75,50' stroke='%23e4a5ca' stroke-width='2' fill='none' stroke-dasharray='2,5' stroke-linecap='round'/%3e%3c/svg%3e");
@@ -214,7 +214,7 @@
 }
 
 /* Add some inner doodles */
-.feature-card::after {
+/* .feature-card::after {
   content: '';
   position: absolute;
   top: 20px;
@@ -224,16 +224,16 @@
   background: url("data:image/svg+xml,%3csvg width='30' height='30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5,15 Q15,5 25,15 Q15,25 5,15' stroke='%23632713' stroke-width='1.5' fill='none' stroke-linecap='round'/%3e%3cpath d='M10,15 Q15,10 20,15' stroke='%23632713' stroke-width='1' fill='none' stroke-linecap='round'/%3e%3c/svg%3e");
   opacity: 0.3;
   pointer-events: none;
-}
+} */
 
 /* Different doodles for each card */
-.feature-card:nth-child(2)::after {
+/* .feature-card:nth-child(2)::after {
   background: url("data:image/svg+xml,%3csvg width='30' height='30' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='15' cy='15' r='8' stroke='%23632713' stroke-width='1.5' fill='none' stroke-dasharray='2,2'/%3e%3ccircle cx='15' cy='15' r='3' stroke='%23632713' stroke-width='1' fill='none'/%3e%3c/svg%3e");
-}
+} */
 
-.feature-card:nth-child(3)::after {
+/* .feature-card:nth-child(3)::after {
   background: url("data:image/svg+xml,%3csvg width='30' height='30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M8,22 L15,8 L22,22 Z' stroke='%23632713' stroke-width='1.5' fill='none' stroke-dasharray='3,2' stroke-linecap='round'/%3e%3cpath d='M12,18 L18,18' stroke='%23632713' stroke-width='1' fill='none'/%3e%3c/svg%3e");
-}
+} */
 
 /* Community section */
 .community-section {
