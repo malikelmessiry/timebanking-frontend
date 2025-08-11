@@ -9,7 +9,6 @@ describe('Home', () => {
         <Home />
       </MemoryRouter>
     );
-    // Adjust the text to match your actual hero title
     expect(
       screen.getByText(/welcome to timebank/i)
     ).toBeInTheDocument();
@@ -21,7 +20,6 @@ describe('Home', () => {
         <Home />
       </MemoryRouter>
     );
-    // Adjust the text to match your CTA button
     expect(
       screen.getByRole('link', { name: /join the timebank/i })
     ).toBeInTheDocument();
