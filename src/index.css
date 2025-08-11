@@ -1,13 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Comforter+Brush&family=Fredericka+the+Great&family=Give+You+Glory&family=Just+Another+Hand&family=Londrina+Outline&family=Oldenburg&family=Poiret+One&family=Square+Peg&family=Sue+Ellen+Francisco&family=Viaoda+Libre&family=Zeyada&display=swap');
 
-
-/* src/index.css - Updated to work with your custom design */
+/* Global reset and base styles only */
 :root {
-  font-family: "Oldenburg", serif;
+  font-family: 'Georgia', 'Times New Roman', serif;
   line-height: 1.7;
   font-weight: 400;
-  color: #632713;
-  background-color: #fde3cf;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -20,59 +17,11 @@
   box-sizing: border-box;
 }
 
-/* Remove the conflicting body styles */
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  font-family: "Oldenburg", serif;
-  background: #fde3cf;
-  color: #632713;
-  /* REMOVED: display: flex and place-items: center */
-}
-
-a {
-  font-weight: 400;
-  color: #72ac43;
-  text-decoration: inherit;
-  transition: color 0.3s ease;
-}
-
-a:hover {
-  color: #2e573a;
-}
-
-h1 {
-  font-size: 2.5em;
-  line-height: 1.2;
-  color: #632713;
-  font-family: "Viaoda Libre", serif;
-  font-weight: 300;
-}
-
-/* Update button styles to match your theme */
-button {
-  border-radius: 2px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 300;
-  font-family: "Viaoda Libre", serif;
-  background-color: rgba(228, 165, 202, 0.1);
-  cursor: pointer;
-  /* transition: all 0.3s ease; */
-  color: #632713;
-}
-
-button:hover {
-  border-color: #e4a5ca;
-  background-color: rgba(228, 165, 202, 0.2);
-}
-
-button:focus,
-button:focus-visible {
-  outline: 2px solid #72ac43;
-  outline-offset: 2px;
+  font-family: 'Georgia', 'Times New Roman', serif;
 }
 
 #root {
@@ -80,26 +29,27 @@ button:focus-visible {
   min-height: 100vh;
 }
 
-.londrina-outline-regular {
-  font-family: "Londrina Outline", sans-serif;
+/* Basic link styles */
+a {
   font-weight: 400;
-  font-style: normal;
+  text-decoration: inherit;
+  transition: color 0.3s ease;
 }
 
-.fredericka-the-great-regular {
-  font-family: "Fredericka the Great", serif;
-  font-weight: 400;
-  font-style: normal;
+/* Basic button styles */
+button {
+  border-radius: 2px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 300;
+  font-family: 'Georgia', serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.oldenburg-regular {
-  font-family: "Oldenburg", serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.viaoda-libre-regular {
-  font-family: "Viaoda Libre", serif;
-  font-weight: 400;
-  font-style: normal;
+button:focus,
+button:focus-visible {
+  outline: 2px solid #72ac43;
+  outline-offset: 2px;
 }
