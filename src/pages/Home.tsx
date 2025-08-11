@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div className="home-page">
       <div className="hero-section">
-        <h1 className="fredericka-the-great-regular">Welcome to Community TimeBanking</h1>
+        <h1 className="fredericka-the-great-regular">Welcome to TimeBank</h1>
         <p>Trade your time, share your skills, grow your community</p>
         <div className="auth-buttons">
           <Link to="/auth" className="btn btn-primary btn-large">Join the TimeBank
