@@ -17,6 +17,7 @@
 .services-header .header-content {
   max-width: 1200px;
   margin: 0 auto;
+  margin-left: -0.5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -50,6 +51,8 @@
 .header-stats {
   display: flex;
   gap: 30px;
+  margin-left: 20px;
+  margin-top: 10px;
 }
 
 .stat {
