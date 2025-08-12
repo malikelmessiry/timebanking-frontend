@@ -45,7 +45,7 @@
 
 .stat-card {
   padding: 1.5rem;
-  border: 1px solid #e0e0e0;
+  /* border: 1px solid #e0e0e0; */
   border-radius: 8px;
   text-align: center;
   color: #632713;
@@ -106,12 +106,12 @@
 }
 
 .booking-card.incoming {
-  border-left: 4px solid #f59e0b; /* Orange for service requests */
+  border-left: 4px solid #f59e0b; 
   background: #fffbeb;
 }
 
 .booking-card.outgoing {
-  border-left: 4px solid #4ade80; /* Green for your bookings */
+  border-left: 4px solid #4ade80; 
   background: #f0fdf4;
 }
 
@@ -439,7 +439,6 @@
   background: #357abd;
 }
 
-/* Add this to your Dashboard.css */
 .booking-filters {
   display: flex;
   gap: 12px;
