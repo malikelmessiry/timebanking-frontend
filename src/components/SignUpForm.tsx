@@ -229,7 +229,7 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
         />
       </div>
 
-      {/* Skills and Interests - side by side */}
+      {/* Skills and Interests */}
       <div className="form-row">
         <div className="form-group">
           <label htmlFor="skills">skills</label>
@@ -258,7 +258,7 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
             rows={3}
           />
           <small className="hint">
-            📝 Enter your interests separated by commas
+            Enter your interests separated by commas
           </small>
           <small className="example">
             Example: music, sports, reading, travel
