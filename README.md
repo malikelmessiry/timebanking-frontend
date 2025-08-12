@@ -1,21 +1,25 @@
 
-# TimeBanking (Front-End)
+# TimeBank (Front-End)
 
 Frontend for our group project built with **React**, **TypeScript**, and **Vite**.
 
+---
+
 ## 🌐 Overview
 
-This app is the client-side of our service marketplace platform where users can exchange time-based services with one another.
+The TimeBank app is the client-side of our service marketplace platform where users can exchange time-based services with one another.
 
 It supports features such as:
 
-- User sign-up and log-in with authentication
+- User sign-up and login with authentication
 - Viewing and editing profiles
 - Creating and booking services
-- Browsing services via an interactive map
+- Browsing services through an interactive map
 
 It connects to a Django backend via REST API:
-* [Community TimeBanking (Backend) Repo](https://github.com/florasmile/timebanking-backend)
+* [TimeBank (Back-end) Repo](https://github.com/florasmile/timebanking-backend)
+
+---
 
 ## 🛠️ Tech Stack
 
@@ -24,7 +28,17 @@ It connects to a Django backend via REST API:
 - **Axios** for HTTP requests
 - **React Router** for navigation
 - **Cloudinary** for image uploads
-- **Jest/React Testing Library** for UI tests
+- **Vitest/React Testing Library** for UI tests
+
+---
+
+## 🌍 Deployment
+
+The frontend is deployed via **Render** and accessible at:
+
+🔗 [Live URL](https://timebanking-frontend.onrender.com)
+
+---
 
 ## 🚀 Getting Started
 
@@ -32,6 +46,7 @@ It connects to a Django backend via REST API:
 
 ```bash
 git clone https://github.com/malikelmessiry/timebanking-frontend.git
+cd timebanking-frontend
 ````
 
 2. **Install dependencies**:
@@ -52,6 +67,9 @@ npm run dev
 npm run test
 ```
 
+---
+
+
 ## 📁 Folder Structure
 
 ```
@@ -63,12 +81,6 @@ src/
 ├── App.tsx         # Main app component
 └── main.tsx        # Entry point
 ```
-
-## 🌍 Deployment
-
-The frontend is deployed via **Render** and accessible at:
-
-🔗 [Live URL](https://timebanking-frontend.onrender.com)
 
 ---
 
@@ -84,4 +96,4 @@ The frontend is deployed via **Render** and accessible at:
 
 ## 📌 Notes
 
-* Environment variables are stored in `.env`.
+* Environment variables are stored in `.env`
