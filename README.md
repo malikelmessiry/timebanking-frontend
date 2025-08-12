@@ -3,6 +3,13 @@
 
 Frontend for our group project built with **React**, **TypeScript**, and **Vite**.
 
+### 🤝 Team
+
+* Dehui Hu
+* Malik Elmessiry
+* Mikaela Baluyot
+* Natasha Gaye
+
 ---
 
 ## 🌐 Overview
@@ -36,7 +43,7 @@ It connects to a Django backend via REST API:
 
 The frontend is deployed via **Render** and accessible at:
 
-🔗 [Live URL](https://timebanking-frontend.onrender.com)
+🔗 [TimeBank Live URL](https://timebanking-frontend.onrender.com)
 
 ---
 
@@ -82,18 +89,13 @@ src/
 └── main.tsx        # Entry point
 ```
 
----
-
-## 🤝 Team
-
-* Dehui Hu
-* Malik Elmessiry
-* Mikaela Baluyot
-* Natasha Gaye
-
 
 ---
 
 ## 📌 Notes
 
 * Environment variables are stored in `.env`
+
+---
+
+### Thank You! 🤝
