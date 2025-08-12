@@ -82,57 +82,57 @@ export default function Home() {
           position: 'absolute',
           top: '80px',
           right: '120px', 
-          width: '120px',
-          pointerEvents: 'none',
-          zIndex: 1,
-        }}
-      />
-      <img
-        src={doodle2}
-        alt="Decorative doodle 2"
-        className="home-doodle"
-        style={{
-          position: 'absolute',
-          top: '120px',
-          left: '60px',
-          width: '100px',
-          pointerEvents: 'none',
-          zIndex: 1,
-        }}
-      />
-      <img
-        src={doodle3}
-        alt="Decorative doodle 3"
-        className="home-doodle"
-        style={{
-          position: 'absolute',
-          top: '400px',
-          left: '100px',
-          width: '110px',
-          pointerEvents: 'none',
-          zIndex: 1,
-        }}
-      />
-      <img
-        src={doodle4}
-        alt="Decorative doodle 4"
-        className="home-doodle"
-        style={{
-          position: 'absolute',
-          top: '600px',
-          right: '80px',
-          width: '90px',
-          pointerEvents: 'none',
-          zIndex: 1,
-        }}
-      />
-      <img
-        src={doodle5}
-        alt="Decorative doodle 5"
-        className="home-doodle"
-        style={{
-          position: 'absolute',
-          top: '260px', // moved down a little
+            width: '120px',
+            pointerEvents: 'none',
+            zIndex: 1,
+          }}
+          />
+          <img
+          src={doodle2}
+          alt="Decorative doodle 2"
+          className="home-doodle"
+          style={{
+            position: 'absolute',
+            top: '120px',
+            left: '60px',
+            width: '100px',
+            pointerEvents: 'none',
+            zIndex: 1,
+          }}
+          />
+          <img
+          src={doodle3}
+          alt="Decorative doodle 3"
+          className="home-doodle"
+          style={{
+            position: 'absolute',
+            top: '400px',
+            left: '100px',
+            width: '110px',
+            pointerEvents: 'none',
+            zIndex: 1,
+          }}
+          />
+          <img
+          src={doodle4}
+          alt="Decorative doodle 4"
+          className="home-doodle"
+          style={{
+            position: 'absolute',
+            top: '600px',
+            right: '20px', // moved further right
+            width: '90px',
+            pointerEvents: 'none',
+            zIndex: 1,
+          }}
+          />
+          <img
+          src={doodle5}
+          alt="Decorative doodle 5"
+          className="home-doodle"
+          style={{
+            position: 'absolute',
+            top: '260px', // moved down a little
           right: '60px',
           width: '100px',
           pointerEvents: 'none',
