@@ -20,7 +20,7 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
   const [skills, setSkills] = useState(''); 
   const [interests, setInterests] = useState('');
   
-  // Add error handling
+  // error handling
   const [errors, setErrors] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,7 +29,7 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
     setErrors([]);
     setIsLoading(true);
 
-    const interestsArray = parseInterests(interests); // ✅ Convert interests to array
+    const interestsArray = parseInterests(interests); // convert interests to array
 
     const formData = {
       email,
@@ -42,11 +42,10 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
       state,
       zip_code: zipCode,
       bio: bio || '',
-      skills: skills || '',        // ✅ Keep skills as string
-      interests: interestsArray,   // ✅ Convert interests to array
+      skills: skills || '',       
+      interests: interestsArray, 
     };
 
-    // Frontend validation first
     const validation = validateRegistrationData({
       email,
       password,
@@ -63,12 +62,11 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
     if (!validation.isValid) {
       setErrors(validation.errors);
       setIsLoading(false);
-      return; // Don't send to backend if validation fails
+      return; 
     }
 
     try {
-      await onSubmit(formData);  // Let the parent handle the API call
-      // Success is handled by parent component
+      await onSubmit(formData); 
     } catch (error: any) {
       console.error("Registration failed", error);
       setErrors([error.message]);
@@ -79,7 +77,6 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
 
   return (
     <form className="signup-form" onSubmit={handleSubmit}>
-      {/* Error Messages */}
       {errors.length > 0 && (
         <div className="error-messages">
           {errors.map((error, index) => (
@@ -91,10 +88,9 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
         </div>
       )}
 
-      {/* Name fields in a row */}
       <div className="form-row">
         <div className="form-group">
-          <label htmlFor="firstName">first name</label>
+          <label htmlFor="firstName">first name *</label>
           <input
             type="text"
             id="firstName"
@@ -115,7 +111,6 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
         </div>
       </div>
 
-      {/* Email - full width */}
       <div className="form-group full-width">
         <label htmlFor="email">email</label>
         <input
@@ -127,29 +122,6 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
         />
       </div>
 
-      {/* Phone and Date of Birth in a row */}
-      <div className="form-row">
-        <div className="form-group">
-          <label htmlFor="phone">phone</label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            // ... other props
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="dateOfBirth">date of birth</label>
-          <input
-            type="date"
-            id="dateOfBirth"
-            name="dateOfBirth"
-            // ... other props
-          />
-        </div>
-      </div>
-
-      {/* Address - full width */}
       <div className="form-group full-width">
         <label htmlFor="address">address</label>
         <input
