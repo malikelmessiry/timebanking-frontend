@@ -22,17 +22,17 @@
 .hero-title {
   font-size: 3.5rem;
   color: #876029;
-  font-family: "Londrina Outline", sans-serif;
+  font-family: "Fredericka the Great", serif;
   margin-bottom: 30px;
   font-weight: 300;
   font-size: 4.5rem;
   letter-spacing: 3px;
-  line-height: 1.2;
+  line-height: 1;
   /* text-transform: lowercase; */
 }
 
 .hero-subtitle {
-  font-size: 1.3rem;
+  font-size: 3rem;
   color: #5d5b09;
   margin: 50px auto;
   font-family: "Viaoda Libre", serif;
@@ -40,7 +40,6 @@
   margin-left: auto;
   margin-right: auto;
   white-space: nowrap;
-  font-style: italic;
   font-size: 2rem;
   font-weight: 300;
   letter-spacing: 1px;
@@ -49,25 +48,25 @@
 
 .hero-cta {
   display: inline-block;
-  background: linear-gradient(135deg, #25533f, #876029);
+  background: linear-gradient(135deg, #b27b1e, #b27b1e);
   color: white;
   padding: 20px 50px;
   text-decoration: none;
-  font-size: 1.1rem;
+  margin-top: 15px;
+  font-size: 1.5rem;
   font-weight: 300;
-  font-family: 'Georgia', serif;
+  font-family: "Fredericka the Great", serif;
   text-transform: lowercase;
   letter-spacing: 2px;
   transition: all 0.3s ease;
   position: relative;
-  border: none;
   /* Add scribbled border using border-radius variations */
   border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
 
   /* Add hand-drawn shadow */
   box-shadow:
     2px 8px 4px -6px rgba(0, 0, 0, .3),
-    inset 0 0 0 2px #632713;
+    inset 0 0 0 2px #2e573a;
 
   /* Add slight rotation for hand-drawn feel */
   /* transform: rotate(-1deg); */
@@ -106,10 +105,10 @@
 
 .features-title {
   text-align: center;
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   color: #632713;
   margin-bottom: 80px;
-  font-family: 'Georgia', serif;
+  font-family: "Fredericka the Great", serif;
   font-weight: 300;
   letter-spacing: 2px;
   /* text-transform: lowercase; */
@@ -132,18 +131,35 @@
 
   /* Hand-drawn border effect */
   box-shadow:
-    0 0 0 3px #e4a5ca,
+    0 0 0 3px #afab23,
     0 20px 40px rgba(228, 165, 202, 0.15);
 }
 
 .feature-description {
   color: rgb(218, 213, 207);
+  font-family: "Viaoda Libre", serif;
+  font-size: 1.5rem;
+  line-height: 1.6;
 }
 
 /* Alternative blob shapes for variety */
 .feature-card:nth-child(1) {
   border-radius: 50% 60% 70% 40% / 50% 60% 30% 70%;
   transform: rotate(-2deg);
+}
+
+.feature-title {
+  font-size: 2rem;
+  color: #f0e6d2;
+  margin-bottom: 20px;
+  font-family: "Fredericka the Great", serif;
+  font-weight: 300;
+}
+
+.feature-icon {
+  font-size: 3rem;
+  color: #f0e6d2;
+  margin-bottom: 20px;
 }
 
 .feature-card:nth-child(2) {
@@ -176,7 +192,14 @@
 /* Community section */
 .community-section {
   padding: 50px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 250px;
   text-align: center;
+  font-family: "Viaoda Libre", serif;
+  background: #afab23;
 }
 
 .community-container {
@@ -189,14 +212,14 @@
   font-size: 2.5rem;
   color: #632713;
   margin-bottom: 40px;
-  font-family: 'Georgia', serif;
+  font-family: "Fredericka the Great", serif;
   font-weight: 300;
   letter-spacing: 2px;
   text-transform: lowercase;
 }
 
 .community-description {
-  font-size: 1.2rem;
+  font-size: 3rem;
   color: #2e573a;
   line-height: 1.7;
   font-style: italic;
@@ -206,13 +229,14 @@
 .community-cta {
   display: inline-block;
   background: transparent;
+  text-align: center;
   color: #72ac43;
   padding: 15px 40px;
   text-decoration: none;
   border: 1px solid #72ac43;
   font-size: 1rem;
   font-weight: 300;
-  font-family: 'Georgia', serif;
+  font-family: "Londrina Outline", sans-serif;
   text-transform: lowercase;
   letter-spacing: 1px;
   transition: all 0.3s ease;
@@ -247,6 +271,7 @@
   .community-title {
     font-size: 2rem;
     letter-spacing: 1px;
+    font-family: "Fredericka the Great", serif;
   }
 
   .feature-card {
