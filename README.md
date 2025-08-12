@@ -1,18 +1,21 @@
 
-# Community TimeBanking (Front-End)
+# TimeBanking (Front-End)
 
 Frontend for our group project built with **React**, **TypeScript**, and **Vite**.
 
 ## 🌐 Overview
 
-This app is the client-side of our service marketplace platform, allowing users to:
-- Sign up and log in with authentication
-- View and edit profiles
-- Create and book services
-- Browse services via an interactive map
+This app is the client-side of our service marketplace platform where users can exchange time-based services with one another.
 
+It supports features such as:
 
-It connects to a Django backend via REST API.
+- User sign-up and log-in with authentication
+- Viewing and editing profiles
+- Creating and booking services
+- Browsing services via an interactive map
+
+It connects to a Django backend via REST API:
+* [Community TimeBanking (Backend) Repo](https://github.com/florasmile/timebanking-backend)
 
 ## 🛠️ Tech Stack
 
@@ -81,5 +84,4 @@ The frontend is deployed via **Render** and accessible at:
 
 ## 📌 Notes
 
-* [Community TimeBanking (Backend) Repo](https://github.com/florasmile/timebanking-backend).
 * Environment variables are stored in `.env`.
