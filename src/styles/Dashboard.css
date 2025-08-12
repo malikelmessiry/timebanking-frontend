@@ -37,6 +37,10 @@
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
   margin: 2rem 0;
+  background-image: url('src/assets/background/homey_background.jpg');
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
 }
 
 .stat-card {
@@ -44,6 +48,7 @@
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   text-align: center;
+  color: #632713;
 }
 
 .quick-actions {
@@ -206,7 +211,7 @@
   padding: 8px 12px;
   border: 1px solid rgba(228, 165, 202, 0.3);
   background: transparent;
-  color: #e4a5ca;
+  color: #e4bca5;
   text-decoration: none;
   border-radius: 4px;
   cursor: pointer;

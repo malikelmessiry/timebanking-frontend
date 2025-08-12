@@ -44,7 +44,7 @@
   margin: 0;
   line-height: 1.3;
   flex: 1;
-  font-family: 'Georgia', serif;
+  font-family: "Viaoda Libre", serif;
 }
 
 .provider-label {
@@ -64,7 +64,7 @@
   font-size: 14px;
   line-height: 1.5;
   margin: 12px 0;
-  font-family: 'Georgia', serif;
+  font-family: "Viaoda Libre", serif;
 }
 
 .service-date {
@@ -91,7 +91,7 @@
   align-items: center;
   justify-content: center;
   gap: 4px;
-  font-family: 'Georgia', serif;
+  font-family: "Viaoda Libre", serif;
   position: relative;
   z-index: 1;
 }
