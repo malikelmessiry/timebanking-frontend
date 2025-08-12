@@ -14,8 +14,7 @@
   background: url('src/assets/background/homey_background.jpg');
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: top;
-  /* backdrop-filter: blur(10px); */
+  background-position: center;
 }
 
 .services-header .header-content {
