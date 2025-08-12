@@ -1,7 +1,7 @@
 /* Services Browse Page Styles - Lighter Background */
 .services-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #fde3cf 0%, #e4a5ca 50%, #72ac43 100%);
+  background: #fde3cf;
   font-family: "Viaoda Libre", serif;
   padding-bottom: 40px;
 }
@@ -11,6 +11,10 @@
   background: rgba(255, 255, 255, 0.15);
   border-bottom: 2px solid rgba(99, 39, 19, 0.2);
   padding: 40px 20px;
+  background: url('src/assets/background/homey_background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
   /* backdrop-filter: blur(10px); */
 }
 
@@ -26,10 +30,7 @@
 }
 
 .services-page {
-  background: url('src/assets/background/homey_background_circle.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+  background-color: #fde3cf;
 }
 
 .services-header h1 {
