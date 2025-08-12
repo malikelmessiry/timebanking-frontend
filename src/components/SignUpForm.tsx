@@ -90,7 +90,9 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
 
       <div className="form-row">
         <div className="form-group">
-          <label htmlFor="firstName">first name *</label>
+          <label htmlFor="firstName">
+            first name <span className="required-asterisk">*</span>
+          </label>
           <input
             type="text"
             id="firstName"
@@ -100,7 +102,9 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
           />
         </div>
         <div className="form-group">
-          <label htmlFor="lastName">last name</label>
+          <label htmlFor="lastName">
+            last name <span className="required-asterisk">*</span>
+          </label>
           <input
             type="text"
             id="lastName"
@@ -112,7 +116,9 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
       </div>
 
       <div className="form-group full-width">
-        <label htmlFor="email">email</label>
+        <label htmlFor="email">
+          email <span className="required-asterisk">*</span>
+        </label>
         <input
           type="email"
           id="email"
@@ -123,7 +129,9 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
       </div>
 
       <div className="form-group full-width">
-        <label htmlFor="address">address</label>
+        <label htmlFor="address">
+          address <span className="required-asterisk">*</span>
+        </label>
         <input
           type="text"
           id="address"
@@ -138,7 +146,9 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
       {/* City, State, Zip in three columns */}
       <div className="form-row three-col">
         <div className="form-group">
-          <label htmlFor="city">city</label>
+          <label htmlFor="city">
+            city <span className="required-asterisk">*</span>
+          </label>
           <input
             type="text"
             id="city"
@@ -149,7 +159,9 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
           />
         </div>
         <div className="form-group">
-          <label htmlFor="state">state</label>
+          <label htmlFor="state">
+            state <span className="required-asterisk">*</span>
+          </label>
           <input
             type="text"
             id="state"
@@ -160,7 +172,9 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
           />
         </div>
         <div className="form-group">
-          <label htmlFor="zipCode">zip code</label>
+          <label htmlFor="zipCode">
+            zip code <span className="required-asterisk">*</span>
+          </label>
           <input
             type="text"
             id="zipCode"
@@ -175,7 +189,9 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
       {/* Password fields in a row */}
       <div className="form-row">
         <div className="form-group">
-          <label htmlFor="password">password</label>
+          <label htmlFor="password">
+            password <span className="required-asterisk">*</span>
+          </label>
           <input
             type="password"
             id="password"
@@ -188,7 +204,9 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
           </small>
         </div>
         <div className="form-group">
-          <label htmlFor="confirmPassword">confirm password</label>
+          <label htmlFor="confirmPassword">
+            confirm password <span className="required-asterisk">*</span>
+          </label>
           <input
             type="password"
             id="confirmPassword"
