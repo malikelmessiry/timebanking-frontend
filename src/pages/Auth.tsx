@@ -7,7 +7,7 @@ import '../styles/Auth.css';
 
 export default function Auth() {
   const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
-  const [successMessage, setSuccessMessage] = useState<string>(''); // Add success state
+  const [successMessage, setSuccessMessage] = useState<string>(''); 
   const navigate = useNavigate();
 
   const handleLogin = async (data: { email: string; password: string }) => {
@@ -22,7 +22,6 @@ export default function Auth() {
       navigate('/dashboard');
     } catch (error) {
       console.error('Login failed:', error);
-      // Let LoginForm handle error display
       throw error;
     }
   };
@@ -46,19 +45,18 @@ export default function Auth() {
 
     } catch (error: any) {
       console.error('Registration failed:', error);
-      // Re-throw so SignUpForm can handle the error
       throw error;
     }
   };
 
   const switchToLogin = () => {
     setActiveTab('login');
-    setSuccessMessage(''); // Clear success message when manually switching
+    setSuccessMessage(''); 
   };
 
   const switchToSignup = () => {
     setActiveTab('signup');
-    setSuccessMessage(''); // Clear success message when switching to signup
+    setSuccessMessage(''); 
   };
 
   return (
