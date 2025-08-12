@@ -6,10 +6,11 @@ Frontend for our group project built with **React**, **TypeScript**, and **Vite*
 ## 🌐 Overview
 
 This app is the client-side of our service marketplace platform, allowing users to:
-- Browse and book services
+- Sign up and log in with authentication
 - View and edit profiles
-- Send messages
-- Leave reviews (optional) **
+- Create and book services
+- Browse services via an interactive map
+
 
 It connects to a Django backend via REST API.
 
