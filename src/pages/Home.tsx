@@ -73,7 +73,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Doodle Images - scattered, not behind text/containers */}
+      {/* Illustrations */}
       <img
         src={doodle1}
         alt="Decorative doodle 1"
@@ -81,7 +81,7 @@ export default function Home() {
         style={{
           position: 'absolute',
           top: '80px',
-          right: '120px', // moved a little to the right
+          right: '120px', 
             width: '120px',
             pointerEvents: 'none',
             zIndex: 1,
