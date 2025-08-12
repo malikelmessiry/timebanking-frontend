@@ -37,6 +37,36 @@ It connects to a Django backend via REST API:
 - **Cloudinary** for image uploads
 - **Vitest/React Testing Library** for UI tests
 
+<details>
+<summary>📦 Dependencies</summary>
+
+```
+leaflet ^1.9.4
+react ^19.1.0
+react-dom ^19.1.0
+react-leaflet ^5.0.0
+react-router-dom ^7.7.0
+@eslint/js ^9.30.1
+@testing-library/jest-dom ^6.6.4
+@testing-library/react ^16.3.0
+@types/leaflet ^1.9.20
+@types/react ^19.1.8
+@types/react-dom ^19.1.6
+@types/testing-library__jest-dom ^5.14.9
+@vitejs/plugin-react ^4.6.0
+@vitest/ui ^3.2.4
+eslint ^9.30.1
+eslint-plugin-react-hooks ^5.2.0
+eslint-plugin-react-refresh ^0.4.20
+globals ^16.3.0
+jsdom ^26.1.0
+typescript ~5.8.3
+typescript-eslint ^8.35.1
+vite ^7.0.4
+vitest ^3.2.4
+```
+</details>
+
 ---
 
 ## 🌍 Deployment
