@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile, logoutUser, updateUserProfile } from "../services/api";
-import { parseInterests } from "../utilities/validation"; // ✅ Add this import
+import { parseInterests } from "../utilities/validation"; 
 import Navbar from '../components/Navbar';
 import '../styles/Profile.css';
 
