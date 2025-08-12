@@ -148,10 +148,11 @@ export default function Services() {
           return a.credit_required - b.credit_required;
         case 'credits-high':
           return b.credit_required - a.credit_required;
-        case 'rating':
+        case 'rating': {
           const ratingA = a.average_rating || 0;
           const ratingB = b.average_rating || 0;
           return ratingB - ratingA;
+        }
         default:
           return 0;
       }
@@ -201,7 +202,7 @@ export default function Services() {
         <div className="services-header">
           <div className="header-content">
             <h1>Discover Services</h1>
-            <p>Find the help you need from our amazing community</p>
+            <p>Find the help you need from our timebanking community</p>
           </div>
           
           <div className="header-stats">
