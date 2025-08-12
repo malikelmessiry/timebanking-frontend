@@ -202,7 +202,7 @@ export default function Services() {
         <div className="services-header">
           <div className="header-content">
             <h1>Discover Services</h1>
-            <p>Find the help you need from our amazing community</p>
+            <p>Find the help you need from our timebanking community</p>
           </div>
           
           <div className="header-stats">

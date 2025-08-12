@@ -171,7 +171,7 @@
   border: 1px solid rgba(99, 39, 19, 0.2);
   border-radius: 8px;
   padding: 12px;
-  background: rgba(244, 228, 7, 0.2);
+  background: rgba(214, 129, 233, 0.2);
 }
 
 .category-filter-item {
@@ -192,7 +192,7 @@
 }
 
 .category-filter-item input[type="checkbox"] {
-  accent-color: #bdf40a;
+  accent-color: #9e50b5;
 }
 
 .category-filter-item span {
@@ -253,7 +253,7 @@
   border: 2px solid rgba(99, 39, 19, 0.3);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.2);
-  color: #632713;
+  color: #73368b;
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: "Viaoda Libre", serif;
@@ -263,7 +263,7 @@
 .view-btn:hover,
 .view-btn.active {
   background: rgba(248, 169, 31, 0.2);
-  border-color: #bdf40a;
+  border-color: #843c91;
   color: #632713;
   box-shadow: 0 2px 8px rgba(248, 169, 31, 0.3);
 }
@@ -448,7 +448,7 @@
 
 .popup-title {
   margin: 0 0 8px 0;
-  color: #632713;
+  color: #63135f;
   font-size: 1.1rem;
   font-weight: 600;
 }
