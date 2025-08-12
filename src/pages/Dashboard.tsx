@@ -261,23 +261,19 @@ export default function Dashboard() {
         throw new Error('Please log in again');
       }
 
-      console.log('🎯 Submitting review for booking:', reviewBookingId); // Debug
       const updatedBooking = await completeBookingWithReview(token, reviewBookingId, reviewData.rating, reviewData.review);
-      console.log('✅ Review submitted, updated booking:', updatedBooking); // Debug
 
       // Update bookings list
       setAllBookings(prev => {
         const newBookings = prev.map(booking => 
           booking.id === reviewBookingId ? updatedBooking : booking
         );
-        console.log('🔄 Updated bookings state:', newBookings); // Debug
         return newBookings;
       });
 
       alert('🎉 Review submitted and booking completed!');
       closeReviewModal();
 
-      // Force refresh of bookings to ensure UI updates
       setTimeout(() => {
         loadBookings();
       }, 500);
