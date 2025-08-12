@@ -237,7 +237,7 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
             id="skills"
             value={skills}
             onChange={(e) => setSkills(e.target.value)}
-            placeholder="Describe your skills and abilities"
+            // placeholder="Describe your skills and abilities"
             rows={3}
           />
           <small className="hint">
@@ -254,7 +254,7 @@ export default function SignUpForm({ onSubmit, switchToLogin }: SignUpFormProps)
             id="interests"
             value={interests}
             onChange={(e) => setInterests(e.target.value)}
-            placeholder="music, sports, reading, photography"
+            // placeholder="music, sports, reading, photography"
             rows={3}
           />
           <small className="hint">
