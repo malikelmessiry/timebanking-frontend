@@ -78,7 +78,7 @@ export default function ServiceCard({
         {/* Service Meta Info */}
         <div className="service-meta">
           <div className="service-provider">
-            <span className="provider-label">by</span>
+            <span className="provider-label">by </span>
             <span className="provider-email">{service.owner_email}</span>
           </div>
           
@@ -90,10 +90,10 @@ export default function ServiceCard({
               </div>
             )}
             
-            <div className="sessions-info">
+            {/* <div className="sessions-info">
               <span className="sessions-remaining">{service.remaining_sessions}</span>
               <span className="sessions-total">/{service.total_sessions} left</span>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -148,14 +148,14 @@ export default function ServiceCard({
         )}
 
         {/* Availability Status */}
-        <div className="service-status">
+        {/* <div className="service-status">
           <span className={`status-indicator ${service.is_available ? 'available' : 'unavailable'}`}>
             {service.is_available ? '🟢 Available' : '🔴 Unavailable'}
           </span>
           <span className="service-date">
             Listed {new Date(service.created_at).toLocaleDateString()}
           </span>
-        </div>
+        </div> */}
       </Link>
 
       {/* Action Buttons */}
