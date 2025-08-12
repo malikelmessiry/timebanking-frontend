@@ -27,8 +27,7 @@ It connects to a Django backend via REST API.
 1. **Clone the repo**:
 
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/malikelmessiry/timebanking-frontend.git
 ````
 
 2. **Install dependencies**:
@@ -63,23 +62,23 @@ src/
 
 ## 🌍 Deployment
 
-Frontend will be deployed via **Netlify** (or Render if preferred).
+The frontend is deployed via **Render** and accessible at:
+
+🔗 [Live URL](https://timebanking-frontend.onrender.com)
 
 ---
 
 ## 🤝 Team
 
-* Dehui
-* Malik
-* Mikaela 
-* Natasha
+* Dehui Hu
+* Malik Elmessiry
+* Mikaela Baluyot
+* Natasha Gaye
 
 
 ---
 
 ## 📌 Notes
 
-* The backend repo is [linked here](will put link later).
+* [Community TimeBanking (Backend) Repo](https://github.com/florasmile/timebanking-backend).
 * Environment variables are stored in `.env`.
-
-
