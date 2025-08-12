@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import '../styles/Home.css';
 
-import doodle1 from '../assets/Doodle Images/Cartwheel Joy with Blue Star.png';
+import doodle1 from '../assets/Doodle Images/cartwheel.png';
 import doodle2 from '../assets/Doodle Images/Business.png';
 import doodle3 from '../assets/Doodle Images/Dog Sitting Chat.png';
 import doodle4 from '../assets/Doodle Images/HandyPerson.png';
@@ -11,6 +11,9 @@ import doodle7 from '../assets/Doodle Images/Musician.png';
 import doodle8 from '../assets/Doodle Images/PC Artist.png';
 import doodle9 from '../assets/Doodle Images/Photog.png';
 import doodle10 from '../assets/Doodle Images/Pottery.png';
+import doodle11 from '../assets/Icons/boltttttt.png';
+import doodle12 from '../assets/Icons/shake copy.png';
+import doodle13 from '../assets/Icons/planty3.png';
 
 export default function Home() {
   return (
@@ -29,17 +32,23 @@ export default function Home() {
           <h2 className="features-title">How the TimeBank Works</h2>
           <div className="features-grid">
             <div className="feature-card">
-              <div className="feature-icon">⚡</div>
+                <div className="feature-icon">
+                <img src={doodle11} alt="Offer Services Icon" style={{ width: '48px', height: '48px' }} />
+                </div>
               <h3 className="feature-title">Offer Services</h3>
               <p className="feature-description">Share your skills and earn time credits</p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">🤝</div>
+                <div className="feature-icon">
+                <img src={doodle12} alt="Request Help Icon" style={{ width: '48px', height: '48px' }} />
+                </div>
               <h3 className="feature-title">Request Help</h3>
               <p className="feature-description">Find community members who can help you</p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">🌱</div>
+              <div className="feature-icon">
+              <img src={doodle13} alt="Build Community Icon" style={{ width: '48px', height: '48px' }} />
+              </div>
               <h3 className="feature-title">Build Community</h3>
               <p className="feature-description">Connect with neighbors and build lasting relationships</p>
             </div>
@@ -72,7 +81,7 @@ export default function Home() {
         style={{
           position: 'absolute',
           top: '80px',
-          right: '180px',
+          right: '120px', // moved a little to the right
           width: '120px',
           pointerEvents: 'none',
           zIndex: 1,
@@ -123,7 +132,7 @@ export default function Home() {
         className="home-doodle"
         style={{
           position: 'absolute',
-          top: '200px',
+          top: '260px', // moved down a little
           right: '60px',
           width: '100px',
           pointerEvents: 'none',
