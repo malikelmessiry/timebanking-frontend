@@ -3,7 +3,7 @@
 
 /* src/index.css - Updated to work with your custom design */
 :root {
-  font-family: "Oldenburg", serif;
+  font-family: "Viaoda Libre", serif;
   line-height: 1.7;
   font-weight: 400;
   color: #632713;
@@ -24,7 +24,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  font-family: "Oldenburg", serif;
+  font-family: "Viaoda Libre", serif;
   background: #fde3cf;
   color: #632713;
 }

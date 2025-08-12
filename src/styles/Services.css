@@ -2,7 +2,7 @@
 .services-page {
   min-height: 100vh;
   background: linear-gradient(135deg, #fde3cf 0%, #e4a5ca 50%, #72ac43 100%);
-  font-family: 'Georgia', serif;
+  font-family: "Viaoda Libre", serif;
   padding-bottom: 40px;
 }
 
@@ -22,6 +22,13 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 20px;
+}
+
+.services-page {
+  background: url('src/assets/background/watercolor1.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .services-header h1 {
@@ -138,7 +145,7 @@
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.4);
   color: #632713;
-  font-family: 'Georgia', serif;
+  font-family: "Viaoda Libre", serif;
   /* transition: all 0.3s ease; */
   /* transition: border-color 0.3s ease, background-color 0.3s ease; */
 }
@@ -164,7 +171,7 @@
   border: 1px solid rgba(99, 39, 19, 0.2);
   border-radius: 8px;
   padding: 12px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(244, 228, 7, 0.2);
 }
 
 .category-filter-item {
@@ -185,7 +192,7 @@
 }
 
 .category-filter-item input[type="checkbox"] {
-  accent-color: #f8a91f;
+  accent-color: #bdf40a;
 }
 
 .category-filter-item span {
@@ -249,14 +256,14 @@
   color: #632713;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: 'Georgia', serif;
+  font-family: "Viaoda Libre", serif;
   font-size: 13px;
 }
 
 .view-btn:hover,
 .view-btn.active {
   background: rgba(248, 169, 31, 0.2);
-  border-color: #f8a91f;
+  border-color: #bdf40a;
   color: #632713;
   box-shadow: 0 2px 8px rgba(248, 169, 31, 0.3);
 }
@@ -279,13 +286,13 @@
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.3);
   color: #632713;
-  font-family: 'Georgia', serif;
+  font-family: "Viaoda Libre", serif;
   font-size: 13px;
 }
 
 .sort-select:focus {
   outline: none;
-  border-color: #f8a91f;
+  border-color: #bdf40a;
   box-shadow: 0 0 0 3px rgba(248, 169, 31, 0.1);
 }
 
@@ -330,7 +337,7 @@
   background: rgba(255, 255, 255, 0.15);
   border: 2px dashed rgba(99, 39, 19, 0.3);
   border-radius: 16px;
-  color: #632713;
+  color: #bdf40a;
   /* backdrop-filter: blur(10px); */
 }
 
@@ -352,7 +359,7 @@
   color: #632713;
   border: none;
   border-radius: 8px;
-  font-family: 'Georgia', serif;
+  font-family: "Viaoda Libre", serif;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -382,7 +389,7 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-family: 'Georgia', serif;
+  font-family: "Viaoda Libre", serif;
 }
 
 /* Map View Styles */
@@ -527,7 +534,7 @@
   background: rgba(255, 255, 255, 0.3);
   color: #632713;
   cursor: pointer;
-  font-family: 'Georgia', serif;
+  font-family: "Viaoda Libre", serif;
   font-size: 14px;
   /* transition: all 0.3s ease; */
   text-align: left;
@@ -535,12 +542,12 @@
 
 .service-type-btn:hover {
   background: rgba(248, 169, 31, 0.1);
-  border-color: rgba(248, 169, 31, 0.5);
+  border-color: rgba(195, 107, 222, 0.5);
 }
 
 .service-type-btn.active {
   background: rgba(248, 169, 31, 0.2);
-  border-color: #f8a91f;
+  border-color: #bdf40a;
   font-weight: 500;
   box-shadow: 0 0 0 2px rgba(248, 169, 31, 0.1);
 }
@@ -550,6 +557,7 @@
   .services-container {
     grid-template-columns: 1fr;
     gap: 24px;
+    background: rgba(93, 138, 55, 0.2);
   }
   
   .filters-sidebar {

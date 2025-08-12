@@ -21,10 +21,10 @@
 
 .nav-brand {
   color: #632713;
-  font-size: 24px;
+  font-size: 40px;
   font-weight: 300;
   text-decoration: none;
-  font-family: 'Georgia', serif;
+  font-family: "Fredericka the Great", serif;
   letter-spacing: 2px;
   position: relative;
   transition: all 0.3s ease;
@@ -52,11 +52,11 @@
 }
 
 .nav-link {
-  color: #e4a5ca;
+  color: #632713;
   text-decoration: none;
   font-weight: 400;
-  font-size: 15px;
-  font-family: 'Georgia', serif;
+  font-size: 20px;
+  font-family: "Fredericka the Great", serif;
   letter-spacing: 1px;
   position: relative;
   transition: all 0.3s ease;

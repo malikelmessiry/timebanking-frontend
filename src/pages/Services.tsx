@@ -148,10 +148,11 @@ export default function Services() {
           return a.credit_required - b.credit_required;
         case 'credits-high':
           return b.credit_required - a.credit_required;
-        case 'rating':
+        case 'rating': {
           const ratingA = a.average_rating || 0;
           const ratingB = b.average_rating || 0;
           return ratingB - ratingA;
+        }
         default:
           return 0;
       }
